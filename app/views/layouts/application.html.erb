@@ -1,15 +1,40 @@
 <!DOCTYPE html>
 <html>
   <head>
-    <title>VirtualTable</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Virtual Table</title>
     <%= csrf_meta_tags %>
     <%= csp_meta_tag %>
-
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-
   <body>
+    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
+      <div class="navbar-brand">
+        <%= link_to 'Virtual Table', root_path, class: 'navbar-item' %>
+        
+        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+          <span aria-hidden="true"></span>
+        </a>
+      </div>
+      
+      <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+        </div>
+        
+        <div class="navbar-end">
+          <div class="navbar-item">
+          </div>
+        </div>
+      </div>
+    </nav>
+    
+    <%= render 'shared/notice', message: notice if notice %>
+    <%= render 'shared/alert',  message: alert  if alert  %>
+    
     <%= yield %>
   </body>
 </html>
