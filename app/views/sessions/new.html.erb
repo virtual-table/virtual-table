@@ -1,0 +1,18 @@
+<section class="section">
+  <div class="container">
+    <h1 class="title">Log in</h1>
+    <%= bulma_form_for :login do |f| %>
+      <%= f.field :email do %>
+        <%= f.label      :email %>
+        <%= f.text_field :email, input_html: { autofocus: true } %>
+      <% end %>
+      
+      <%= f.field :password do %>
+        <%= f.label          :password %>
+        <%= f.password_field :password, input_html: { autofocus: true } %>
+      <% end %>
+      
+      <%= f.submit_or_reset %>
+    <% end %>
+  </div>
+</section>

@@ -1,4 +1,8 @@
 en:
+  sessions:
+    create:
+      session_created_message: "Succesfully logged in!"
+      session_invalid_message: "Incorrect email or password. Please check for errors and try again."
   users:
     create:
       user_created_message: "Account created succesfully!"
