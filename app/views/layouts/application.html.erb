@@ -27,6 +27,16 @@
         
         <div class="navbar-end">
           <div class="navbar-item">
+            <div class="buttons">
+              <% if logged_in? %>
+                <%= link_to 'Log out', logout_path, class: 'button is-light', data: { method: :delete } %>
+              <% else %>
+                <%= link_to new_user_path, class: 'button is-primary' do %>
+                  <strong>Sign up</strong>
+                <% end %>
+                <%= link_to 'Log in', login_path, class: 'button is-light' %>
+              <% end %>
+            </div>
           </div>
         </div>
       </div>
