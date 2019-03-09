@@ -9,10 +9,10 @@ class UsersController < ApplicationController
     
     if @user.save
       session[:user_id] = @user.id
-      flash[:notice] = t('.user_created_message')
+      flash[:notice] = t('.user_created')
       redirect_to root_url
     else
-      flash.now.alert = t('.user_invalid_message')
+      flash.now.alert = t('.user_invalid')
       render :new
     end
   end

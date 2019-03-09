@@ -1,9 +1,11 @@
 en:
   sessions:
     create:
-      session_created_message: "Succesfully logged in!"
-      session_invalid_message: "Incorrect email or password. Please check for errors and try again."
+      session_created: "Succesfully logged in!"
+      session_invalid: "Incorrect email or password. Please check for errors and try again."
+    destroy:
+      session_destroyed: "Succesfully logged out!"
   users:
     create:
-      user_created_message: "Account created succesfully!"
-      user_invalid_message: "Couldn't create account. Please check for errors and try again."
+      user_created: "Account created succesfully!"
+      user_invalid: "Couldn't create account. Please check for errors and try again."
