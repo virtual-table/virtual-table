@@ -3,7 +3,8 @@ class GamesController < ApplicationController
   before_action :require_user
   
   def index
-    @games = Game.all
+    @players = current_user&.players
+    @games   = current_user&.games
   end
   
   def show

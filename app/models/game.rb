@@ -5,4 +5,9 @@ class Game < ApplicationRecord
   belongs_to :author,
     class_name: 'User'
   
+  has_many :players
+  
+  has_many :users, 
+    through: :players
+  
 end

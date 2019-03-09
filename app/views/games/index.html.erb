@@ -11,11 +11,13 @@
       </div>
     </header>
     
-    <% if @games.present? %>
+    <% if @players.present? %>
       <ul>
-        <% @games.each do |game| %>
+        <% @players.each do |play| %>
+          <% game = play.game %>
           <li>
             <%= link_to game.title, game %>
+            <span class="tag"><%= play.role %></span>
           </li>
         <% end %>
       </ul>
