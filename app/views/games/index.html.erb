@@ -1,0 +1,26 @@
+<section class="section">
+  <div class="container">
+    <header class="level">
+      <div class="level-left">
+        <div class="level-item">
+          <h1 class="title"><%= t '.games' %></h1>
+        </div>
+        <div class="level-item">
+          <%= link_to t('.create_new_game'), new_game_path, class: 'is-small button' %>
+        </div>
+      </div>
+    </header>
+    
+    <% if @games.present? %>
+      <ul>
+        <% @games.each do |game| %>
+          <li>
+            <%= link_to game.title, game %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p><%= t '.no_games_available' %></p>
+    <% end %>
+  </div>
+</section>

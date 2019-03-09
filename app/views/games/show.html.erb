@@ -1,0 +1,19 @@
+<section class="section">
+  <div class="container">
+    <h1 class="title">
+      <%= @game.title %>
+    </h1>
+    <div class="content">
+      <%= @game.description %>
+    </div>
+    
+    <%=
+      link_to t('.destroy_game'), game_path,
+        class: 'button is-danger',
+        data:  {
+          method:  :delete,
+          confirm: t('.confirm_game_destruction')
+        }
+    %>
+  </div>
+</section>

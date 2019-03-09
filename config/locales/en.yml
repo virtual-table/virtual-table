@@ -1,4 +1,13 @@
 en:
+  games:
+    create:
+      game_created: "Game created succesfully!"
+      game_invalid: "Couldn't create game. Please check for errors and try again."
+    update:
+      game_updated: "Game updated succesfully!"
+      game_invalid: "Couldn't update game. Please check for errors and try again."
+    destroy:
+      game_destroyed: "Game removed succesfully!"
   sessions:
     create:
       session_created: "Succesfully logged in!"
