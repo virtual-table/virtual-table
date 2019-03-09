@@ -10,7 +10,8 @@ class BulmaFormBuilder < ActionView::Helpers::FormBuilder
   {
     text_field:     'input',
     email_field:    'input',
-    password_field: 'input'
+    password_field: 'input',
+    rich_text_area: '',
   }.each do |selector, input_class|
     class_eval <<-RUBY_EVAL, __FILE__, __LINE__ + 1
       def #{selector}(method, options = {})
