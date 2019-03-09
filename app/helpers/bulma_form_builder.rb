@@ -77,7 +77,7 @@ class BulmaFormBuilder < ActionView::Helpers::FormBuilder
   private
   
   def invalid?(method)
-    object.errors.has_key?(method)
+    object&.errors&.has_key?(method)
   end
   
   def insert_class(class_name, options)
