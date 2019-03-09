@@ -26,15 +26,29 @@
         </div>
         
         <div class="navbar-end">
+          <% if logged_in? %>
+            <div class="navbar-item has-dropdown is-hoverable">
+              <%= link_to t('.games'), games_path, class: 'navbar-link' %>
+              
+              <div class="navbar-dropdown">
+                <% current_user.games.each do |game| %>
+                  <%= link_to game.title, game, class: 'navbar-item' %>
+                <% end %>
+                <hr class="navbar-divider">
+                <%= link_to t('.new_game'), new_game_path, class: 'navbar-item' %>
+              </div>
+            </div>
+          <% end %>
+          
           <div class="navbar-item">
             <div class="buttons">
               <% if logged_in? %>
-                <%= link_to 'Log out', logout_path, class: 'button is-light', data: { method: :delete } %>
+                <%= link_to t('.logout'), logout_path, class: 'button is-light', data: { method: :delete } %>
               <% else %>
                 <%= link_to new_user_path, class: 'button is-primary' do %>
-                  <strong>Sign up</strong>
+                  <strong><%= t '.signup' %></strong>
                 <% end %>
-                <%= link_to 'Log in', login_path, class: 'button is-light' %>
+                <%= link_to t('.login'), login_path, class: 'button is-light' %>
               <% end %>
             </div>
           </div>
