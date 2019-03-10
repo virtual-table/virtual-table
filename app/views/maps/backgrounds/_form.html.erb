@@ -1,0 +1,70 @@
+<%
+if background.persisted?
+  form_title = t '.edit_background'
+  form_url   = map_background_path(map, background)
+else
+  form_title = t '.new_background'
+  form_url   = map_backgrounds_path(map)
+end
+%>
+<%= bulma_form_for background, url: form_url do |f| %>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title"><%= form_title %></p>
+      <button class="delete" aria-label="close" data-action="click->modal#close"></button>
+    </header>
+    
+    <section class="modal-card-body">
+      <%= f.field :image do %>
+        <%= f.label      :image %>
+        <%= f.file_field :image %>
+        <%= f.errors     :image %>
+      <% end %>
+      
+      <%= f.field :floor_id do %>
+        <%= f.label  :floor_id %>
+        <%= f.select :floor_id, @map.floors.map { |f| [f.title, f.id] } %>
+        <%= f.errors :floor_id %>
+      <% end %>
+      
+      <div class="columns">
+        <div class="column">
+          <%= f.field :width do %>
+            <%= f.label        :width %>
+            <%= f.number_field :width %>
+            <%= f.errors       :width %>
+          <% end %>
+        </div>
+        <div class="column">
+          <%= f.field :height do %>
+            <%= f.label        :height %>
+            <%= f.number_field :height %>
+            <%= f.errors       :height %>
+          <% end %>
+        </div>
+      </div>
+      
+      <div class="columns">
+        <div class="column">
+          <%= f.field :x do %>
+            <%= f.label        :x %>
+            <%= f.number_field :x %>
+            <%= f.errors       :x %>
+          <% end %>
+        </div>
+        <div class="column">
+          <%= f.field :y do %>
+            <%= f.label        :y %>
+            <%= f.number_field :y %>
+            <%= f.errors       :y %>
+          <% end %>
+        </div>
+      </div>
+    </section>
+    
+    <footer class="modal-card-foot">
+      <%= f.button t('.submit'), type: 'submit', class: 'button is-success' %>
+      <%= f.button t('.cancel'), type: 'reset',  class: 'button is-text', data: { action: 'click->modal#close' }%>
+    </footer>
+  </div>
+<% end %>

@@ -1,0 +1,9 @@
+.map-editor {
+  &.columns {
+    flex-direction: row-reverse;
+  }
+  
+  .panel-block {
+    display: block;
+  }
+}

@@ -1,0 +1,22 @@
+<%= bulma_form_for map do |f| %>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title"><%= t '.edit_map' %></p>
+      <button class="delete" aria-label="close" data-action="click->modal#close"></button>
+    </header>
+    
+    <section class="modal-card-body">
+      <%= f.field :title do %>
+        <%= f.label      :title %>
+        <%= f.text_field :title %>
+        <%= f.errors     :title %>
+      <% end %>
+    </section>
+    
+    <footer class="modal-card-foot">
+      <%= f.button t('.submit'), type: 'submit', class: 'button is-success' %>
+      <%= f.button t('.cancel'), type: 'reset',  class: 'button is-text', data: { action: 'click->modal#close' }%>
+    </footer>
+  </div>
+<% end %>
+

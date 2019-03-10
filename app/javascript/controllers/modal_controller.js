@@ -32,7 +32,9 @@ export default class extends Controller {
           <div data-target="modal.content" id="modal_content">
           </div>
           
-          <button class="modal-close is-large" aria-label="close" data-target="modal.close"></button>
+          <button class="modal-close is-large" aria-label="close"
+                  data-target="modal.close"
+                  data-action="click->modal#close"></button>
         </div>
       `
     }

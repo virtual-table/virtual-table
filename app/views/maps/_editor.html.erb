@@ -1,0 +1,93 @@
+<%
+active_floor = local_assigns[:active_floor]
+active_panel = local_assigns[:active_panel]
+%>
+<section class="section">
+  <div class="columns map-editor">
+    <div class="column">
+      <div data-controller="map--canvas" data-action="resize@window->map--canvas#resize" style="background: #c0c0c0">
+      </div>
+    </div>
+    
+    <div class="column is-full-mobile is-half-tablet is-one-third-desktop is-one-quarter-widescreen is-one-fifth-fullhd">
+      <nav class="panel">
+        <div class="panel-heading">
+          <div class="level is-mobile">
+            <h1 class="level-left"><%= map.title %></h1>
+            <p class="level-right">
+              <%=
+                link_to t('.edit'),
+                  edit_map_path(map),
+                  class: 'button is-small',
+                  data: { remote: true }
+              %>
+            </p>
+          </div>
+        </div>
+        <% floors.each do |floor| %>
+          <div class="panel-block<% if floor == active_floor %> is-active<% end %>">
+            <div class="level is-mobile">
+              <h2 class="level-left">
+                <%= link_to floor.title, map_floor_path(map, floor) %>
+              </h2>
+              <p class="level-right">
+                <%=
+                  link_to t('.edit'),
+                    edit_map_floor_path(map, floor),
+                    class: 'button is-small',
+                    data: { remote: true }
+                %>
+              </p>
+            </div>
+          </div>
+        <% end %>
+        <div class="panel-block">
+          <%=
+            link_to t('.new_floor'), new_map_floor_path(map),
+              class: 'button is-small is-link is-outlined is-fullwidth',
+              data:  {
+                remote: true
+              }
+          %>
+        </div>
+        
+        <% if floor = active_floor %>
+          <p class="panel-tabs">
+            <% %w[backgrounds].each do |panel| %>
+              <%=
+                link_to t(".#{panel}"), '',
+                  class: ('is-active' if panel == active_panel)
+              %>
+            <% end %>
+          </p>
+          <% floor.backgrounds.each do |background| %>
+            <div class="panel-block">
+              <div class="level is-mobile">
+                <h2 class="level-left">
+                  <%= link_to background.filename, map_background_path(map, background) %>
+                </h2>
+                <p class="level-right">
+                  <%=
+                    link_to t('.edit'),
+                      edit_map_background_path(map, background),
+                      class: 'button is-small',
+                      data: { remote: true }
+                  %>
+                </p>
+              </div>
+            </div>
+          <% end %>
+          <div class="panel-block">
+            <%=
+              link_to t('.new_background'), new_map_background_path(map, background: { floor_id: floor.id }),
+                class: 'button is-small is-link is-outlined is-fullwidth',
+                data:  {
+                  remote: true
+                }
+            %>
+          </div>
+        <% end %>
+      </nav>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,81 @@
+<%
+if floor.persisted?
+  form_title = t '.edit_floor'
+  form_url   = map_floor_path(map, floor)
+else
+  form_title = t '.new_floor'
+  form_url   = map_floors_path(map)
+end
+%>
+<%= bulma_form_for floor, url: form_url do |f| %>
+  <div class="modal-card">
+    <header class="modal-card-head">
+      <p class="modal-card-title"><%= form_title %></p>
+      <button class="delete" aria-label="close" data-action="click->modal#close"></button>
+    </header>
+    
+    <section class="modal-card-body">
+      <%= f.field :title do %>
+        <%= f.label      :title %>
+        <%= f.text_field :title %>
+        <%= f.errors     :title %>
+      <% end %>
+      
+      <div class="columns">
+        <div class="column">
+          <%= f.field :columns do %>
+            <%= f.label        :columns %>
+            <%= f.number_field :columns %>
+            <%= f.errors       :columns %>
+          <% end %>
+        </div>
+        <div class="column">
+          <%= f.field :rows do %>
+            <%= f.label        :rows %>
+            <%= f.number_field :rows %>
+            <%= f.errors       :rows %>
+          <% end %>
+        </div>
+      </div>
+      
+      <%= f.field :scale do %>
+        <%= f.label        :scale %>
+        <%= f.number_field :scale %>
+        <%= f.select       :scale_unit, %w[ft miles] %>
+        <%= f.errors       :scale %>
+        <%= f.errors       :scale_unit %>
+      <% end %>
+      
+      
+      <%= f.field :background_color do %>
+        <%= f.label       :background_color %>
+        <%= f.color_field :background_color %>
+        <%= f.errors      :background_color %>
+      <% end %>
+      
+      <%= f.field :grid do %>
+        <%= f.check_box :grid %>
+        <%= f.label     :grid %>
+        <%= f.errors    :grid %>
+      <% end %>
+      
+      <%= f.field :grid_color do %>
+        <%= f.label       :grid_color %>
+        <%= f.color_field :grid_color %>
+        <%= f.errors      :grid_color %>
+      <% end %>
+      
+      <%= f.field :grid_opacity do %>
+        <%= f.label        :grid_opacity %>
+        <%= f.number_field :grid_opacity,
+              min: 0, max: 1, step: 0.1  %>
+        <%= f.errors       :grid_opacity %>
+      <% end %>
+    </section>
+    
+    <footer class="modal-card-foot">
+      <%= f.button t('.submit'), type: 'submit', class: 'button is-success' %>
+      <%= f.button t('.cancel'), type: 'reset',  class: 'button is-text', data: { action: 'click->modal#close' }%>
+    </footer>
+  </div>
+<% end %>

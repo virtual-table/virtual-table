@@ -1,0 +1,9 @@
+<%=
+  active_floor = @map.floors.first
+  render 'editor',
+    map:          @map,
+    floors:       @map.floors,
+    active_floor: active_floor,
+    backgrounds:  active_floor&.backgrounds,
+    active_panel: 'backgrounds'
+%>

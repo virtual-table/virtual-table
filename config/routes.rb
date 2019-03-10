@@ -11,4 +11,11 @@ Rails.application.routes.draw do
       resources :maps, only: %i[new create]
     end
   end
+  
+  resources :maps, except: %i[new create] do
+    scope module: 'maps' do
+      resources :floors
+      resources :backgrounds
+    end
+  end
 end

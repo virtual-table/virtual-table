@@ -20,8 +20,7 @@ class GamesController < ApplicationController
     @game = Game.new game_params
     @game.author = current_user
     
-    if @game.valid?
-      @game.save
+    if @game.save
       redirect_to @game, notice: t('.game_created')
     else
       flash.now[:alert] = t('.game_invalid')

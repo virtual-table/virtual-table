@@ -8,7 +8,7 @@ module Games
       @map = @game.maps.build map_params
       
       if @map.save
-        redirect_to [:edit, @map], notice: t('.map_created')
+        redirect_to @map, notice: t('.map_created')
       else
         flash.now[:alert] = t('.map_invalid')
         render :new

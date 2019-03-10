@@ -1,0 +1,2 @@
+module Maps::BackgroundsHelper
+end
