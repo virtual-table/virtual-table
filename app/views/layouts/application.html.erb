@@ -9,7 +9,7 @@
     <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
-  <body>
+  <body data-controller="modal" data-target="modal.container">
     <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <%= link_to 'Virtual Table', root_path, class: 'navbar-item' %>

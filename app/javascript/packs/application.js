@@ -1,12 +1,37 @@
-// This file is automatically compiled by Webpack, along with any other files
-// present in this directory. You're encouraged to place your actual application logic in
-// a relevant structure within app/javascript and only use these pack files to reference
-// that code so it'll be compiled.
+require('channels')
 
-require("@rails/ujs").start()
-require("turbolinks").start()
-require("@rails/activestorage").start()
-require("channels")
+import { Application } from 'stimulus'
+import { definitionsFromContext } from 'stimulus/webpack-helpers'
+import consumer from '../channels/consumer'
 
-require("trix")
-require("@rails/actiontext")
+(function() {
+  this.VTT || (this.VTT = {})
+  
+  this.VTT.actionCable = consumer
+  
+  this.VTT.turboLinks    = require('turbolinks')
+  this.VTT.turboLinks.start()
+  
+  this.VTT.ujs = require('@rails/ujs')
+  this.VTT.ujs.start()
+  
+  this.VTT.trix       = require('trix')
+  this.VTT.actionText = require('@rails/actiontext')
+  
+  this.VTT.activeStorage = require('@rails/activestorage')
+  this.VTT.activeStorage.start()
+  
+  const application = Application.start()
+  const context = require.context('../controllers', true, /\.js$/)
+  application.load(definitionsFromContext(context))
+  
+  this.VTT.application = application
+  
+  Object.defineProperty(this.VTT, 'modal', {
+    get: function() {
+      let element = document.querySelector('[data-controller*="modal"]')
+      return window.VTT.application
+                   .getControllerForElementAndIdentifier(element, 'modal')
+    }
+  })
+}).call(window)
