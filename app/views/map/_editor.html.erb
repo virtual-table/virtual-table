@@ -5,8 +5,7 @@ active_panel = local_assigns[:active_panel]
 <section class="section">
   <div class="columns map-editor">
     <div class="column">
-      <div data-controller="map--canvas" data-action="resize@window->map--canvas#resize" style="background: #c0c0c0">
-      </div>
+      <%= render 'map/map', map: map %>
     </div>
     
     <div class="column is-full-mobile is-half-tablet is-one-third-desktop is-one-quarter-widescreen is-one-fifth-fullhd">

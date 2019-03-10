@@ -4,4 +4,16 @@ class Map::Floor < ApplicationRecord
   
   has_many :backgrounds
   
+  def width
+    columns * grid_size
+  end
+  
+  def height
+    rows * grid_size
+  end
+  
+  def grid_size
+    50
+  end
+  
 end

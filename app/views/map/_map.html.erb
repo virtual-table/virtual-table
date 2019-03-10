@@ -1,0 +1,12 @@
+<div class="map-editor-canvas"
+     data-controller="map--canvas"
+     data-action="resize@window->map--canvas#resize"
+     data-map--canvas-width="<%= map.width %>"
+     data-map--canvas-height="<%= map.height %>">
+  <div data-target="map--canvas.canvas">
+  </div>
+  
+  <div style="display: none;">
+    <%= render @active_floor %>
+  </div>
+</div>

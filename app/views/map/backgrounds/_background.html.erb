@@ -1,0 +1,18 @@
+<%=
+  content_tag(
+    :li,
+    id:    dom_id(background),
+    class: 'map-background',
+    data: {
+      controller:             'map--background',
+      map__background_url:    map_background_path(background.map, background),
+      map__background_width:  background.width,
+      map__background_height: background.height,
+      map__background_x:      background.x,
+      map__background_y:      background.y,
+      map__background_sprite: url_for(background.image)
+    }
+  ) do
+%>
+  <%= image_tag url_for(background.image), width: background.width, height: background.height if background.image %>
+<% end %>

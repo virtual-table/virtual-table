@@ -1,7 +1,7 @@
 module Maps
   class FloorsController < MapController
     def show
-      @floor = @map.floors.find params[:id]
+      redirect_to map_url(@map, floor_id: params[:id])
     end
     
     def new
