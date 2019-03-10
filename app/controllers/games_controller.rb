@@ -9,6 +9,7 @@ class GamesController < ApplicationController
   
   def show
     @game = Game.find params[:id]
+    @maps = @game.maps
   end
   
   def new

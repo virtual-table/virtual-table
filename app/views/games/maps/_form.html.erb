@@ -1,0 +1,9 @@
+<%= bulma_form_for [game, map] do |f| %>
+  <%= f.field :title do %>
+    <%= f.label      :title %>
+    <%= f.text_field :title %>
+    <%= f.errors     :title %>
+  <% end %>
+  
+  <%= f.submit_or_reset %>
+<% end %>

@@ -1,0 +1,2 @@
+module Games::MapsHelper
+end

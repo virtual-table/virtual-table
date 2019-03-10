@@ -17,3 +17,28 @@
     %>
   </div>
 </section>
+<section class="section">
+  <div class="container">
+    <header class="level">
+      <div class="level-left">
+        <div class="level-item">
+          <h2 class="title is-4"><%= t '.maps' %></h2>
+        </div>
+        <div class="level-item">
+          <%= link_to t('.create_new_map'), new_game_map_path(@game), class: 'is-small button' %>
+        </div>
+      </div>
+    </header>
+    <div class="content">
+      <% if @maps.present? %>
+        <ul>
+          <% @maps.each do |map| %>
+            <li><%= link_to map.title, map %></li>
+          <% end %>
+        </ul>
+      <% else %>
+        <p><%= t '.no_maps_available' %></p>
+      <% end %>
+    </div>
+  </div>
+</section>
