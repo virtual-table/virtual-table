@@ -5,4 +5,7 @@ class Map < ApplicationRecord
   has_many :floors,
     class_name: 'Map::Floor'
   
+  has_many :backgrounds,
+    through: :floors
+  
 end
