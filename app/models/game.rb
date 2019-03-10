@@ -10,4 +10,6 @@ class Game < ApplicationRecord
   has_many :users, 
     through: :players
   
+  has_many :maps
+  
 end

@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_09_231226) do
+ActiveRecord::Schema.define(version: 2019_03_09_234057) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -69,6 +69,43 @@ ActiveRecord::Schema.define(version: 2019_03_09_231226) do
     t.index ["author_id"], name: "index_games_on_author_id"
   end
 
+  create_table "map_backgrounds", force: :cascade do |t|
+    t.bigint "floor_id"
+    t.boolean "visible", default: true
+    t.integer "width"
+    t.integer "height"
+    t.integer "x", default: 0
+    t.integer "y", default: 0
+    t.integer "z", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["floor_id"], name: "index_map_backgrounds_on_floor_id"
+  end
+
+  create_table "map_floors", force: :cascade do |t|
+    t.bigint "map_id"
+    t.string "title"
+    t.integer "columns", default: 30
+    t.integer "rows", default: 24
+    t.integer "scale", default: 5
+    t.integer "scale_unit"
+    t.string "background_color", default: "#ffffff"
+    t.boolean "grid", default: true
+    t.string "grid_color", default: "#c0c0c0"
+    t.float "grid_opacity", default: 0.5
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["map_id"], name: "index_map_floors_on_map_id"
+  end
+
+  create_table "maps", force: :cascade do |t|
+    t.bigint "game_id"
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["game_id"], name: "index_maps_on_game_id"
+  end
+
   create_table "players", force: :cascade do |t|
     t.bigint "game_id"
     t.bigint "user_id"
@@ -89,6 +126,9 @@ ActiveRecord::Schema.define(version: 2019_03_09_231226) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "games", "users", column: "author_id"
+  add_foreign_key "map_backgrounds", "map_floors", column: "floor_id"
+  add_foreign_key "map_floors", "maps"
+  add_foreign_key "maps", "games"
   add_foreign_key "players", "games"
   add_foreign_key "players", "users"
 end
