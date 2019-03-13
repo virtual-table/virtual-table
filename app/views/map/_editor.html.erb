@@ -3,7 +3,10 @@ active_floor = local_assigns[:active_floor]
 active_panel = local_assigns[:active_panel]
 %>
 <section class="section">
-  <div class="columns map-editor">
+  <div class="columns map-editor"
+       data-controller="map--editor"
+       data-map--editor-active-floor="<%= dom_id(active_floor) %>"
+       data-map--editor-active-panel="<%= active_panel %>">
     <div class="column">
       <%= render 'map/map', map: map %>
     </div>
@@ -27,7 +30,13 @@ active_panel = local_assigns[:active_panel]
           <div class="panel-block<% if floor == active_floor %> is-active<% end %>">
             <div class="level is-mobile">
               <h2 class="level-left">
-                <%= link_to floor.title, map_floor_path(map, floor) %>
+                <%=
+                  link_to floor.title,
+                    map_floor_path(map, floor),
+                    data: {
+                      action: 'click->map--editor#changeFloor'
+                    }
+                %>
               </h2>
               <p class="level-right">
                 <%=
@@ -52,40 +61,29 @@ active_panel = local_assigns[:active_panel]
         
         <% if floor = active_floor %>
           <p class="panel-tabs">
-            <% %w[backgrounds].each do |panel| %>
+            <% %w[backgrounds characters].each do |panel| %>
               <%=
-                link_to t(".#{panel}"), '',
-                  class: ('is-active' if panel == active_panel)
+                link_to t(".#{panel}"), "##{panel}_panel",
+                  data:  {
+                    action: 'click->map--editor#changePanel'
+                  }
               %>
             <% end %>
           </p>
-          <% floor.backgrounds.each do |background| %>
-            <div class="panel-block">
-              <div class="level is-mobile">
-                <h2 class="level-left">
-                  <%= link_to background.filename, map_background_path(map, background) %>
-                </h2>
-                <p class="level-right">
-                  <%=
-                    link_to t('.edit'),
-                      edit_map_background_path(map, background),
-                      class: 'button is-small',
-                      data: { remote: true }
-                  %>
-                </p>
-              </div>
-            </div>
-          <% end %>
-          <div class="panel-block">
-            <%=
-              link_to t('.new_background'), new_map_background_path(map, background: { floor_id: floor.id }),
-                class: 'button is-small is-link is-outlined is-fullwidth',
-                data:  {
-                  remote: true
-                }
-            %>
-          </div>
+          <%= render 'map/backgrounds_panel', floor: floor %>
+          <%= render 'map/characters_panel', floor: floor %>
         <% end %>
+        
+        <div class="panel-block">
+          <div class="level is-mobile">
+            <span class="level-left">
+              <a data-action="click->map--editor#zoomOut">-</a>
+            </span>
+            <span class="level-right">
+              <a data-action="click->map--editor#zoomIn">+</a>
+            </span>
+          </div>
+        </div>
       </nav>
     </div>
   </div>

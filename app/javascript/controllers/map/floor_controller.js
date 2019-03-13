@@ -5,10 +5,24 @@ require('lib/polyfills/closest')
 
 export default class extends Controller {
   
-  get canvasElement () { return this.element.closest('[data-controller*="map--canvas"]') }
-  get canvas        () {
+  get id () { return this.element.id }
+  
+  get canvas () {
     return this._canvas || (
-      this._canvas = this.application.getControllerForElementAndIdentifier(this.canvasElement, 'map--canvas')
+      this._canvas =
+        this.application
+            .getControllerForElementAndIdentifier(
+              this.element.closest('[data-controller*="map--canvas"]'),
+              'map--canvas'
+            )
+    )
+  }
+  
+  get backgrounds () { 
+    return [
+      ...this.element.querySelectorAll('[data-controller*="map--background"]')
+    ].map(
+      (element) => this.application.getControllerForElementAndIdentifier(element, 'map--background')
     )
   }
   
@@ -25,6 +39,7 @@ export default class extends Controller {
   get height     () { return this.rows * this.gridSize          }
   
   connect () {
+    this.active     = false
     this.container  = this.canvas.viewport.addChild(new PIXI.Container())
     
     this.background = this.container.addChild(new PIXI.Container())

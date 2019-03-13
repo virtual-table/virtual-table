@@ -1,15 +1,17 @@
 import { Controller } from 'stimulus'
 import PIXI from 'lib/pixi'
+import Draggable from 'lib/map/draggable'
 
-export default class extends Controller {
-  
-  get floorElement () {
-    return this.element.closest('[data-controller*="map--floor"]')
-  }
+export default class extends Draggable(Controller) {
   
   get floor () {
     return this._floor || (
-      this._floor = this.application.getControllerForElementAndIdentifier(this.floorElement, 'map--floor')
+      this._floor =
+        this.application
+            .getControllerForElementAndIdentifier(
+              this.element.closest('[data-controller*="map--floor"]'),
+              'map--floor'
+            )
     )
   }
   

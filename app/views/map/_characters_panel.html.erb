@@ -1,0 +1,14 @@
+<%
+map = floor.map
+%>
+<div id="characters_panel" data-target="map--editor.panel">
+  <div class="panel-block">
+    <%=
+      link_to t('.new_character'), '',
+        class: 'button is-small is-link is-outlined is-fullwidth',
+        data:  {
+          remote: true
+        }
+    %>
+  </div>
+</div>
