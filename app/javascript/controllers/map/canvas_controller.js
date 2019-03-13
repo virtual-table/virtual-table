@@ -22,6 +22,16 @@ export default class extends Controller {
     return this.canvasTarget.clientWidth
   }
   
+  get floors () {
+    return [
+      ...this.element.querySelectorAll('[data-controller*="map--floor"]')
+    ].map((element) => this.application.getControllerForElementAndIdentifier(element, 'map--floor'))
+  }
+  
+  get backgrounds () {
+    return this.floors.map((floor) => floor.backgrounds).flat()
+  }
+  
   connect () {
     this.resize()
     
@@ -52,15 +62,14 @@ export default class extends Controller {
     this.pixi.stage.addChild(this.viewport)
     this.viewport
         .drag()
-        .pinch()
-        .wheel()
+        .pinch({ noDrag: true }) // .wheel()
         .decelerate()
         .clamp({ direction: 'all' })
         .clampZoom({
-          minWidth:  this.worldWidth  / 4,
-          minHeight: this.worldHeight / 4,
-          maxWidth:  this.worldWidth  * 4,
-          maxHeight: this.worldHeight * 4
+          minWidth:  this.worldWidth  / 6,
+          minHeight: this.worldHeight / 6,
+          maxWidth:  this.worldWidth  * 6,
+          maxHeight: this.worldHeight * 6
         })
   }
   

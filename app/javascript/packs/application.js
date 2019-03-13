@@ -30,8 +30,18 @@ import consumer from '../channels/consumer'
   Object.defineProperty(this.VTT, 'modal', {
     get: function() {
       let element = document.querySelector('[data-controller*="modal"]')
-      return window.VTT.application
+      return element &&
+             window.VTT.application
                    .getControllerForElementAndIdentifier(element, 'modal')
+    }
+  })
+  
+  Object.defineProperty(this.VTT, 'editor', {
+    get: function() {
+      let element = document.querySelector('[data-controller*="map--editor"]')
+      return element &&
+             window.VTT.application
+                   .getControllerForElementAndIdentifier(element, 'map--editor')
     }
   })
 }).call(window)
