@@ -7,6 +7,8 @@ export default class extends Controller {
   
   get id () { return this.element.id }
   
+  get parent () { return this.canvas.viewport }
+  
   get canvas () {
     return this._canvas || (
       this._canvas =
@@ -40,13 +42,22 @@ export default class extends Controller {
   
   connect () {
     this.active     = false
-    this.container  = this.canvas.viewport.addChild(new PIXI.Container())
+    this.container  = this.parent.addChild(new PIXI.Container())
     
     this.background = this.container.addChild(new PIXI.Container())
     this.drawBackgroundColor()
     
     this.grid = this.container.addChild(new PIXI.Container())
     this.drawGrid()
+  }
+  
+  hide () {
+    this.parent.removeChild(this.container)
+  }
+  
+  showAtLevel (level) {
+    this.parent.removeChild(this.container)
+    this.parent.addChildAt(this.container, level)
   }
   
   drawBackgroundColor () {

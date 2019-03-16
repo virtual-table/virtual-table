@@ -1,0 +1,45 @@
+<%
+floor ||= local_assigns[:floor_panel]
+tabs  ||= %w[backgrounds characters]
+%>
+<nav class="panel" id="<%= dom_id(floor, :panel) %>" data-controller="map--panel">
+  <div class="panel-heading">
+    <div class="level is-mobile">
+      <h1 class="level-left">
+        <%=
+          link_to '<', "##{dom_id(floor.map, :panel)}",
+            class: 'button is-small is-link is-outlined',
+            data: {
+              action: 'click->map--panel#openPanel'
+            }
+        %>
+        <%= floor.title %>
+      </h1>
+      <p class="level-right">
+        <%=
+          link_to t('.edit'),
+            edit_map_floor_path(floor.map, floor),
+            class: 'button is-small',
+            data: { remote: true }
+        %>
+      </p>
+    </div>
+  </div>
+  <p class="panel-tabs">
+    <% tabs.each do |tab| %>
+      <%=
+        link_to t(".#{tab}"), "##{dom_id(floor, "#{tab}_tab")}",
+          data:  {
+            action: 'click->map--panel#changeTab'
+          }
+      %>
+    <% end %>
+  </p>
+  <% tabs.each do |tab| %>
+    <%= render "map/#{tab}/#{tab}_tab", floor: floor %>
+  <% end %>
+</nav>
+<%=
+  render partial:    'map/backgrounds/background_panel',
+         collection: floor.backgrounds
+%>

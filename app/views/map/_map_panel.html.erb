@@ -1,0 +1,37 @@
+<nav class="panel" id="<%= dom_id(map, :panel) %>" data-controller="map--panel" data-map--panel-active="true">
+  <div class="panel-heading">
+    <div class="level is-mobile">
+      <h1 class="level-left">
+        <%= map.title %>
+      </h1>
+      <p class="level-right">
+        <%=
+          link_to t('.edit'),
+            edit_map_path(map),
+            class: 'button is-small',
+            data: { remote: true }
+        %>
+      </p>
+    </div>
+  </div>
+  <% map.floors.each do |floor| %>
+    <%=
+      link_to floor.title, "##{dom_id(floor)}",
+        class: 'panel-block',
+        data: {
+          action: 'click->map--panel#openPanel click->map--editor#changeFloor',
+          panel:  dom_id(floor, :panel),
+          floor:  dom_id(floor)
+        }
+    %>
+  <% end %>
+  <div class="panel-block">
+    <%=
+      link_to t('.new_floor'), new_map_floor_path(map),
+        class: 'button is-small is-link is-outlined is-fullwidth',
+        data:  {
+          remote: true
+        }
+    %>
+  </div>
+</nav>

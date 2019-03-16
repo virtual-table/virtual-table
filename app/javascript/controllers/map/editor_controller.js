@@ -5,7 +5,7 @@ require('lib/polyfills/closest')
 
 export default class extends Controller {
   
-  static targets = ['panel']
+  static targets = ['floor']
   
   get canvas () {
     return this._canvas || (
@@ -20,71 +20,60 @@ export default class extends Controller {
   
   get floors () { return this.canvas.floors }
   
-  get panelLinks () {
-    return this.panelTargets.map(
-      (panel) => this.element.querySelector(`a[href="#${panel.id}"][data-action*="changePanel"]`)
+  get floorLinks () {
+    return this.floorTargets.map(
+      (floor) => this.element.querySelector(`a[href="#${floor.id}"][data-action*="changeFloor"]`)
     )
   }
   
-  get panels () {
-    return this.panelTargets
-  }
-  
-  get activePanel () {
-    return this.data.get('activePanel')
-  }
-  
-  set activePanel (value) {
-    console.log('activePanel = ', value)
-    this.data.set('activePanel', value)
-    this.showActivePanel()
-  }
-  
   get activeFloor () {
-    return this.floors.find((floor) => floor.id == this.data.get('activeFloor'))
+    return this.floors.find((floor) => floor.id == this.data.get('activeFloor')) ||
+           this.floors[0]
   }
   
   set activeFloor (value) {
     this.data.set('activeFloor', value)
-    this.activateFloor()
-    this.showActivePanel()
+    this.showActiveFloor()
   }
   
   connect () {
-    this.showActivePanel()
-    
-    _.defer(this.activateFloor.bind(this))
+    _.defer(this.showActiveFloor.bind(this))
   }
   
   // ACTIONS:
   
-  showActivePanel () {
-    this.panelLinks.forEach(
+  showActiveFloor() {
+    this.floorLinks.forEach(
       (link) => {
-        if (link['href'].endsWith(`#${this.activePanel}`)) {
-          link.classList.add('is-active')
+        if (link['href'].endsWith(`#${this.activeFloor.id}`)) {
+          link.closest('.panel-block').classList.add('is-active')
         } else {
-          link.classList.remove('is-active')
+          link.closest('.panel-block').classList.remove('is-active')
         }
       }
     )
     
-    this.panels.forEach(
-      (panel) => {
-        if (panel.id == this.activePanel) {
-          panel.style.display = 'block'
-        } else {
-          panel.style.display = 'none'
-        }
-      }
-    )
+    let index = this.floors.indexOf(this.activeFloor)
+    let higherFloors  = this.floors.slice(0, index).reverse()
+    let lowerFloors   = this.floors.slice(index + 1)
+    
+    for (let [index, floor] of lowerFloors.entries())
+      floor.showAtLevel(index)
+    
+    if (this.activeFloor) this.activeFloor.showAtLevel(lowerFloors.length)
+    
+    for (let floor of higherFloors) floor.hide()
   }
   
-  changePanel (event) {
+  changeFloor (event) {
     let link = event.currentTarget.closest('a')
     if (link) {
       event.preventDefault()
-      this.activePanel = link['href'].split('#').pop()
+      if (link.dataset.floor) {
+        this.activeFloor = link.dataset.floor
+      } else {
+        this.activeFloor = link['href'].split('#').pop()
+      }
     }
   }
   
@@ -94,10 +83,5 @@ export default class extends Controller {
   
   zoomOut () {
     if (this.canvas) this.canvas.viewport.zoomPercent(-0.25, true)
-  }
-  
-  activateFloor () {
-    this.floors.forEach((floor) => floor.active = false)
-    if (this.activeFloor) this.activeFloor.active = true
   }
 }

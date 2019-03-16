@@ -1,90 +1,14 @@
 <%
 active_floor = local_assigns[:active_floor]
-active_panel = local_assigns[:active_panel]
 %>
-<section class="section">
-  <div class="columns map-editor"
-       data-controller="map--editor"
-       data-map--editor-active-floor="<%= dom_id(active_floor) %>"
-       data-map--editor-active-panel="<%= active_panel %>">
-    <div class="column">
-      <%= render 'map/map', map: map %>
-    </div>
-    
-    <div class="column is-full-mobile is-half-tablet is-one-third-desktop is-one-quarter-widescreen is-one-fifth-fullhd">
-      <nav class="panel">
-        <div class="panel-heading">
-          <div class="level is-mobile">
-            <h1 class="level-left"><%= map.title %></h1>
-            <p class="level-right">
-              <%=
-                link_to t('.edit'),
-                  edit_map_path(map),
-                  class: 'button is-small',
-                  data: { remote: true }
-              %>
-            </p>
-          </div>
-        </div>
-        <% floors.each do |floor| %>
-          <div class="panel-block<% if floor == active_floor %> is-active<% end %>">
-            <div class="level is-mobile">
-              <h2 class="level-left">
-                <%=
-                  link_to floor.title,
-                    map_floor_path(map, floor),
-                    data: {
-                      action: 'click->map--editor#changeFloor'
-                    }
-                %>
-              </h2>
-              <p class="level-right">
-                <%=
-                  link_to t('.edit'),
-                    edit_map_floor_path(map, floor),
-                    class: 'button is-small',
-                    data: { remote: true }
-                %>
-              </p>
-            </div>
-          </div>
-        <% end %>
-        <div class="panel-block">
-          <%=
-            link_to t('.new_floor'), new_map_floor_path(map),
-              class: 'button is-small is-link is-outlined is-fullwidth',
-              data:  {
-                remote: true
-              }
-          %>
-        </div>
-        
-        <% if floor = active_floor %>
-          <p class="panel-tabs">
-            <% %w[backgrounds characters].each do |panel| %>
-              <%=
-                link_to t(".#{panel}"), "##{panel}_panel",
-                  data:  {
-                    action: 'click->map--editor#changePanel'
-                  }
-              %>
-            <% end %>
-          </p>
-          <%= render 'map/backgrounds_panel', floor: floor %>
-          <%= render 'map/characters_panel', floor: floor %>
-        <% end %>
-        
-        <div class="panel-block">
-          <div class="level is-mobile">
-            <span class="level-left">
-              <a data-action="click->map--editor#zoomOut">-</a>
-            </span>
-            <span class="level-right">
-              <a data-action="click->map--editor#zoomIn">+</a>
-            </span>
-          </div>
-        </div>
-      </nav>
-    </div>
+<div class="columns map-editor is-gapless"
+     data-controller="map--editor"
+     data-map--editor-active-floor="<%= dom_id(active_floor) %>">
+  <div class="column">
+    <%= render 'map/map', map: map %>
   </div>
-</section>
+  
+  <div class="column is-full-mobile is-half-tablet is-one-third-desktop is-one-quarter-widescreen is-one-fifth-fullhd">
+    <%= render 'map/editor_sidebar', map: map %>
+  </div>
+</div>

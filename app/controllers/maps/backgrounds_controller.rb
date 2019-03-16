@@ -6,7 +6,7 @@ module Maps
     end
     
     def new
-      @background = @map.backgrounds.new
+      @background = @map.backgrounds.new background_params
     end
     
     def create
@@ -36,7 +36,7 @@ module Maps
     private
     
     def background_params
-      params.require(:map_background).permit(%i[
+      params.fetch(:map_background, {}).permit(%i[
         image
         floor_id
         width

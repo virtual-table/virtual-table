@@ -3,10 +3,24 @@
      data-action="resize@window->map--canvas#resize"
      data-map--canvas-width="<%= map.width %>"
      data-map--canvas-height="<%= map.height %>">
+  
+  <div class="map-editor-zoom">
+    <div class="level is-mobile">
+      <span class="level-left">
+        <a data-action="click->map--editor#zoomOut" class="button">-</a>
+      </span>
+      <span class="level-right">
+        <a data-action="click->map--editor#zoomIn" class="button">+</a>
+      </span>
+    </div>
+  </div>
+  
   <div data-target="map--canvas.canvas">
   </div>
   
   <div style="display: none;">
-    <%= render @active_floor %>
+    <% map.floors.each do |floor| %>
+        <%= render floor %>
+    <% end %>
   </div>
 </div>

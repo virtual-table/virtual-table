@@ -1,4 +1,6 @@
 .map-editor {
+  margin-bottom: 0 !important;
+  
   &.columns {
     flex-direction: row-reverse;
   }
@@ -9,5 +11,45 @@
   
   .map-editor-canvas {
     background: #c0c0c0;
+  }
+  
+  .panel-heading {
+    border-radius: 0;
+  }
+}
+
+.map-editor-canvas {
+  position: relative;
+  
+  .map-editor-zoom {
+    width: 60px;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+}
+
+.map-editor-floor {
+  .level {
+    margin-bottom: 0;
+  }
+  .map-editor-floor-contents {
+    display: none;
+  }
+  
+  &.is-active {
+    > .level {
+      margin-bottom: 1rem;
+    }
+    
+    .map-editor-floor-contents {
+      display: block;
+      margin: -8px -13px;
+      margin-bottom: -9px;
+    }
+  }
+  
+  .panel-tabs {
+    border-bottom: 0;
   }
 }

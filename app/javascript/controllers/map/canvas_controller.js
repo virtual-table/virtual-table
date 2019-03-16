@@ -15,11 +15,12 @@ export default class extends Controller {
   
   get availableHeight () {
     let position = this.canvasTarget.getBoundingClientRect()
-    return window.innerHeight - position.top - 48
+    return window.innerHeight - position.top
   }
   
   get availableWidth () {
-    return this.canvasTarget.clientWidth
+    let position = this.canvasTarget.getBoundingClientRect()
+    return window.innerWidth - position.left
   }
   
   get floors () {
@@ -74,7 +75,11 @@ export default class extends Controller {
   }
   
   resize () {
+    this.canvasTarget.style.width  = 0
+    this.canvasTarget.style.height = 0
+    
     this.canvasTarget.style.height = `${this.availableHeight}px`
+    this.canvasTarget.style.width  = `${this.availableWidth}px`
     if (this.pixi) {
       this.pixi.renderer.resize(this.availableWidth, this.availableHeight);
     }
