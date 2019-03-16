@@ -8,6 +8,9 @@ class Map < ApplicationRecord
   has_many :backgrounds,
     through: :floors
   
+  has_many :characters,
+    through: :floors
+  
   def width
     floors.map(&:width).max
   end

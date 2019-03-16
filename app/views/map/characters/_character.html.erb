@@ -1,0 +1,23 @@
+<%=
+  content_tag(
+    :li,
+    id:    dom_id(character),
+    class: 'map-character',
+    data: {
+      controller:                         'map--character',
+      map__character_url:                 map_character_path(character.map, character),
+      map__character_name:                character.name,
+      map__character_width:               character.width,
+      map__character_height:              character.height,
+      map__character_x:                   character.x,
+      map__character_y:                   character.y,
+      map__character_sprite:              url_for(character.image),
+      map__character_light_radius:        character.light_radius,
+      map__character_dim_light_radius:    character.dim_light_radius,
+      map__character_light_ange:          character.light_angle,
+      map__character_line_of_sight_angle: character.line_of_sight_angle
+    }
+  ) do
+%>
+  <%= image_tag url_for(character.image), width: character.width, height: character.height if character.image %>
+<% end %>

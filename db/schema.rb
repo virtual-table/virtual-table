@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_09_234057) do
+ActiveRecord::Schema.define(version: 2019_03_16_174553) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -82,6 +82,24 @@ ActiveRecord::Schema.define(version: 2019_03_09_234057) do
     t.index ["floor_id"], name: "index_map_backgrounds_on_floor_id"
   end
 
+  create_table "map_characters", force: :cascade do |t|
+    t.string "name"
+    t.bigint "floor_id"
+    t.boolean "visible", default: true
+    t.integer "width"
+    t.integer "height"
+    t.integer "x", default: 0
+    t.integer "y", default: 0
+    t.integer "z", default: 0
+    t.integer "light_radius", default: 20
+    t.integer "dim_light_radius", default: 40
+    t.integer "light_angle", default: 360
+    t.integer "line_of_sight_angle", default: 0
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["floor_id"], name: "index_map_characters_on_floor_id"
+  end
+
   create_table "map_floors", force: :cascade do |t|
     t.bigint "map_id"
     t.string "title"
@@ -127,6 +145,7 @@ ActiveRecord::Schema.define(version: 2019_03_09_234057) do
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "games", "users", column: "author_id"
   add_foreign_key "map_backgrounds", "map_floors", column: "floor_id"
+  add_foreign_key "map_characters", "map_floors", column: "floor_id"
   add_foreign_key "map_floors", "maps"
   add_foreign_key "maps", "games"
   add_foreign_key "players", "games"

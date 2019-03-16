@@ -9,6 +9,8 @@ export default class extends Controller {
   
   get parent () { return this.canvas.viewport }
   
+  get pixi () { return this.canvas.pixi }
+  
   get canvas () {
     return this._canvas || (
       this._canvas =
@@ -44,11 +46,18 @@ export default class extends Controller {
     this.active     = false
     this.container  = this.parent.addChild(new PIXI.Container())
     
-    this.background = this.container.addChild(new PIXI.Container())
+    this.backgroundLayer = this.container.addChild(new PIXI.Container())
     this.drawBackgroundColor()
     
-    this.grid = this.container.addChild(new PIXI.Container())
+    this.characterLayer = this.container.addChild(new PIXI.Container())
+    
+    this.gridLayer = this.container.addChild(new PIXI.Container())
     this.drawGrid()
+  }
+  
+  disconnect () {
+    this.parent.removeChild(this.container)
+    this.pixi.ticker.remove(this.updateFieldOfSight)
   }
   
   hide () {
@@ -61,7 +70,7 @@ export default class extends Controller {
   }
   
   drawBackgroundColor () {
-    let backgroundColor    = this.background.addChild(new PIXI.Sprite(PIXI.Texture.WHITE))
+    let backgroundColor    = this.backgroundLayer.addChild(new PIXI.Sprite(PIXI.Texture.WHITE))
     backgroundColor.tint   = this.backgroundColor
     backgroundColor.width  = this.width
     backgroundColor.height = this.height
@@ -69,7 +78,7 @@ export default class extends Controller {
   }
   
   drawGrid () {
-    let graphics = this.grid.addChild(new PIXI.Graphics())
+    let graphics = this.gridLayer.addChild(new PIXI.Graphics())
     graphics.lineStyle(this.gridWidth, this.gridColor, this.gridOpacity)
     
     for (let y = 0; y < this.rows; y++) {

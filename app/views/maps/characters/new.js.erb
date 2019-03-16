@@ -1,0 +1,11 @@
+(function(modal) {
+  modal.show('<%=
+    escape_javascript(
+      render(
+        'form',
+        map:       @map,
+        character: @character
+      )
+    )
+  %>')
+})(window.VTT && window.VTT.modal)

@@ -4,6 +4,8 @@ class Map::Floor < ApplicationRecord
   
   has_many :backgrounds
   
+  has_many :characters
+  
   def width
     columns * grid_size
   end

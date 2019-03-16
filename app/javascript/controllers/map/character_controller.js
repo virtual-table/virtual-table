@@ -65,10 +65,10 @@ export default class extends Draggable(Controller) {
   }
   
   draw() {
-    this.floor.backgroundLayer.addChild(this.sprite)
+    this.floor.characterLayer.addChild(this.sprite)
   }
   
   undraw () {
-    this.floor.backgroundLayer.removeChild(this.sprite)
+    this.floor.characterLayer.removeChild(this.sprite)
   }
 }

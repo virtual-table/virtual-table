@@ -14,8 +14,9 @@ Rails.application.routes.draw do
   
   resources :maps, except: %i[new create] do
     scope module: 'maps' do
-      resources :floors
       resources :backgrounds
+      resources :characters
+      resources :floors
     end
   end
 end
