@@ -7,7 +7,8 @@ export default class extends Controller {
   
   get id () { return this.element.id }
   
-  get parent () { return this.canvas.viewport }
+  get parent ()   { return this.canvas.viewport }
+  get viewport () { return this.parent }
   
   get pixi () { return this.canvas.pixi }
   
@@ -30,6 +31,14 @@ export default class extends Controller {
     )
   }
   
+  get characters () {
+    return [
+      ...this.element.querySelectorAll('[data-controller*="map--character"]')
+    ].map(
+      (element) => this.application.getControllerForElementAndIdentifier(element, 'map--character')
+    )
+  }
+  
   get backgroundColor () { return parseInt((this.data.get('backgroundColor') || '#ffffff').replace('#', '0x')) }
   
   get gridSize    () { return parseInt(this.data.get('gridSize')) }
@@ -46,13 +55,15 @@ export default class extends Controller {
     this.active     = false
     this.container  = this.parent.addChild(new PIXI.Container())
     
-    this.backgroundLayer = this.container.addChild(new PIXI.Container())
-    this.drawBackgroundColor()
+    this.addBackgroundLayer()
+    this.addCharacterLayer()
+    this.addGridLayer()
     
-    this.characterLayer = this.container.addChild(new PIXI.Container())
-    
-    this.gridLayer = this.container.addChild(new PIXI.Container())
-    this.drawGrid()
+    this.container.addChild(
+      this.backgroundLayer,
+      this.gridLayer,
+      this.characterLayer
+    )
   }
   
   disconnect () {
@@ -69,15 +80,21 @@ export default class extends Controller {
     this.parent.addChildAt(this.container, level)
   }
   
-  drawBackgroundColor () {
-    let backgroundColor    = this.backgroundLayer.addChild(new PIXI.Sprite(PIXI.Texture.WHITE))
-    backgroundColor.tint   = this.backgroundColor
-    backgroundColor.width  = this.width
-    backgroundColor.height = this.height
-    backgroundColor.position.set(0, 0)
+  addBackgroundLayer () {
+    this.backgroundLayer = new PIXI.Container()
+    this.background = this.backgroundLayer.addChild(new PIXI.Graphics())
+    this.background.beginFill(this.backgroundColor)
+                   .drawRect(0, 0, this.width, this.height)
+                   .endFill()
   }
   
-  drawGrid () {
+  addCharacterLayer () {
+    this.characterLayer = new PIXI.Container()
+  }
+  
+  addGridLayer () {
+    this.gridLayer = new PIXI.Container()
+    
     let graphics = this.gridLayer.addChild(new PIXI.Graphics())
     graphics.lineStyle(this.gridWidth, this.gridColor, this.gridOpacity)
     
