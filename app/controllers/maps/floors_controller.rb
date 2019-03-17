@@ -37,6 +37,7 @@ module Maps
     def floor_params
       params.require(:map_floor).permit(%i[
         title
+        level
         columns
         rows
         scale

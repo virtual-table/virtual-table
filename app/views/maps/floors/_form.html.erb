@@ -21,6 +21,12 @@ end
         <%= f.errors     :title %>
       <% end %>
       
+      <%= f.field :level do %>
+        <%= f.label        :level %>
+        <%= f.number_field :level %>
+        <%= f.errors       :level %>
+      <% end %>
+      
       <div class="columns">
         <div class="column">
           <%= f.field :columns do %>
