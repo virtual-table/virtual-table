@@ -80,6 +80,7 @@ export default class extends Controller {
   }
   
   showAtLevel (level) {
+    this.pixi.renderer.backgroundColor = this.backgroundColor
     this.parent.removeChild(this.container)
     this.parent.addChildAt(this.container, level)
   }
@@ -97,12 +98,6 @@ export default class extends Controller {
   
   addBackgroundLayer () {
     this.backgroundLayer = new PIXI.Container()
-    this.background = this.backgroundLayer
-                          .addChild(new PIXI.Graphics())
-                          .beginFill(this.backgroundColor)
-                          .drawRect(0, 0, this.width, this.height)
-                          .endFill()
-    
     this.contents.addChild(this.backgroundLayer)
   }
   
@@ -171,5 +166,7 @@ export default class extends Controller {
         4 * 50
       )
     }
+    
+    vision.endFill()
   }
 }
