@@ -1,7 +1,7 @@
-import { Controller } from 'stimulus'
+import ApplicationController from 'controllers/application_controller'
 import PIXI from 'lib/pixi'
 
-export default class extends Controller {
+export default class extends ApplicationController {
   
   static targets = ['canvas']
   
@@ -24,9 +24,7 @@ export default class extends Controller {
   }
   
   get floors () {
-    return [
-      ...this.element.querySelectorAll('[data-controller*="map--floor"]')
-    ].map((element) => this.application.getControllerForElementAndIdentifier(element, 'map--floor'))
+    return this.findChildControllers('map--floor')
   }
   
   get backgrounds () {

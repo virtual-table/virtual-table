@@ -1,10 +1,10 @@
-import { Controller } from 'stimulus'
+import ApplicationController from 'controllers/application_controller'
 import _ from 'underscore'
 import PIXI from 'lib/pixi'
 
 require('lib/polyfills/closest')
 
-export default class extends Controller {
+export default class extends ApplicationController {
   
   get id () { return this.element.id }
   
@@ -14,34 +14,15 @@ export default class extends Controller {
   get pixi () { return this.canvas.pixi }
   
   get canvas () {
-    return this._canvas || (
-      this._canvas =
-        this.application
-            .getControllerForElementAndIdentifier(
-              this.element.closest('[data-controller*="map--canvas"]'),
-              'map--canvas'
-            )
-    )
+    return this._canvas || (this._canvas = this.findParentController('map--canvas'))
   }
   
   get backgrounds () { 
-    return _.compact(
-      [
-        ...this.element.querySelectorAll('[data-controller*="map--background"]')
-      ].map(
-        (element) => this.application.getControllerForElementAndIdentifier(element, 'map--background')
-      )
-    )
+    return this.findChildControllers('map--background')
   }
   
   get characters () {
-    return _.compact(
-      [
-        ...this.element.querySelectorAll('[data-controller*="map--character"]')
-      ].map(
-        (element) => this.application.getControllerForElementAndIdentifier(element, 'map--character')
-      )
-    )
+    return this.findChildControllers('map--character')
   }
   
   get backgroundColor () { return parseInt((this.data.get('backgroundColor') || '#ffffff').replace('#', '0x')) }
@@ -162,12 +143,7 @@ export default class extends Controller {
                        .beginFill(0xffffff, 0.5)
       
       for (let character of this.characters) {
-        vision.drawCircle(
-          character.x + (character.dragging ? 0 : character.width / 2),
-          character.y + (character.dragging ? 0 : character.height / 2),
-          4 * 50,
-          4 * 50
-        )
+        character.drawVision(vision)
       }
       
       vision.endFill()

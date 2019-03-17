@@ -1,8 +1,8 @@
-import { Controller } from 'stimulus'
+import ObjectController from 'controllers/map/object_controller'
 import PIXI from 'lib/pixi'
 import Draggable from 'lib/map/draggable'
 
-export default class extends Draggable(Controller) {
+export default class extends Draggable(ObjectController) {
   
   get floor () {
     return this._floor || (
@@ -18,32 +18,6 @@ export default class extends Draggable(Controller) {
   get canvas ()   { return this.floor.canvas }
   get parent ()   { return this.canvas.viewport }
   get viewport () { return this.parent }
-  
-  get x ()  {
-    return parseInt(this.data.get('x'))
-  }
-  set x (v) {
-    this.data.set('x', v)
-    if (this.sprite) this.sprite.x = parseInt(v)
-    if (this.floor)  this.floor.updateFieldOfVision()
-  }
-  
-  get y () {
-    return parseInt(this.data.get('y'))
-  }
-  set y (v) {
-    this.data.set('y', v)
-    if (this.sprite) this.sprite.y = parseInt(v)
-    if (this.floor)  this.floor.updateFieldOfVision()
-  }
-  
-  get width () {
-    return parseInt(this.data.get('width'))
-  }
-  
-  get height () {
-    return parseInt(this.data.get('height'))
-  }
   
   get spriteURL () {
     return this.data.get('sprite')
@@ -81,5 +55,25 @@ export default class extends Draggable(Controller) {
   
   undraw () {
     this.floor.characterLayer.removeChild(this.sprite)
+  }
+  
+  locationUpdated () {
+    if (this.sprite) {
+      this.sprite.x = this.x
+      this.sprite.y = this.y
+    }
+    
+    if (this.floor) {
+      this.floor.updateFieldOfVision()
+    }
+  }
+  
+  drawVision (graphics) {
+    graphics.drawCircle(
+      this.x + (this.dragging ? 0 : this.width / 2),
+      this.y + (this.dragging ? 0 : this.height / 2),
+      4 * 50,
+      4 * 50
+    )
   }
 }

@@ -1,24 +1,17 @@
 import _ from 'underscore'
-import { Controller } from 'stimulus'
+import ApplicationController from 'controllers/application_controller'
 
 require('lib/polyfills/closest')
 
-export default class extends Controller {
+export default class extends ApplicationController {
   
   static targets = ['floor']
   
   get canvas () {
-    return this._canvas || (
-      this._canvas =
-        this.application
-            .getControllerForElementAndIdentifier(
-              this.element.querySelector('[data-controller*="map--canvas"]'),
-              'map--canvas'
-            )
-    )
+    return this._canvas || (this._canvas = this.findChildController('map--canvas'))
   }
   
-  get floors () { return this.canvas.floors }
+  get floors () { return (this.canvas && this.canvas.floors) || [] }
   
   get floorLinks () {
     return this.floorTargets.map(

@@ -1,8 +1,8 @@
-import { Controller } from 'stimulus'
+import ObjectController from 'controllers/map/object_controller'
 import PIXI from 'lib/pixi'
 import Draggable from 'lib/map/draggable'
 
-export default class extends Draggable(Controller) {
+export default class extends Draggable(ObjectController) {
   
   get floor () {
     return this._floor || (
@@ -13,30 +13,6 @@ export default class extends Draggable(Controller) {
               'map--floor'
             )
     )
-  }
-  
-  get x ()  {
-    return parseInt(this.data.get('x'))
-  }
-  set x (v) {
-    this.data.set('x', v)
-    if (this.sprite) this.sprite.x = parseInt(v)
-  }
-  
-  get y () {
-    return parseInt(this.data.get('y'))
-  }
-  set y (v) {
-    this.data.set('y', v)
-    if (this.sprite) this.sprite.y = parseInt(v)
-  }
-  
-  get width () {
-    return parseInt(this.data.get('width'))
-  }
-  
-  get height () {
-    return parseInt(this.data.get('height'))
   }
   
   get spriteURL () {
@@ -62,6 +38,13 @@ export default class extends Draggable(Controller) {
   
   disconnect () {
     this.undraw()
+  }
+  
+  locationUpdated () {
+    if (this.sprite) {
+      this.sprite.x = this.x
+      this.sprite.y = this.y
+    }
   }
   
   draw() {
