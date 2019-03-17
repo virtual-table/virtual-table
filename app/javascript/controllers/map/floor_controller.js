@@ -86,14 +86,16 @@ export default class extends Controller {
   }
   
   addVisionMask () {
-    this.vision = new PIXI.Graphics()
+    let vision = new PIXI.Graphics()
     
-    this.container.addChild(this.vision)
-    this.contents.mask = this.vision
+    this.container.addChild(vision)
+    this.contents.mask = vision
     
-    this.vision.clear()
-               .beginFill(0xffffff, 1)
-               .drawRect(0, 0, this.width, this.height)
+    vision.clear()
+          .beginFill(0xffffff, 1)
+          .drawRect(0, 0, this.width, this.height)
+    
+    this.vision = vision
   }
   
   addBackgroundLayer () {
@@ -131,7 +133,7 @@ export default class extends Controller {
       }
     }
     
-    this.contents.addChild(this.gridLayer)
+    this.container.addChild(this.gridLayer)
   }
   
   generateGridTile(x, y) {
@@ -155,18 +157,20 @@ export default class extends Controller {
   }
   
   updateFieldOfVision () {
-    let vision = this.vision.clear()
-                     .beginFill(0xffffff, 1)
-    
-    for (let character of this.characters) {
-      vision.drawCircle(
-        character.x + (character.dragging ? 0 : character.width / 2),
-        character.y + (character.dragging ? 0 : character.height / 2),
-        4 * 50,
-        4 * 50
-      )
+    if (this.vision) {
+      let vision = this.vision.clear()
+                       .beginFill(0xffffff, 0.5)
+      
+      for (let character of this.characters) {
+        vision.drawCircle(
+          character.x + (character.dragging ? 0 : character.width / 2),
+          character.y + (character.dragging ? 0 : character.height / 2),
+          4 * 50,
+          4 * 50
+        )
+      }
+      
+      vision.endFill()
     }
-    
-    vision.endFill()
   }
 }
