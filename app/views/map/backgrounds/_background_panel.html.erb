@@ -26,6 +26,12 @@ end
     %>
   </div>
   <%= bulma_form_for background, url: form_url, html: { class: 'panel-block' } do |f| %>
+    <%= f.field :image do %>
+      <%= f.label      :image %>
+      <%= f.file_field :image %>
+      <%= f.errors     :image %>
+    <% end %>
+    
     <div class="level">
       <div class="level-item">
         <%= f.field :width do %>
