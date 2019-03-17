@@ -74,6 +74,18 @@ export default class extends Controller {
         })
   }
   
+  pauseViewport () {
+    for (let plugin of ['drag', 'pinch']) {
+      this.viewport.pausePlugin(plugin)
+    }
+  }
+  
+  resumeViewport () {
+    for (let plugin of ['drag', 'pinch']) {
+      this.viewport.resumePlugin(plugin)
+    }
+  }
+  
   resize () {
     this.canvasTarget.style.width  = 0
     this.canvasTarget.style.height = 0

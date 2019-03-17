@@ -9,15 +9,20 @@ export default (superclass) => class extends superclass {
   }
   
   enableDragging () {
+    this.draggable.interactive = true
     this.draggingEnabled = true
   }
   
   disableDragging () {
+    this.draggable.interactive = false
     this.draggingEnabled = false
   }
   
   onDragStart (event) {
+    console.log('onDragStart')
     if (this.draggingEnabled) {
+      if (this.canvas) this.canvas.pauseViewport()
+      
       this.dragging = true
       this.draggingData = event.data
       
@@ -32,12 +37,14 @@ export default (superclass) => class extends superclass {
   
   onDragEnd (event) {
     if (this.draggingEnabled) {
+      if (this.canvas) this.canvas.resumeViewport()
+      
       this.draggable.alpha = 1
       this.draggable.anchor.set(0)
       
       let newPosition = this.draggingData.getLocalPosition(this.draggable.parent)
-      this.x = newPosition.x
-      this.y = newPosition.y
+      this.x = newPosition.x - this.width / 2
+      this.y = newPosition.y - this.height / 2
       
       this.dragging = false
       this.draggingData = null
@@ -45,7 +52,7 @@ export default (superclass) => class extends superclass {
   }
   
   onDragMove (event) {
-    if (this.draggingEnabled) {
+    if (this.draggingEnabled && this.dragging) {
       let newPosition = this.draggingData.getLocalPosition(this.draggable.parent)
       this.x = newPosition.x
       this.y = newPosition.y

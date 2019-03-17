@@ -15,6 +15,10 @@ export default class extends Draggable(Controller) {
     )
   }
   
+  get canvas ()   { return this.floor.canvas }
+  get parent ()   { return this.canvas.viewport }
+  get viewport () { return this.parent }
+  
   get x ()  {
     return parseInt(this.data.get('x'))
   }
@@ -58,6 +62,10 @@ export default class extends Draggable(Controller) {
       
       this.draw()
     }
+    
+    
+    this.setupDraggable(this.sprite)
+    this.enableDragging()
   }
   
   disconnect () {
