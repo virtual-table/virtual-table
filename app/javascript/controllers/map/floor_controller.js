@@ -37,6 +37,22 @@ export default class extends ApplicationController {
   get width      () { return this.columns * this.gridSize       }
   get height     () { return this.rows * this.gridSize          }
   
+  get polygon   () {
+    return new PIXI.Polygon([
+      [0, 0], // top left
+      [0, this.height], // bottom left
+      [this.width, this.height], // bottom right
+      [this.width, 0], // top right
+      [0, 0] // top left
+    ])
+  }
+  
+  get obstacles () {
+    return JSON.parse(this.data.get('obstacles')).map(
+      (path) => new PIXI.Polygon(path)
+    )
+  }
+  
   connect () {
     this.active     = false
     
@@ -45,6 +61,7 @@ export default class extends ApplicationController {
     
     this.addBackgroundLayer()
     this.addCharacterLayer()
+    this.addObstacleLayer()
     this.addGridLayer()
     
     this.addVisionMask()
@@ -82,6 +99,22 @@ export default class extends ApplicationController {
   addBackgroundLayer () {
     this.backgroundLayer = new PIXI.Container()
     this.contents.addChild(this.backgroundLayer)
+  }
+  
+  addObstacleLayer () {
+    this.obstacleLayer = new PIXI.Container()
+    this.container.addChild(this.obstacleLayer)
+    
+    let graphics = new PIXI.Graphics()
+    graphics.lineStyle(2, 0xFF0000, 1)
+    
+    graphics.drawPolygon(_.flatten(this.polygon.points))
+    
+    for (let polygon of this.obstacles) {
+      graphics.drawPolygon(_.flatten(polygon.points))
+    }
+    
+    this.obstacleLayer.addChild(graphics)
   }
   
   addCharacterLayer () {
