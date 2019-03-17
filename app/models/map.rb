@@ -3,6 +3,7 @@ class Map < ApplicationRecord
   belongs_to :game
   
   has_many :floors,
+    -> { order(level: :asc) },
     class_name: 'Map::Floor'
   
   has_many :backgrounds,
