@@ -43,3 +43,7 @@ tabs  ||= %w[backgrounds characters]
   render partial:    'map/backgrounds/background_panel',
          collection: floor.backgrounds
 %>
+<%=
+  render partial:    'map/characters/character_panel',
+         collection: floor.characters
+%>
