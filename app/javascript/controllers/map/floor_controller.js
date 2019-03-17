@@ -1,4 +1,5 @@
 import { Controller } from 'stimulus'
+import _ from 'underscore'
 import PIXI from 'lib/pixi'
 
 require('lib/polyfills/closest')
@@ -24,18 +25,22 @@ export default class extends Controller {
   }
   
   get backgrounds () { 
-    return [
-      ...this.element.querySelectorAll('[data-controller*="map--background"]')
-    ].map(
-      (element) => this.application.getControllerForElementAndIdentifier(element, 'map--background')
+    return _.compact(
+      [
+        ...this.element.querySelectorAll('[data-controller*="map--background"]')
+      ].map(
+        (element) => this.application.getControllerForElementAndIdentifier(element, 'map--background')
+      )
     )
   }
   
   get characters () {
-    return [
-      ...this.element.querySelectorAll('[data-controller*="map--character"]')
-    ].map(
-      (element) => this.application.getControllerForElementAndIdentifier(element, 'map--character')
+    return _.compact(
+      [
+        ...this.element.querySelectorAll('[data-controller*="map--character"]')
+      ].map(
+        (element) => this.application.getControllerForElementAndIdentifier(element, 'map--character')
+      )
     )
   }
   
@@ -53,17 +58,16 @@ export default class extends Controller {
   
   connect () {
     this.active     = false
-    this.container  = this.parent.addChild(new PIXI.Container())
+    
+    this.container = this.parent.addChild(new PIXI.Container())
+    this.contents  = this.container.addChild(new PIXI.Container())
     
     this.addBackgroundLayer()
     this.addCharacterLayer()
     this.addGridLayer()
     
-    this.container.addChild(
-      this.backgroundLayer,
-      this.gridLayer,
-      this.characterLayer
-    )
+    this.addVisionMask()
+    this.updateFieldOfVision()
   }
   
   disconnect () {
@@ -80,16 +84,31 @@ export default class extends Controller {
     this.parent.addChildAt(this.container, level)
   }
   
+  addVisionMask () {
+    this.vision = new PIXI.Graphics()
+    
+    this.container.addChild(this.vision)
+    this.contents.mask = this.vision
+    
+    this.vision.clear()
+               .beginFill(0xffffff, 1)
+               .drawRect(0, 0, this.width, this.height)
+  }
+  
   addBackgroundLayer () {
     this.backgroundLayer = new PIXI.Container()
-    this.background = this.backgroundLayer.addChild(new PIXI.Graphics())
-    this.background.beginFill(this.backgroundColor)
-                   .drawRect(0, 0, this.width, this.height)
-                   .endFill()
+    this.background = this.backgroundLayer
+                          .addChild(new PIXI.Graphics())
+                          .beginFill(this.backgroundColor)
+                          .drawRect(0, 0, this.width, this.height)
+                          .endFill()
+    
+    this.contents.addChild(this.backgroundLayer)
   }
   
   addCharacterLayer () {
     this.characterLayer = new PIXI.Container()
+    this.contents.addChild(this.characterLayer)
   }
   
   addGridLayer () {
@@ -116,6 +135,8 @@ export default class extends Controller {
         }
       }
     }
+    
+    this.contents.addChild(this.gridLayer)
   }
   
   generateGridTile(x, y) {
@@ -136,5 +157,19 @@ export default class extends Controller {
     ]
     
     return path
+  }
+  
+  updateFieldOfVision () {
+    let vision = this.vision.clear()
+                     .beginFill(0xffffff, 1)
+    
+    for (let character of this.characters) {
+      vision.drawCircle(
+        character.x + (character.dragging ? 0 : character.width / 2),
+        character.y + (character.dragging ? 0 : character.height / 2),
+        4 * 50,
+        4 * 50
+      )
+    }
   }
 }

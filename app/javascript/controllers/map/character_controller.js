@@ -25,6 +25,7 @@ export default class extends Draggable(Controller) {
   set x (v) {
     this.data.set('x', v)
     if (this.sprite) this.sprite.x = parseInt(v)
+    if (this.floor)  this.floor.updateFieldOfVision()
   }
   
   get y () {
@@ -33,6 +34,7 @@ export default class extends Draggable(Controller) {
   set y (v) {
     this.data.set('y', v)
     if (this.sprite) this.sprite.y = parseInt(v)
+    if (this.floor)  this.floor.updateFieldOfVision()
   }
   
   get width () {
@@ -63,9 +65,10 @@ export default class extends Draggable(Controller) {
       this.draw()
     }
     
-    
     this.setupDraggable(this.sprite)
     this.enableDragging()
+    
+    this.floor.updateFieldOfVision()
   }
   
   disconnect () {

@@ -39,6 +39,7 @@ export default (superclass) => class extends superclass {
     if (this.draggingEnabled) {
       if (this.canvas) this.canvas.resumeViewport()
       
+      this.dragging = false
       this.draggable.alpha = 1
       this.draggable.anchor.set(0)
       
@@ -46,7 +47,6 @@ export default (superclass) => class extends superclass {
       this.x = newPosition.x - this.width / 2
       this.y = newPosition.y - this.height / 2
       
-      this.dragging = false
       this.draggingData = null
     }
   }
