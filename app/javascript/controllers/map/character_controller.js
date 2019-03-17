@@ -1,6 +1,8 @@
 import ObjectController from 'controllers/map/object_controller'
 import PIXI from 'lib/pixi'
 import Draggable from 'lib/map/draggable'
+import Caster from 'lib/map/caster'
+import _ from 'underscore'
 
 export default class extends Draggable(ObjectController) {
   
@@ -17,11 +19,16 @@ export default class extends Draggable(ObjectController) {
   connect () {
     if (!this.floor) return
     
+    this.container = new PIXI.Container()
+    
     if (this.spriteURL.length) {
-      this.drawSprite()
+      this.addSprite()
       this.setupDraggable(this.sprite)
       this.enableDragging()
     }
+    
+    this.addCaster()
+    this.addLight()
     
     this.draw()
     
@@ -32,23 +39,44 @@ export default class extends Draggable(ObjectController) {
     this.undraw()
   }
   
-  drawSprite () {
-    this.sprite = PIXI.Sprite.from(this.spriteURL)
+  addCaster () {
+    this.caster = new Caster(
+      [this.x, this.y],
+      [this.floor.polygon, ...this.floor.obstacles]
+    )
+  }
+  
+  addSprite () {
+    let sprite = PIXI.Sprite.from(this.spriteURL)
     
-    this.sprite.anchor.set(0)
+    sprite.anchor.set(0)
     
-    this.sprite.width  = this.width
-    this.sprite.height = this.height
-    this.sprite.x      = this.x
-    this.sprite.y      = this.y
+    sprite.width  = this.width
+    sprite.height = this.height
+    sprite.x      = this.x
+    sprite.y      = this.y
+    
+    this.container.addChild(sprite)
+    this.sprite = sprite
+  }
+  
+  addLight () {
+    let light = new PIXI.Graphics()
+    
+    light.beginFill(0xFFFFAA, 0.2)
+    this.drawVision(light)
+    light.endFill()
+    
+    this.container.addChild(light)
+    this.light = light
   }
   
   draw() {
-    this.floor.characterLayer.addChild(this.sprite)
+    this.floor.characterLayer.addChild(this.container)
   }
   
   undraw () {
-    this.floor.characterLayer.removeChild(this.sprite)
+    this.floor.characterLayer.removeChild(this.container)
   }
   
   locationUpdated () {
@@ -57,17 +85,26 @@ export default class extends Draggable(ObjectController) {
       this.sprite.y = this.y
     }
     
+    if (this.caster) {
+      this.caster.origin = [this.x, this.y]
+    }
+    
+    if (this.light) {
+      this.light.clear().beginFill(0xFFFFAA, 0.2)
+      this.drawVision(this.light)
+      this.light.endFill()
+    }
+    
     if (this.floor) {
       this.floor.updateFieldOfVision()
     }
   }
   
   drawVision (graphics) {
-    graphics.drawCircle(
-      this.x + (this.dragging ? 0 : this.width / 2),
-      this.y + (this.dragging ? 0 : this.height / 2),
-      4 * 50,
-      4 * 50
-    )
+    for (let polygon of this.caster.cast()) {
+      var points = polygon.points
+      graphics.moveTo(points[points.length-1].x, points[points.length-1].y)
+      for (var i=0; i<points.length; i++) graphics.lineTo(points[i].x, points[i].y)
+    }
   }
 }

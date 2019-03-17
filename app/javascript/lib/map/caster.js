@@ -1,0 +1,101 @@
+import _ from 'underscore'
+import PIXI from 'lib/pixi'
+import Vector from 'lib/map/vector'
+
+export default class {
+  
+  get origin ()  { return this._origin }
+  set origin (v) { this._origin = new Vector(v) }
+  
+  get obstacles ()  { return this._obstacles }
+  set obstacles (v) {
+    this._obstacles = v
+    this.preprocess()
+  }
+  
+  constructor (origin, obstacles) {
+    this.origin    = origin
+    this.obstacles = obstacles
+    
+    this.preprocess()
+  }
+  
+  preprocess () {
+    this.vertices = _.flatten(
+      this.obstacles.map((poly) => poly.points.map((point) => new Vector(point)))
+    )
+  }
+  
+  cast () {
+    let angles = _.uniq(
+      this.vertices.map((vector) => vector.sub(this.origin).dir)
+    )
+    
+    angles.forEach((angle) => {
+      angles.push(angle - 0.00001);
+      angles.push(angle + 0.00001);
+    })
+    
+    let intersections = []
+    let visiblePolys  = []
+    
+    for (let dir of angles) {
+      let min = null
+      let minPoly = null
+      
+      for (let polygon of this.obstacles) {
+        for (var i = 0, j = polygon.points.length; i<j; i++) {
+          var pointA = new Vector(polygon.points[i])
+          var pointB = new Vector(polygon.points[(i+1)%j])
+          var result = this.rayLineIntersect(
+            this.origin, Vector.fromDir(dir), pointA, pointB
+          )
+          
+          if (result !== null) {
+            if (min === null || result.param < min.param) {
+              min = result
+              minPoly = polygon
+            }
+          }
+        }
+      }
+      
+      if (min !== null) {
+        intersections.push(new Vector(min.x, min.y))
+        
+        if (!visiblePolys.includes(minPoly)) visiblePolys.push(minPoly)
+      }
+    }
+    
+    // sort intersections by angle
+    intersections.sort((a,b) => a.sub(this.origin).dir - b.sub(this.origin).dir)
+    
+    // construct polygon representing vision
+    visiblePolys.push(new PIXI.Polygon(intersections))
+    
+    return visiblePolys
+  }
+  
+  rayLineIntersect (rayPoint, rayDir, pointA, pointB) {
+    var segDx = pointB.sub(pointA);
+    if (rayDir.dir === segDx.dir) return null;
+    
+    //do math
+    var T2 = (rayDir.x * (pointA.y - rayPoint.y) + rayDir.y * (rayPoint.x - pointA.x));
+    T2 /= (segDx.x*rayDir.y - segDx.y*rayDir.x);
+    var T1 = (pointA.x + segDx.x * T2 - rayPoint.x) / rayDir.x;
+    
+    //determine intersection
+    if (T1<0)
+      return null;
+    if (T2<0 || T2>1)
+      return null;
+    
+    // Return the POINT OF INTERSECTION
+    return {
+      x: rayPoint.x+rayDir.x*T1,
+      y: rayPoint.y+rayDir.y*T1,
+      param: T1
+    };
+  }
+}
