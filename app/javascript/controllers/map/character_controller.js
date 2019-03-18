@@ -41,7 +41,7 @@ export default class extends Draggable(ObjectController) {
   
   addCaster () {
     this.caster = new Caster(
-      [this.x, this.y],
+      this.center,
       [this.floor.polygon, ...this.floor.obstacles]
     )
   }
@@ -86,7 +86,7 @@ export default class extends Draggable(ObjectController) {
     }
     
     if (this.caster) {
-      this.caster.origin = [this.x, this.y]
+      this.caster.origin = this.center
     }
     
     if (this.light) {

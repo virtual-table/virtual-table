@@ -13,6 +13,13 @@ export default class extends ApplicationController {
     this.locationUpdated()
   }
   
+  get center () {
+    return [
+      this.x + this.width  / 2,
+      this.y + this.height / 2
+    ]
+  }
+  
   get width ()  { return parseInt(this.data.get('width')) }
   set width (v) {
     this.data.set('width', v)
