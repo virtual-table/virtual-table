@@ -12,6 +12,15 @@ export default class extends Draggable(ObjectController) {
   get parent ()   { return this.canvas.viewport }
   get viewport () { return this.parent }
   
+  get caster () {
+    return this._caster || (
+      this._caster = new Caster(
+        this.center,
+        [this.floor.polygon, ...this.floor.obstacles]
+      )
+    )
+  }
+  
   get spriteURL () {
     return this.data.get('sprite')
   }
@@ -27,23 +36,14 @@ export default class extends Draggable(ObjectController) {
       this.enableDragging()
     }
     
-    this.addCaster()
     this.addLight()
     
-    this.draw()
-    
     this.floor.updateFieldOfVision()
+    this.draw()
   }
   
   disconnect () {
     this.undraw()
-  }
-  
-  addCaster () {
-    this.caster = new Caster(
-      this.center,
-      [this.floor.polygon, ...this.floor.obstacles]
-    )
   }
   
   addSprite () {
@@ -63,8 +63,8 @@ export default class extends Draggable(ObjectController) {
   addLight () {
     let light = new PIXI.Graphics()
     
-    light.beginFill(0xFFFFAA, 0.2)
-    this.drawVision(light)
+    light.beginFill(0xFFFFAA, 0.4)
+    this.drawLight(light)
     light.endFill()
     
     this.container.addChild(light)
@@ -90,9 +90,8 @@ export default class extends Draggable(ObjectController) {
     }
     
     if (this.light) {
-      this.light.clear().beginFill(0xFFFFAA, 0.2)
-      this.drawVision(this.light)
-      this.light.endFill()
+      this.light.clear().beginFill(0xFFFFAA, 0.4)
+      this.drawLight(this.light).endFill()
     }
     
     if (this.floor) {
@@ -100,11 +99,13 @@ export default class extends Draggable(ObjectController) {
     }
   }
   
+  drawLight (graphics) {
+    this.caster.drawLight(graphics)
+    return graphics
+  }
+  
   drawVision (graphics) {
-    for (let polygon of this.caster.cast()) {
-      var points = polygon.points
-      graphics.moveTo(points[points.length-1].x, points[points.length-1].y)
-      for (var i=0; i<points.length; i++) graphics.lineTo(points[i].x, points[i].y)
-    }
+    this.caster.drawVision(graphics)
+    return graphics
   }
 }

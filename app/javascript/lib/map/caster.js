@@ -2,6 +2,10 @@ import _ from 'underscore'
 import PIXI from 'lib/pixi'
 import Vector from 'lib/map/vector'
 
+const DEFAULT_OPTIONS = {
+  lightRadius: 200
+}
+
 export default class {
   
   get origin ()  { return this._origin }
@@ -13,7 +17,29 @@ export default class {
     this.preprocess()
   }
   
-  constructor (origin, obstacles) {
+  get lightPolygon () {
+    let radius = this.options.lightRadius
+    let steps  = this.options.lightRadius / 50 * 4
+    let path   = []
+    
+    let x = this.origin.x
+    let y = this.origin.y
+    
+    for (var i = 0; i < steps; i++) {
+      let r = Math.PI * i / steps
+      path.push([
+        (x + radius * Math.cos(2 * r)),
+        (y + radius * Math.sin(2 * r))
+      ])
+    }
+    
+    path.push(path[0])
+    
+    return new PIXI.Polygon(path)
+  }
+  
+  constructor (origin, obstacles, options = {}) {
+    this.options   = _.extend(DEFAULT_OPTIONS, options)
     this.origin    = origin
     this.obstacles = obstacles
     
@@ -24,6 +50,21 @@ export default class {
     this.vertices = _.flatten(
       this.obstacles.map((poly) => poly.points.map((point) => new Vector(point)))
     )
+  }
+  
+  drawLight (graphics) {
+    graphics.drawPolygon(_.flatten(this.lightPolygon.points))
+  }
+  
+  drawVision (graphics) {
+    for (let polygon of this.cast()) {
+      this.drawPoints(graphics, polygon.points)
+    }
+  }
+  
+  drawPoints (graphics, points) {
+    graphics.moveTo(points[points.length-1].x, points[points.length-1].y)
+    for (var i=0; i<points.length; i++) graphics.lineTo(points[i].x, points[i].y)
   }
   
   cast () {
