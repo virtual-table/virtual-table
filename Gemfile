@@ -15,6 +15,7 @@ gem 'pg'
 gem 'bcrypt'
 
 # File handling:
+gem 'aws-sdk-s3', require: false
 gem 'image_processing'
 
 # Frontend:
