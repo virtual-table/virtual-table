@@ -26,11 +26,10 @@ export default (superclass) => class extends superclass {
       this.draggingData = event.data
       
       this.draggable.alpha = 0.5
-      this.draggable.anchor.set(0.5)
       
       let newPosition = this.draggingData.getLocalPosition(this.draggable.parent)
-      this.x = newPosition.x
-      this.y = newPosition.y
+      this.x = newPosition.x - this.width  / 2
+      this.y = newPosition.y - this.height / 2
     }
   }
   
@@ -40,10 +39,9 @@ export default (superclass) => class extends superclass {
       
       this.dragging = false
       this.draggable.alpha = 1
-      this.draggable.anchor.set(0)
       
       let newPosition = this.draggingData.getLocalPosition(this.draggable.parent)
-      this.x = newPosition.x - this.width / 2
+      this.x = newPosition.x - this.width  / 2
       this.y = newPosition.y - this.height / 2
       
       this.draggingData = null
@@ -53,8 +51,8 @@ export default (superclass) => class extends superclass {
   onDragMove (event) {
     if (this.draggingEnabled && this.dragging) {
       let newPosition = this.draggingData.getLocalPosition(this.draggable.parent)
-      this.x = newPosition.x
-      this.y = newPosition.y
+      this.x = newPosition.x - this.width  / 2
+      this.y = newPosition.y - this.height / 2
     }
   }
 }

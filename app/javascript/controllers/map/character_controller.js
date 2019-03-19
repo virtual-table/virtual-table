@@ -49,12 +49,10 @@ export default class extends Draggable(ObjectController) {
   addSprite () {
     let sprite = PIXI.Sprite.from(this.spriteURL)
     
-    sprite.anchor.set(0)
+    sprite.anchor.set(0.5)
     
     sprite.width  = this.width
     sprite.height = this.height
-    sprite.x      = this.x
-    sprite.y      = this.y
     
     this.container.addChild(sprite)
     this.sprite = sprite
@@ -81,8 +79,8 @@ export default class extends Draggable(ObjectController) {
   
   locationUpdated () {
     if (this.sprite) {
-      this.sprite.x = this.x
-      this.sprite.y = this.y
+      this.sprite.x = this.x + this.width  / 2
+      this.sprite.y = this.y + this.height / 2
     }
     
     if (this.caster) {
