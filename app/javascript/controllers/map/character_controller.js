@@ -38,8 +38,8 @@ export default class extends Draggable(ObjectController) {
     
     this.addLight()
     
-    this.floor.updateFieldOfVision()
     this.draw()
+    this.locationUpdated()
   }
   
   disconnect () {
@@ -90,8 +90,9 @@ export default class extends Draggable(ObjectController) {
     }
     
     if (this.light) {
-      this.light.clear().beginFill(0xFFFFAA, 0.4)
-      this.drawLight(this.light).endFill()
+      this.light.clear()
+      this.drawLight(this.light.beginFill(0xFFFFAA, 0.4)).endFill()
+      this.drawVision(this.light.beginFill(0xFFAAFF, 0.2))
     }
     
     if (this.floor) {
