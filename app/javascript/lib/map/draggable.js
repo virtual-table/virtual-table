@@ -19,7 +19,6 @@ export default (superclass) => class extends superclass {
   }
   
   onDragStart (event) {
-    console.log('onDragStart')
     if (this.draggingEnabled) {
       if (this.canvas) this.canvas.pauseViewport()
       
