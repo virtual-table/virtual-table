@@ -3,7 +3,9 @@ import PIXI from 'lib/pixi'
 import Vector from 'lib/map/vector'
 
 const DEFAULT_OPTIONS = {
-  lightRadius: 200
+  lightRadius: 200,
+  width:  50,
+  height: 50
 }
 
 export default class {
@@ -18,9 +20,11 @@ export default class {
   }
   
   get lightPolygon () {
-    let radius = this.options.lightRadius
-    let steps  = this.options.lightRadius / 50 * 4
-    let path   = []
+    let radius  = this.options.lightRadius
+    let xRadius = radius + this.options.width / 2
+    let yRadius = radius + this.options.height / 2
+    let steps   = this.options.lightRadius / 50 * 4
+    let path    = []
     
     let x = this.origin.x
     let y = this.origin.y
@@ -28,8 +32,8 @@ export default class {
     for (var i = 0; i < steps; i++) {
       let r = Math.PI * i / steps
       path.push([
-        (x + radius * Math.cos(2 * r)),
-        (y + radius * Math.sin(2 * r))
+        (x + xRadius * Math.cos(2 * r)),
+        (y + yRadius * Math.sin(2 * r))
       ])
     }
     
@@ -68,14 +72,13 @@ export default class {
   }
   
   cast () {
-    let angles = _.uniq(
-      this.vertices.map((vector) => vector.sub(this.origin).dir)
-    )
-    
-    angles.forEach((angle) => {
-      angles.push(angle - 0.00001);
-      angles.push(angle + 0.00001);
-    })
+    let angles = _.flatten(
+      _.uniq(
+        this.vertices.map((vector) => vector.sub(this.origin).dir)
+      ).map(
+        (angle) => [angle - 0.00001, angle, angle + 0.00001]
+      )
+    ).sort()
     
     let intersections = []
     let visiblePolys  = []
