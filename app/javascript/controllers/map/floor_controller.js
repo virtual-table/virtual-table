@@ -64,7 +64,7 @@ export default class extends ApplicationController {
     this.addObstacleLayer()
     this.addGridLayer()
     
-    this.addVisionMask()
+    // this.addVisionMask()
     this.updateFieldOfVision()
   }
   
