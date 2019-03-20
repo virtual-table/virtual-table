@@ -35,7 +35,7 @@ export default class {
     let radius  = this.options.lightRadius
     let xRadius = radius + this.options.width  / 2
     let yRadius = radius + this.options.height / 2
-    let steps   = this.options.lightRadius / 50 * 12
+    let steps   = (2 * this.options.lightRadius * Math.PI) / 5
     let points  = []
     
     let x = this.origin.x
