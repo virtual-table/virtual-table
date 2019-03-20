@@ -1,7 +1,7 @@
 import ObjectController from 'controllers/map/object_controller'
 import PIXI from 'lib/pixi'
 import Draggable from 'lib/map/draggable'
-import Caster from 'lib/map/caster'
+import Caster from 'lib/map/visibility/caster'
 import _ from 'underscore'
 
 export default class extends Draggable(ObjectController) {
@@ -89,7 +89,7 @@ export default class extends Draggable(ObjectController) {
     
     if (this.light) {
       this.light.clear()
-      this.drawLight(this.light.beginFill(0xFFFFAA, 0.4)).endFill()
+      this.drawLight(this.light.beginFill(0xFFFFAA, 0.4).lineStyle(1, 0xFFFFAA, 0.4)).endFill()
       this.drawVision(this.light.beginFill(0xFFAAFF, 0.2))
     }
     
