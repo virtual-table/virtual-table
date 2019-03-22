@@ -4,6 +4,8 @@ class Map::Floor < ApplicationRecord
   
   has_many :backgrounds
   
+  has_many :rooms
+  
   has_many :characters
   
   def width

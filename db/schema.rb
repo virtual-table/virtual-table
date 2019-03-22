@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_17_154252) do
+ActiveRecord::Schema.define(version: 2019_03_22_095910) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,6 +100,18 @@ ActiveRecord::Schema.define(version: 2019_03_17_154252) do
     t.index ["floor_id"], name: "index_map_characters_on_floor_id"
   end
 
+  create_table "map_doors", force: :cascade do |t|
+    t.bigint "room_id"
+    t.integer "origin_x"
+    t.integer "origin_y"
+    t.integer "destination_x"
+    t.integer "destination_y"
+    t.boolean "closed", default: true
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["room_id"], name: "index_map_doors_on_room_id"
+  end
+
   create_table "map_floors", force: :cascade do |t|
     t.bigint "map_id"
     t.string "title"
@@ -114,8 +126,27 @@ ActiveRecord::Schema.define(version: 2019_03_17_154252) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.integer "level", default: 0
-    t.json "obstacles", default: []
     t.index ["map_id"], name: "index_map_floors_on_map_id"
+  end
+
+  create_table "map_rooms", force: :cascade do |t|
+    t.bigint "floor_id"
+    t.string "short_code"
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["floor_id"], name: "index_map_rooms_on_floor_id"
+  end
+
+  create_table "map_walls", force: :cascade do |t|
+    t.bigint "room_id"
+    t.integer "origin_x"
+    t.integer "origin_y"
+    t.integer "destination_x"
+    t.integer "destination_y"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["room_id"], name: "index_map_walls_on_room_id"
   end
 
   create_table "maps", force: :cascade do |t|
@@ -148,7 +179,10 @@ ActiveRecord::Schema.define(version: 2019_03_17_154252) do
   add_foreign_key "games", "users", column: "author_id"
   add_foreign_key "map_backgrounds", "map_floors", column: "floor_id"
   add_foreign_key "map_characters", "map_floors", column: "floor_id"
+  add_foreign_key "map_doors", "map_rooms", column: "room_id"
   add_foreign_key "map_floors", "maps"
+  add_foreign_key "map_rooms", "map_floors", column: "floor_id"
+  add_foreign_key "map_walls", "map_rooms", column: "room_id"
   add_foreign_key "maps", "games"
   add_foreign_key "players", "games"
   add_foreign_key "players", "users"

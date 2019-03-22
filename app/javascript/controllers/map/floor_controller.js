@@ -25,6 +25,10 @@ export default class extends ApplicationController {
     return this.findChildControllers('map--character')
   }
   
+  get rooms () {
+    return this.findChildControllers('map--room')
+  }
+  
   get backgroundColor () { return parseInt((this.data.get('backgroundColor') || '#ffffff').replace('#', '0x')) }
   
   get gridSize    () { return parseInt(this.data.get('gridSize')) }
@@ -48,9 +52,7 @@ export default class extends ApplicationController {
   }
   
   get obstacles () {
-    return JSON.parse(this.data.get('obstacles')).map(
-      (path) => new PIXI.Polygon(path)
-    )
+    return _.flatten(this.rooms.map((room) => room.obstacles))
   }
   
   connect () {
@@ -60,12 +62,13 @@ export default class extends ApplicationController {
     this.contents  = this.container.addChild(new PIXI.Container())
     
     this.addBackgroundLayer()
+    this.addGameMasterLayer()
     this.addCharacterLayer()
-    this.addObstacleLayer()
+    
     this.addGridLayer()
     
     // this.addVisionMask()
-    this.updateFieldOfVision()
+    _.defer(this.updateFieldOfVision.bind(this))
   }
   
   disconnect () {
@@ -99,6 +102,11 @@ export default class extends ApplicationController {
   addBackgroundLayer () {
     this.backgroundLayer = new PIXI.Container()
     this.contents.addChild(this.backgroundLayer)
+  }
+  
+  addGameMasterLayer () {
+    this.gameMasterLayer = new PIXI.Container()
+    this.contents.addChild(this.gameMasterLayer)
   }
   
   addObstacleLayer () {
@@ -168,6 +176,17 @@ export default class extends ApplicationController {
     ]
     
     return path
+  }
+  
+  updateObstacles () {
+    for (let character of this.characters) {
+      if (character.caster) {
+        character.caster.obstacles = [this.polygon, ...this.obstacles]
+        character.locationUpdated()
+      }
+    }
+    
+    this.updateFieldOfVision()
   }
   
   updateFieldOfVision () {
