@@ -4,7 +4,8 @@ class Map::Room < ApplicationRecord
   
   belongs_to :floor
   
-  delegate :map, to: :floor
+  delegate :map, to: :floor,
+    allow_nil: true
   
   has_many :walls
   
