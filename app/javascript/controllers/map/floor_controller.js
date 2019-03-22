@@ -58,8 +58,9 @@ export default class extends ApplicationController {
   connect () {
     this.active     = false
     
-    this.container = this.parent.addChild(new PIXI.Container())
-    this.contents  = this.container.addChild(new PIXI.Container())
+    this.container   = this.parent.addChild(new PIXI.Container())
+    this.illuminated = this.container.addChild(new PIXI.Container())
+    this.contents    = this.illuminated.addChild(new PIXI.Container())
     
     this.addBackgroundLayer()
     this.addGameMasterLayer()
@@ -67,7 +68,9 @@ export default class extends ApplicationController {
     
     this.addGridLayer()
     
-    // this.addVisionMask()
+    this.addLightMask()
+    this.addVisionMask()
+    
     _.defer(this.updateFieldOfVision.bind(this))
   }
   
@@ -86,17 +89,30 @@ export default class extends ApplicationController {
     this.parent.addChildAt(this.container, level)
   }
   
+  addLightMask () {
+    let light = new PIXI.Graphics()
+    
+    this.container.addChild(light)
+    this.contents.mask = light
+    
+    light.clear()
+          .beginFill(0xFFFFFF, 1)
+          .drawRect(0, 0, this.width, this.height)
+    
+    this.lightMask = light
+  }
+  
   addVisionMask () {
     let vision = new PIXI.Graphics()
     
     this.container.addChild(vision)
-    this.contents.mask = vision
+    this.illuminated.mask = vision
     
     vision.clear()
-          .beginFill(0xffffff, 1)
+          .beginFill(0xFFFFFF, 1)
           .drawRect(0, 0, this.width, this.height)
     
-    this.vision = vision
+    this.visionMask = vision
   }
   
   addBackgroundLayer () {
@@ -106,7 +122,7 @@ export default class extends ApplicationController {
   
   addGameMasterLayer () {
     this.gameMasterLayer = new PIXI.Container()
-    this.contents.addChild(this.gameMasterLayer)
+    this.container.addChild(this.gameMasterLayer)
   }
   
   addObstacleLayer () {
@@ -190,9 +206,24 @@ export default class extends ApplicationController {
   }
   
   updateFieldOfVision () {
-    if (this.vision) {
-      let vision = this.vision.clear()
-                       .beginFill(0xffffff, 0.5)
+    if (this.lightMask) {
+      let light = this.lightMask
+                      .clear()
+                      .beginFill(0xFFFFFF, 1)
+      
+      for (let character of this.characters) {
+        character.drawLight(light)
+      }
+      
+      // for (let lighting of this.lights) {
+      //   lighting.drawLight(light)
+      // }
+    }
+    
+    if (this.visionMask) {
+      let vision = this.visionMask
+                       .clear()
+                       .beginFill(0xFFFFFF, 1)
       
       for (let character of this.characters) {
         character.drawVision(vision)

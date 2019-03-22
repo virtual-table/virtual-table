@@ -91,21 +91,23 @@ export default class {
     this.walls = walls
   }
   
-  cast () {
+  castLight () {
     const walls = this.walls.concat(this.lightWalls)
     const endpoints = loadMap(this.room, [], makeSegments(walls), this.origin)
     return calculateVisibility(this.origin, endpoints)
   }
   
+  castVision() {
+    const endpoints = loadMap(this.room, [], makeSegments(this.walls), this.origin)
+    return calculateVisibility(this.origin, endpoints)
+  }
+  
   drawLight (graphics) {
-    let walls = this.lightWalls
-    for (let [ax, ay, bx, by] of walls) {
-      graphics.moveTo(ax, ay).lineTo(bx, by)
-    }
+    this.drawVisibilityTriangles(graphics, this.castLight())
   }
   
   drawVision (graphics) {
-    this.drawVisibilityTriangles(graphics, this.cast())
+    this.drawVisibilityTriangles(graphics, this.castVision())
   }
   
   drawVisibilityTriangles (graphics, output) {
