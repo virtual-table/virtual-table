@@ -89,8 +89,7 @@ export default class extends Draggable(ObjectController) {
     
     if (this.light) {
       this.light.clear()
-      this.drawLight(this.light.beginFill(0xFFFFAA, 0.4).lineStyle(1, 0xFFFFAA, 0.4)).endFill()
-      this.drawVision(this.light.beginFill(0xFFAAFF, 0.2))
+      this.drawVision(this.light.beginFill(0xFFFF00, 0.1))
     }
     
     if (this.floor) {
