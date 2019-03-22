@@ -11,7 +11,7 @@
       map__character_height:              character.height,
       map__character_x:                   character.x,
       map__character_y:                   character.y,
-      map__character_sprite:              url_for(character.image),
+      map__character_sprite:              (url_for(character.image) if character.image.present?),
       map__character_light_radius:        character.light_radius,
       map__character_dim_light_radius:    character.dim_light_radius,
       map__character_light_ange:          character.light_angle,
@@ -19,5 +19,5 @@
     }
   ) do
 %>
-  <%= image_tag url_for(character.image), width: character.width, height: character.height if character.image %>
+  <%= image_tag url_for(character.image), width: character.width, height: character.height if character.image.present? %>
 <% end %>
