@@ -6,6 +6,12 @@ import _ from 'underscore'
 
 export default class extends Draggable(ObjectController) {
   
+  get form () {
+    let htmlId  = this.data.get('form')
+    let element = document.getElementById(htmlId)
+    return this.controllerFor(element, 'form--map-character')
+  }
+  
   get floor () { return this._floor || (this._floor = this.findParentController('map--floor')) }
   
   get canvas ()   { return this.floor.canvas }
@@ -28,18 +34,26 @@ export default class extends Draggable(ObjectController) {
   connect () {
     if (!this.floor) return
     
+    this.updateForm = _.throttle(
+      this.updateForm.bind(this), 50, {
+      leading:  false,
+      trailing: true
+    })
+    
     this.container = new PIXI.Container()
     
     if (this.spriteURL.length) {
       this.addSprite()
       this.setupDraggable(this.sprite)
       this.enableDragging()
+      
+      
+      this.sprite.on('pointerdown', this.showForm.bind(this))
     }
     
     this.addLight()
     
     this.draw()
-    this.locationUpdated()
   }
   
   disconnect () {
@@ -58,6 +72,21 @@ export default class extends Draggable(ObjectController) {
     this.sprite = sprite
   }
   
+  updateForm () {
+    if (this.form) {
+      let form = this.form
+      
+      form.width  = this.width
+      form.height = this.height
+      form.x      = this.x
+      form.y      = this.y
+    }
+  }
+  
+  showForm () {
+    if (this.form) this.form.show()
+  }
+  
   addLight () {
     let light = new PIXI.Graphics()
     
@@ -71,10 +100,21 @@ export default class extends Draggable(ObjectController) {
   
   draw() {
     this.floor.characterLayer.addChild(this.container)
+    this.sizeUpdated()
+    this.locationUpdated()
   }
   
   undraw () {
     this.floor.characterLayer.removeChild(this.container)
+  }
+  
+  sizeUpdated () {
+    if (this.sprite) {
+      this.sprite.width  = this.width
+      this.sprite.height = this.height
+    }
+    
+    _.defer(this.updateForm.bind(this))
   }
   
   locationUpdated () {
@@ -95,6 +135,8 @@ export default class extends Draggable(ObjectController) {
     if (this.floor) {
       this.floor.updateFieldOfVision()
     }
+    
+    _.defer(this.updateForm.bind(this))
   }
   
   drawLight (graphics) {

@@ -3,17 +3,13 @@ import _ from 'underscore'
 
 export default class extends Controller {
   findParentController (identifier) {
-    return this.application
-               .getControllerForElementAndIdentifier(
-                 this.element.closest(`[data-controller*="${identifier}"]`),
-                 identifier
-               )
+    return this.controllerFor(this.element.closest(`[data-controller*="${identifier}"]`), identifier)
   } 
   
   findChildController (identifier) {
     let element = this.element.querySelector(`[data-controller*="${identifier}"]`)
     if (element) {
-      return this.application.getControllerForElementAndIdentifier(element, identifier)
+      return this.controllerFor(element, identifier)
     }
   }
   
@@ -22,8 +18,22 @@ export default class extends Controller {
       [
         ...this.element.querySelectorAll(`[data-controller*="${identifier}"]`)
       ].map(
-        (element) => this.application.getControllerForElementAndIdentifier(element, identifier)
+        (element) => this.controllerFor(element, identifier)
       )
     )
+  }
+  
+  findControllers (identifier) {
+    return _.compact(
+      [
+        ...document.querySelectorAll(`[data-controller*="${identifier}"]`)
+      ].map(
+        (element) => this.controllerFor(element, identifier)
+      )
+    )
+  }
+  
+  controllerFor(element, identifier) {
+    return this.application.getControllerForElementAndIdentifier(element, identifier)
   }
 }
