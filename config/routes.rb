@@ -19,4 +19,6 @@ Rails.application.routes.draw do
       resources :floors
     end
   end
+  
+  resources :play, controller: :game_sessions, only: %i[index show]
 end

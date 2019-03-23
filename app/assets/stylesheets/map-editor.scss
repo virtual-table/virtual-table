@@ -9,23 +9,8 @@
     display: block;
   }
   
-  .map-editor-canvas {
-    background: #c0c0c0;
-  }
-  
   .panel-heading {
     border-radius: 0;
-  }
-}
-
-.map-editor-canvas {
-  position: relative;
-  
-  .map-editor-zoom {
-    width: 60px;
-    position: absolute;
-    top: 10px;
-    right: 10px;
   }
 }
 

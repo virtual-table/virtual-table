@@ -1,17 +1,18 @@
-import _ from 'underscore'
-import ApplicationController from 'controllers/application_controller'
+import MapPlayerController from 'controllers/map_player_controller'
 
 require('lib/polyfills/closest')
 
-export default class extends ApplicationController {
+export default class extends MapPlayerController {
   
-  static targets = ['floor']
+  static targets = super.targets
   
-  get canvas () {
-    return this._canvas || (this._canvas = this.findChildController('map--canvas'))
+  get mode () {
+    return this._mode || (this._mode = 'editor')
   }
   
-  get floors () { return (this.canvas && this.canvas.floors) || [] }
+  set mode (v) {
+    this._mode = v
+  }
   
   get floorLinks () {
     return this.floorTargets.map(
@@ -19,44 +20,12 @@ export default class extends ApplicationController {
     )
   }
   
-  get activeFloor () {
-    return this.floors.find((floor) => floor.id == this.data.get('activeFloor')) ||
-           this.floors[0]
-  }
-  
-  set activeFloor (value) {
-    this.data.set('activeFloor', value)
-    this.showActiveFloor()
-  }
-  
   connect () {
-    _.defer(this.showActiveFloor.bind(this))
+    super.connect()
+    this.mode = 'editor'
   }
   
   // ACTIONS:
-  
-  showActiveFloor() {
-    this.floorLinks.forEach(
-      (link) => {
-        if (link['href'].endsWith(`#${this.activeFloor.id}`)) {
-          link.closest('.panel-block').classList.add('is-active')
-        } else {
-          link.closest('.panel-block').classList.remove('is-active')
-        }
-      }
-    )
-    
-    let index = this.floors.indexOf(this.activeFloor)
-    let higherFloors  = this.floors.slice(0, index).reverse()
-    let lowerFloors   = this.floors.slice(index + 1)
-    
-    for (let [index, floor] of lowerFloors.entries())
-      floor.showAtLevel(index)
-    
-    if (this.activeFloor) this.activeFloor.showAtLevel(lowerFloors.length)
-    
-    for (let floor of higherFloors) floor.hide()
-  }
   
   changeFloor (event) {
     let link = event.currentTarget.closest('a')
@@ -70,11 +39,17 @@ export default class extends ApplicationController {
     }
   }
   
-  zoomIn () {
-    if (this.canvas) this.canvas.viewport.zoomPercent(0.25, true)
-  }
-  
-  zoomOut () {
-    if (this.canvas) this.canvas.viewport.zoomPercent(-0.25, true)
+  showActiveFloor() {
+    this.floorLinks.forEach(
+      (link) => {
+        if (link['href'].endsWith(`#${this.activeFloor.id}`)) {
+          link.closest('.panel-block').classList.add('is-active')
+        } else {
+          link.closest('.panel-block').classList.remove('is-active')
+        }
+      }
+    )
+    
+    super.showActiveFloor()
   }
 }

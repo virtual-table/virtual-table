@@ -84,6 +84,15 @@ export default class extends ApplicationController {
     }
   }
   
+  
+  zoomIn () {
+    this.viewport.zoomPercent(0.25, true)
+  }
+  
+  zoomOut () {
+    this.viewport.zoomPercent(-0.25, true)
+  }
+  
   resize () {
     this.canvasTarget.style.width  = 0
     this.canvasTarget.style.height = 0

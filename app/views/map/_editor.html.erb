@@ -5,7 +5,7 @@ active_floor = local_assigns[:active_floor]
      data-controller="map-editor"
      data-map-editor-active-floor="<%= dom_id(active_floor) if active_floor %>">
   <div class="column">
-    <%= render 'map/map', map: map %>
+    <%= render 'map/editor_canvas', map: map %>
   </div>
   
   <div class="column is-full-mobile is-half-tablet is-one-third-desktop is-one-quarter-widescreen is-one-fifth-fullhd">

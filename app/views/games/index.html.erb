@@ -18,6 +18,10 @@
           <li>
             <%= link_to game.title, game %>
             <span class="tag"><%= play.role %></span>
+            <%=
+              link_to t('.join_session'), play_path(game),
+                class: 'button is-small is-link is-outlined'
+            %>
           </li>
         <% end %>
       </ul>

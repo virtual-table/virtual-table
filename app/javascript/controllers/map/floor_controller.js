@@ -8,6 +8,13 @@ export default class extends ApplicationController {
   
   get id () { return this.element.id }
   
+  get player () {
+    return this._player || (
+      this._player = this.findParentController('map-player') ||
+                     this.findParentController('map-editor')
+    )
+  }
+  
   get parent ()   { return this.canvas.viewport }
   get viewport () { return this.parent }
   
@@ -60,20 +67,26 @@ export default class extends ApplicationController {
   }
   
   connect () {
-    this.active     = false
+    this.pixi.renderer.backgroundColor = this.backgroundColor
     
     this.container   = this.parent.addChild(new PIXI.Container())
     this.illuminated = this.container.addChild(new PIXI.Container())
     this.contents    = this.illuminated.addChild(new PIXI.Container())
     
     this.addBackgroundLayer()
-    this.addGameMasterLayer()
+    
+    if (this.player.mode == 'editor') {
+      this.addGameMasterLayer()
+    }
+    
     this.addCharacterLayer()
     
     this.addGridLayer()
     
-    this.addLightMask()
-    this.addVisionMask()
+    if (this.player.mode == 'player') {
+      this.addLightMask()
+      this.addVisionMask()
+    }
     
     _.defer(this.updateFieldOfVision.bind(this))
   }
