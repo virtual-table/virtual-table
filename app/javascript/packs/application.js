@@ -38,10 +38,10 @@ import consumer from '../channels/consumer'
   
   Object.defineProperty(this.VTT, 'editor', {
     get: function() {
-      let element = document.querySelector('[data-controller*="map--editor"]')
+      let element = document.querySelector('[data-controller*="map-editor"]')
       return element &&
              window.VTT.application
-                   .getControllerForElementAndIdentifier(element, 'map--editor')
+                   .getControllerForElementAndIdentifier(element, 'map-editor')
     }
   })
 }).call(window)
