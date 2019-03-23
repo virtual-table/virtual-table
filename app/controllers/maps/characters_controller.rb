@@ -44,6 +44,9 @@ module Maps
         height
         x
         y
+        light_color
+        light_radius
+        dim_light_radius
       ])
     end
   end

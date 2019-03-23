@@ -72,6 +72,30 @@ form_data = {
       </div>
     </div>
     
+    
+    <%= f.field :light_color do %>
+      <%= f.label       :light_color %>
+      <%= f.color_field :light_color %>
+      <%= f.errors      :light_color %>
+    <% end %>
+    
+    <div class="level">
+      <div class="level-item">
+        <%= f.field :dim_light_radius do %>
+          <%= f.label        :dim_light_radius %>
+          <%= f.number_field :dim_light_radius, data: { target: 'form--map-character.dimLightRadius' } %>
+          <%= f.errors       :dim_light_radius %>
+        <% end %>
+      </div>
+      <div class="level-item">
+        <%= f.field :light_radius do %>
+          <%= f.label        :light_radius %>
+          <%= f.number_field :light_radius, data: { target: 'form--map-character.lightRadius' } %>
+          <%= f.errors       :light_radius %>
+        <% end %>
+      </div>
+    </div>
+    
     <%= f.submit_or_reset %>
   <% end %>
 </nav>
