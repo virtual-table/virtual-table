@@ -31,6 +31,8 @@ export default class extends ApplicationController {
   
   get backgroundColor () { return parseInt((this.data.get('backgroundColor') || '#ffffff').replace('#', '0x')) }
   
+  get scale () { return parseInt(this.data.get('scale') || 5) }
+  
   get gridSize    () { return parseInt(this.data.get('gridSize')) }
   get gridWidth   () { return 1 }
   get gridColor   () { return parseInt((this.data.get('gridColor') || '#c0c0c0').replace('#', '0x')) }
