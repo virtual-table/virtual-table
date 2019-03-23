@@ -32,7 +32,6 @@ export default class extends WallController {
   }
   
   toggleDoor () {
-    console.log('toggleDoor')
     this.closed = !this.closed
     this.draw()
     this.floor.updateObstacles()
