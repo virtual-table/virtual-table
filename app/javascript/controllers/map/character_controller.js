@@ -113,8 +113,6 @@ export default class extends Draggable(ObjectController) {
       this.sprite.width  = this.width
       this.sprite.height = this.height
     }
-    
-    _.defer(this.updateForm.bind(this))
   }
   
   locationUpdated () {
@@ -135,7 +133,10 @@ export default class extends Draggable(ObjectController) {
     if (this.floor) {
       this.floor.updateFieldOfVision()
     }
-    
+  }
+  
+  onDragEnd (event) {
+    if (super.onDragEnd) super.onDragEnd(event)
     _.defer(this.updateForm.bind(this))
   }
   
