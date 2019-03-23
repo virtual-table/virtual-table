@@ -18,6 +18,7 @@ export default class extends Draggable(ObjectController) {
   get parent ()   { return this.canvas.viewport }
   get viewport () { return this.parent }
   
+  get lightOpacity   () { return 0.2 }
   get lightColor     () { return parseInt((this.data.get('lightColor') || '#ffffff').replace('#', '0x')) }
   get dimLightRadius () { return parseInt(this.data.get('dimLightRadius') || 40) }
   get lightRadius    () { return parseInt(this.data.get('lightRadius')    || 20) }
@@ -94,7 +95,7 @@ export default class extends Draggable(ObjectController) {
   addLight () {
     let light = new PIXI.Graphics()
     
-    light.beginFill(this.lightColor, 0.1)
+    light.beginFill(this.lightColor, this.lightOpacity)
     this.drawLight(light)
     light.endFill()
     
@@ -131,7 +132,7 @@ export default class extends Draggable(ObjectController) {
     
     if (this.light) {
       this.light.clear()
-      this.drawLight(this.light.beginFill(this.lightColor, 0.1))
+      this.drawLight(this.light.beginFill(this.lightColor, this.lightOpacity))
     }
     
     if (this.floor) {
