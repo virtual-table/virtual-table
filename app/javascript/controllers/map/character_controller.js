@@ -18,12 +18,17 @@ export default class extends Draggable(ObjectController) {
   get parent ()   { return this.canvas.viewport }
   get viewport () { return this.parent }
   
+  get lightColor     () { return parseInt((this.data.get('lightColor') || '#ffffff').replace('#', '0x')) }
+  get dimLightRadius () { return parseInt(this.data.get('dimLightRadius') || 40) }
+  get lightRadius    () { return parseInt(this.data.get('lightRadius')    || 20) }
+  
   get caster () {
     return this._caster || (
       this._caster = new Caster(
         this.center,
-        [this.floor.polygon, ...this.floor.obstacles]
-      )
+        [this.floor.polygon, ...this.floor.obstacles], {
+        lightRadius: (this.dimLightRadius / this.floor.scale) * this.floor.gridSize
+      })
     )
   }
   
@@ -44,11 +49,10 @@ export default class extends Draggable(ObjectController) {
     
     if (this.spriteURL.length) {
       this.addSprite()
+      this.sprite.on('pointerdown', this.showForm.bind(this))
+      
       this.setupDraggable(this.sprite)
       this.enableDragging()
-      
-      
-      this.sprite.on('pointerdown', this.showForm.bind(this))
     }
     
     this.addLight()
@@ -90,7 +94,7 @@ export default class extends Draggable(ObjectController) {
   addLight () {
     let light = new PIXI.Graphics()
     
-    light.beginFill(0xFFFFAA, 0.4)
+    light.beginFill(this.lightColor, 0.1)
     this.drawLight(light)
     light.endFill()
     
@@ -127,7 +131,7 @@ export default class extends Draggable(ObjectController) {
     
     if (this.light) {
       this.light.clear()
-      this.drawVision(this.light.beginFill(0xFFFF00, 0.1))
+      this.drawLight(this.light.beginFill(this.lightColor, 0.1))
     }
     
     if (this.floor) {

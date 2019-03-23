@@ -32,7 +32,7 @@ export default class {
   }
   
   get lightWalls () {
-    let radius  = this.options.lightRadius
+    let radius  = this.lightRadius
     let xRadius = radius + this.options.width  / 2
     let yRadius = radius + this.options.height / 2
     let steps   = (2 * this.options.lightRadius * Math.PI) / 5
@@ -55,9 +55,10 @@ export default class {
   }
   
   constructor (origin, obstacles, options = {}) {
-    this.options   = _.extend(DEFAULT_OPTIONS, options)
-    this.origin    = origin
-    this.obstacles = obstacles
+    this.options     = _.extend(DEFAULT_OPTIONS, options)
+    this.lightRadius = this.options.lightRadius
+    this.origin      = origin
+    this.obstacles   = obstacles
     
     this.preprocess()
   }
