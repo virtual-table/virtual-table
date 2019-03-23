@@ -46,6 +46,7 @@ module Maps
         grid
         grid_color
         grid_opacity
+        global_illumination
       ])
     end
   end

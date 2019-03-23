@@ -27,6 +27,12 @@ end
         <%= f.errors       :level %>
       <% end %>
       
+      <%= f.field :global_illumination do %>
+        <%= f.check_box :global_illumination %>
+        <%= f.label     :global_illumination %>
+        <%= f.errors    :global_illumination %>
+      <% end %>
+      
       <div class="columns">
         <div class="column">
           <%= f.field :columns do %>

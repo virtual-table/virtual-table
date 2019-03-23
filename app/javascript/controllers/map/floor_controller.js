@@ -41,6 +41,8 @@ export default class extends ApplicationController {
   get width      () { return this.columns * this.gridSize       }
   get height     () { return this.rows * this.gridSize          }
   
+  get globalIllumination () { return this.data.get('globalIllumination') == 'true' }
+  
   get polygon   () {
     return new PIXI.Polygon([
       [0, 0], // top left
@@ -87,32 +89,6 @@ export default class extends ApplicationController {
     this.pixi.renderer.backgroundColor = this.backgroundColor
     this.parent.removeChild(this.container)
     this.parent.addChildAt(this.container, level)
-  }
-  
-  addLightMask () {
-    let light = new PIXI.Graphics()
-    
-    this.container.addChild(light)
-    this.contents.mask = light
-    
-    light.clear()
-          .beginFill(0xFFFFFF, 1)
-          .drawRect(0, 0, this.width, this.height)
-    
-    this.lightMask = light
-  }
-  
-  addVisionMask () {
-    let vision = new PIXI.Graphics()
-    
-    this.container.addChild(vision)
-    this.illuminated.mask = vision
-    
-    vision.clear()
-          .beginFill(0xFFFFFF, 1)
-          .drawRect(0, 0, this.width, this.height)
-    
-    this.visionMask = vision
   }
   
   addBackgroundLayer () {
@@ -174,6 +150,32 @@ export default class extends ApplicationController {
     this.container.addChild(this.gridLayer)
   }
   
+  addLightMask () {
+    let light = new PIXI.Graphics()
+    
+    this.container.addChild(light)
+    this.contents.mask = light
+    
+    light.clear()
+          .beginFill(0xFFFFFF, 1)
+          .drawRect(0, 0, this.width, this.height)
+    
+    this.lightMask = light
+  }
+  
+  addVisionMask () {
+    let vision = new PIXI.Graphics()
+    
+    this.container.addChild(vision)
+    this.illuminated.mask = vision
+    
+    vision.clear()
+          .beginFill(0xFFFFFF, 1)
+          .drawRect(0, 0, this.width, this.height)
+    
+    this.visionMask = vision
+  }
+  
   generateGridTile(x, y) {
     let left   = x * this.gridSize
     let right  = (x + 1) * this.gridSize
@@ -211,13 +213,17 @@ export default class extends ApplicationController {
                       .clear()
                       .beginFill(0xFFFFFF, 1)
       
-      for (let character of this.characters) {
-        character.drawLight(light)
+      if (this.globalIllumination) {
+        light.drawRect(0, 0, this.width, this.height)
+      } else {
+        for (let character of this.characters) {
+          character.drawLight(light)
+        }
+        
+        // for (let lighting of this.lights) {
+        //   lighting.drawLight(light)
+        // }
       }
-      
-      // for (let lighting of this.lights) {
-      //   lighting.drawLight(light)
-      // }
     }
     
     if (this.visionMask) {
