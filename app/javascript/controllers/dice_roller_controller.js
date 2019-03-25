@@ -32,6 +32,7 @@ export default class extends ApplicationController {
     
     let renderer = this.renderer = new THREE.WebGLRenderer( {antialias:true} )
     renderer.setSize(this.availableWidth, this.availableHeight)
+    renderer.setPixelRatio(window.devicePixelRatio ? window.devicePixelRatio : 1)
     renderer.shadowMap.enabled = true
     renderer.shadowMap.type = THREE.PCFSoftShadowMap
     
