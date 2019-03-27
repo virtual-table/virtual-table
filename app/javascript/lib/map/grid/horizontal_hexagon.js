@@ -1,5 +1,5 @@
 import Grid from 'lib/map/grid/grid'
-// https://codepen.io/zeakd/pen/NdMBgB
+
 export default class extends Grid {
   get width  () { return this.tileWidth * this.columns }
   
@@ -23,8 +23,8 @@ export default class extends Grid {
     
     /*
      *    2 3
-     *  1 /‾\
-     *    \_/ 4
+     *  1 ╱‾╲
+     *    ╲_╱ 4
      *    6 5
      */
     let path = [
