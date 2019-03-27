@@ -2,10 +2,10 @@ import Grid from 'lib/map/grid/grid'
 
 export default class extends Grid {
   pathForTile(column, row) {
-    let left   = column * this.size
-    let right  = (column + 1) * this.size
-    let top    = row * this.size
-    let bottom = (row + 1) * this.size
+    let left   = column * this.tileSize
+    let right  = left + this.tileSize
+    let top    = row * this.tileSize
+    let bottom = top + this.tileSize
     
     /*
      * 1 ┏━━┓ 2

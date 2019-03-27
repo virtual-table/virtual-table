@@ -41,6 +41,20 @@ export default class extends ApplicationController {
   
   get scale () { return parseInt(this.data.get('scale') || 5) }
   
+  get grid () {
+    return this._grid || (
+      this._grid = new this.gridType(this.columns, this.rows, this.gridSize)
+    )
+  }
+  
+  get gridType () {
+    switch (this.data.get('gridType')) {
+      case 'square':
+      default:
+        return SquareGrid
+    }
+  }
+  
   get gridSize    () { return parseInt(this.data.get('gridSize')) }
   get gridWidth   () { return 1 }
   get gridColor   () { return parseInt((this.data.get('gridColor') || '#c0c0c0').replace('#', '0x')) }
@@ -48,8 +62,9 @@ export default class extends ApplicationController {
   
   get columns    () { return parseInt(this.data.get('columns')) }
   get rows       () { return parseInt(this.data.get('rows'))    }
-  get width      () { return this.columns * this.gridSize       }
-  get height     () { return this.rows * this.gridSize          }
+  
+  get width      () { return this.grid ? this.grid.width  : this.columns * this.gridSize }
+  get height     () { return this.grid ? this.grid.height : this.rows * this.gridSize    }
   
   get globalIllumination () { return this.data.get('globalIllumination') == 'true' }
   
@@ -81,8 +96,6 @@ export default class extends ApplicationController {
     }
     
     this.addCharacterLayer()
-    
-    this.grid = new SquareGrid(this.columns, this.rows, this.gridSize)
     this.addGridLayer()
     
     if (this.player.mode == 'player') {

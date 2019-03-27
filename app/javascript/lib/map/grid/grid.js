@@ -1,8 +1,11 @@
 export default class {
+  get width  () { return this.tileSize * this.columns }
+  get height () { return this.tileSize * this.rows    }
+  
   constructor (columns, rows, size) {
-    this.columns = columns
-    this.rows    = rows
-    this.size    = size
+    this.columns  = columns
+    this.rows     = rows
+    this.tileSize = size
   }
   
   drawGrid (graphics) {
