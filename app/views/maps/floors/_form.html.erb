@@ -71,6 +71,12 @@ end
         <%= f.errors    :grid %>
       <% end %>
       
+      <%= f.field :grid_type do %>
+        <%= f.label  :grid_type %>
+        <%= f.select :grid_type, ['square', 'horizontal-hex'] %>
+        <%= f.errors :grid_type %>
+      <% end %>
+      
       <%= f.field :grid_color do %>
         <%= f.label       :grid_color %>
         <%= f.color_field :grid_color %>

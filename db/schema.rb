@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_23_083828) do
+ActiveRecord::Schema.define(version: 2019_03_27_071542) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -128,6 +128,7 @@ ActiveRecord::Schema.define(version: 2019_03_23_083828) do
     t.datetime "updated_at", precision: 6, null: false
     t.integer "level", default: 0
     t.boolean "global_illumination", default: true
+    t.string "grid_type", default: "square"
     t.index ["map_id"], name: "index_map_floors_on_map_id"
   end
 

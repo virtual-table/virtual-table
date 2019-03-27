@@ -44,6 +44,7 @@ module Maps
         scale_unit
         background_color
         grid
+        grid_type
         grid_color
         grid_opacity
         global_illumination
