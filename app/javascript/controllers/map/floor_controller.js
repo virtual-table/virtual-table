@@ -1,6 +1,7 @@
 import ApplicationController from 'controllers/application_controller'
 import _ from 'underscore'
 import PIXI from 'lib/pixi'
+import SquareGrid from 'lib/map/grid/square'
 
 require('lib/polyfills/closest')
 
@@ -81,6 +82,7 @@ export default class extends ApplicationController {
     
     this.addCharacterLayer()
     
+    this.grid = new SquareGrid(this.columns, this.rows, this.gridSize)
     this.addGridLayer()
     
     if (this.player.mode == 'player') {
@@ -143,24 +145,7 @@ export default class extends ApplicationController {
     let graphics = this.gridLayer.addChild(new PIXI.Graphics())
     graphics.lineStyle(this.gridWidth, this.gridColor, this.gridOpacity)
     
-    for (let y = 0; y < this.rows; y++) {
-      for (let x = 0; x < this.columns; x++) {
-        let path = this.generateGridTile(x, y)
-        
-        // Don't draw left border after first column
-        if (y > 0) path.shift()
-        
-        // Don't draw top border after first row
-        if (x > 0) path.pop()
-        
-        // Draw lines:
-        let start = path.shift()
-        graphics.moveTo(start[0], start[1])
-        for (let coordinates of path) {
-          graphics.lineTo(...coordinates)
-        }
-      }
-    }
+    this.grid.drawGrid(graphics)
     
     this.container.addChild(this.gridLayer)
   }
@@ -189,26 +174,6 @@ export default class extends ApplicationController {
           .drawRect(0, 0, this.width, this.height)
     
     this.visionMask = vision
-  }
-  
-  generateGridTile(x, y) {
-    let left   = x * this.gridSize
-    let right  = (x + 1) * this.gridSize
-    let top    = y * this.gridSize
-    let bottom = (y + 1) * this.gridSize
-    
-    /*
-     * 1 ┏━━┓ 2
-     *   ┃  ┃
-     * 4 ┗━━┛ 3
-     */
-    let path = [
-      [left, top],     [right, top],
-      [right, bottom], [left, bottom],
-      [left, top]
-    ]
-    
-    return path
   }
   
   updateObstacles () {
