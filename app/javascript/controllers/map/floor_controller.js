@@ -1,6 +1,7 @@
 import ApplicationController from 'controllers/application_controller'
 import _ from 'underscore'
 import PIXI from 'lib/pixi'
+import HorizontalHexGrid from 'lib/map/grid/horizontal_hexagon'
 import SquareGrid from 'lib/map/grid/square'
 
 require('lib/polyfills/closest')
@@ -49,6 +50,10 @@ export default class extends ApplicationController {
   
   get gridType () {
     switch (this.data.get('gridType')) {
+      case 'horizontal-hex':
+        return HorizontalHexGrid
+        break
+      
       case 'square':
       default:
         return SquareGrid
