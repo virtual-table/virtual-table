@@ -2,6 +2,7 @@ import ApplicationController from 'controllers/application_controller'
 import _ from 'underscore'
 import PIXI from 'lib/pixi'
 import HorizontalHexGrid from 'lib/map/grid/horizontal_hexagon'
+import IsometricGrid from 'lib/map/grid/isometric'
 import VerticalHexGrid from 'lib/map/grid/vertical_hexagon'
 import SquareGrid from 'lib/map/grid/square'
 
@@ -53,6 +54,10 @@ export default class extends ApplicationController {
     switch (this.data.get('gridType')) {
       case 'horizontal-hex':
         return HorizontalHexGrid
+        break
+      
+      case 'isometric':
+        return IsometricGrid
         break
       
       case 'vertical-hex':
