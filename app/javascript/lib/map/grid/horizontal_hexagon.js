@@ -11,7 +11,7 @@ export default class extends Grid {
     this.tileWidth  = this.tileDiameter = this.tileRadius * 2
   }
   
-  cornersForTile(column, row) {
+  verticesForTile(column, row) {
     const top    = column % 2 ? (this.tileHeight / 2) + row * this.tileHeight : row * this.tileHeight
     const middle = top + (this.tileHeight / 2)
     const bottom = top + this.tileHeight
@@ -27,12 +27,12 @@ export default class extends Grid {
      *    ╲_╱ 4
      *    6 5
      */
-    let corners = [
+    let vertices = [
       [left,        middle], [centerLeft, top],
       [centerRight, top],    [right,      middle],
       [centerRight, bottom], [centerLeft, bottom]
     ]
     
-    return corners
+    return vertices
   }
 }

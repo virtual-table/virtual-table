@@ -11,41 +11,41 @@ export default class {
   }
   
   preprocess () {
-    this.tiles = []
+    this.faces = []
     
     for (let row = 0; row < this.rows; row++) {
       for (let column = 0; column < this.columns; column++) {
-        this.tiles.push(this.cornersForTile(column, row))
+        this.faces.push(this.verticesForTile(column, row))
       }
     }
     
-    this.corners = _.uniq(_.flatten(this.tiles, true))
-    this.lines   = _.uniq(_.flatten(_.map(this.tiles, (corners) => {
-      let lines = []
+    this.vertices = _.uniq(_.flatten(this.faces, true))
+    this.edges    = _.uniq(_.flatten(_.map(this.faces, (vertices) => {
+      let edges = []
       
-      for (let i = 1; i < corners.length; i++) {
-        lines.push(
+      for (let i = 1; i < vertices.length; i++) {
+        edges.push(
           [
-            corners[i - 1],
-            corners[i]
+            vertices[i - 1],
+            vertices[i]
           ].sort(this.sortByPosition)
         )
       }
       
-      lines.push(
+      edges.push(
         [
-          corners[corners.length - 1],
-          corners[0]
+          vertices[vertices.length - 1],
+          vertices[0]
         ].sort(this.sortByPosition)
       )
       
-      return lines
-    }), true), _.iteratee((line) => _.flatten(line).join(',')))
+      return edges
+    }), true), _.iteratee((edge) => _.flatten(edge).join(',')))
   }
   
   drawGrid (graphics) {
-    if (!this.lines) this.preprocess()
-    this.lines.forEach((line) => graphics.moveTo(...line[0]).lineTo(...line[1]))
+    if (!this.edges) this.preprocess()
+    this.edges.forEach((edge) => graphics.moveTo(...edge[0]).lineTo(...edge[1]))
   }
   
   sortByPosition (a, b) {
