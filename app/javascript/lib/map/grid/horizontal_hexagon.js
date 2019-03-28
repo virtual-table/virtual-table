@@ -11,7 +11,7 @@ export default class extends Grid {
     this.tileWidth  = this.tileDiameter = this.tileRadius * 2
   }
   
-  pathForTile(column, row) {
+  cornersForTile(column, row) {
     const top    = column % 2 ? (this.tileHeight / 2) + row * this.tileHeight : row * this.tileHeight
     const middle = top + (this.tileHeight / 2)
     const bottom = top + this.tileHeight
@@ -27,28 +27,12 @@ export default class extends Grid {
      *    ╲_╱ 4
      *    6 5
      */
-    let path = [
-      [left, middle],
-      [centerLeft, top],
-      [centerRight, top],
-      [right, middle],
-      [centerRight, bottom],
-      [centerLeft, bottom],
-      [left, middle]
+    let corners = [
+      [left,        middle], [centerLeft, top],
+      [centerRight, top],    [right,      middle],
+      [centerRight, bottom], [centerLeft, bottom]
     ]
     
-    return path
-  }
-  
-  drawTile(graphics, column, row) {
-    let path = this.pathForTile(column, row)
-    
-    // Draw lines:
-    let start = path.shift()
-    
-    graphics.moveTo(start[0], start[1])
-    for (let coordinates of path) graphics.lineTo(...coordinates)
-    
-    return graphics
+    return corners
   }
 }
