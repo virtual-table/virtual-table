@@ -6,7 +6,7 @@ export default class extends Grid {
   constructor (columns, rows, size) {
     super(columns, rows, size)
     
-    this.tileWidth  = size * 2
+    this.tileWidth  = size * 1.71875
     this.tileHeight = size
   }
   
