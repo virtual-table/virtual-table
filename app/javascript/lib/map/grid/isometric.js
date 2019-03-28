@@ -6,7 +6,11 @@ export default class extends Grid {
   constructor (columns, rows, size) {
     super(columns, rows, size)
     
-    this.tileWidth  = size * 1.71875
+    // From Roll20:
+    // To make an isometric map in photo editing or illustration software,
+    // start with a grid, rotate it by 45 degrees and scale it vertically
+    // by 57.7%.
+    this.tileWidth  = size * 1.733102253
     this.tileHeight = size
   }
   
