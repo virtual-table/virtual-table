@@ -40,6 +40,13 @@ export default class extends Draggable(ObjectController) {
     this.undraw()
   }
   
+  sizeUpdated () {
+    if (this.sprite) {
+      this.sprite.width  = this.width
+      this.sprite.height = this.height
+    }
+  }
+  
   locationUpdated () {
     if (this.sprite) {
       this.sprite.x = this.x

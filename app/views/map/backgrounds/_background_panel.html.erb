@@ -7,6 +7,12 @@ if background.persisted?
 else
   form_url   = map_backgrounds_path(map)
 end
+
+form_data = {
+  controller: 'form--map-background',
+  action:     'change->form--map-background#formChanged',
+  form__map_background_map_background: dom_id(background)
+}
 %>
 <nav class="panel" id="<%= dom_id(background, :panel) %>" data-controller="map--panel">
   <div class="panel-heading">
@@ -25,7 +31,7 @@ end
         data: { remote: true }
     %>
   </div>
-  <%= bulma_form_for background, url: form_url, html: { class: 'panel-block' } do |f| %>
+  <%= bulma_form_for background, url: form_url, html: { class: 'panel-block', data: form_data } do |f| %>
     <%= f.field :image do %>
       <%= f.label      :image %>
       <%= f.file_field :image %>
@@ -36,14 +42,14 @@ end
       <div class="level-item">
         <%= f.field :width do %>
           <%= f.label        :width %>
-          <%= f.number_field :width %>
+          <%= f.number_field :width, data: { target: 'form--map-background.width' } %>
           <%= f.errors       :width %>
         <% end %>
       </div>
       <div class="level-item">
         <%= f.field :height do %>
           <%= f.label        :height %>
-          <%= f.number_field :height %>
+          <%= f.number_field :height, data: { target: 'form--map-background.height' } %>
           <%= f.errors       :height %>
         <% end %>
       </div>
@@ -53,14 +59,14 @@ end
       <div class="level-item">
         <%= f.field :x do %>
           <%= f.label        :x %>
-          <%= f.number_field :x %>
+          <%= f.number_field :x, data: { target: 'form--map-background.x' } %>
           <%= f.errors       :x %>
         <% end %>
       </div>
       <div class="level-item">
         <%= f.field :y do %>
           <%= f.label        :y %>
-          <%= f.number_field :y %>
+          <%= f.number_field :y, data: { target: 'form--map-background.y' } %>
           <%= f.errors       :y %>
         <% end %>
       </div>
