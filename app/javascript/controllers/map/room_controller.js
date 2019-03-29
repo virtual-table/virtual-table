@@ -53,7 +53,7 @@ export default class extends ApplicationController {
   }
   
   connect () {
-    if (!this.floor) return
+    if (!this.floor || !this.floor.gameMasterLayer) return
     
     if (this.shortCode) {
       this.token = this.floor.gameMasterLayer.addChild(new PIXI.Container())

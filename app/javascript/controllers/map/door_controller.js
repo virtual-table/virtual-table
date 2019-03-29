@@ -7,6 +7,7 @@ export default class extends WallController {
   set closed (v) { this.data.set('closed', v ? 'true' : 'false') }
   
   connect () {
+    if (!this.floor || !this.floor.gameMasterLayer) return
     super.connect()
     
     this.wall.interactive = true
