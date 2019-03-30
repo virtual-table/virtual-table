@@ -29,15 +29,16 @@ export default class extends ApplicationController {
     let xPoints = points.map((point) => point[0])
     let yPoints = points.map((point) => point[1])
     
-    let left = Math.min(...xPoints) 
-    let right = Math.max(...xPoints)
-    
-    let top    = Math.min(...yPoints)
-    let bottom = Math.max(...yPoints)
+    let xSum = 0
+    let ySum = 0
+    for(var i = 0, l = xPoints.length; i < l; i++) {
+      xSum += xPoints[i]
+      ySum += yPoints[i]
+    }
     
     return [
-      left + (right  - left) / 2,
-      top  + (bottom - top ) / 2
+      xSum / xPoints.length,
+      ySum / yPoints.length
     ]
   }
   
