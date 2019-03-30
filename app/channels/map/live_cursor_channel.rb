@@ -1,4 +1,4 @@
-class LiveCursorChannel < ApplicationCable::Channel
+class Map::LiveCursorChannel < ApplicationCable::Channel
   def subscribed
     current_user.games.each do |game|
       stream_for game

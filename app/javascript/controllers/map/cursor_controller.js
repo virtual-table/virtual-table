@@ -34,7 +34,6 @@ export default class extends ObjectController {
   
   addCursor () {
     let container = this.container = this.viewport.addChild(new PIXI.Container())
-    //container.visible = this.visible
     container.x = this.x || 0
     container.y = this.y || 0
     

@@ -1,6 +1,6 @@
-import consumer from "./consumer"
+import consumer from "../consumer"
 
-const liveCursorChannel = consumer.subscriptions.create("LiveCursorChannel", {
+const liveCursorChannel = consumer.subscriptions.create("Map::LiveCursorChannel", {
   connected() {
     console.log('liveCursorChannel connected')
     // Called when the subscription is ready for use on the server

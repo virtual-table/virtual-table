@@ -1,6 +1,6 @@
 import _ from 'underscore'
 import ApplicationController from 'controllers/application_controller'
-import liveCursorChannel from 'channels/live_cursor_channel'
+import liveCursorChannel from 'channels/map/live_cursor_channel'
 
 export default class extends ApplicationController {
   
