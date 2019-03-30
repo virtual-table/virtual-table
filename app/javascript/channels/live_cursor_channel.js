@@ -17,6 +17,7 @@ const liveCursorChannel = consumer.subscriptions.create("LiveCursorChannel", {
     if (element) {
       element.dataset['map-CursorX'] = data.position[0]
       element.dataset['map-CursorY'] = data.position[1]
+      element.dataset['map-Floor']   = data.floor
       event = new Event('locationUpdated')
       element.dispatchEvent(event)
     }
