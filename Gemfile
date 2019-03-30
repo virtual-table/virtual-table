@@ -10,6 +10,7 @@ gem 'puma'
 
 # Database:
 gem 'pg'
+gem 'redis'
 
 # Utility:
 gem 'bcrypt'
