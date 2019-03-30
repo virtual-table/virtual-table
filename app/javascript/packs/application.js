@@ -44,4 +44,13 @@ import consumer from '../channels/consumer'
                    .getControllerForElementAndIdentifier(element, 'map-editor')
     }
   })
+  
+  Object.defineProperty(this.VTT, 'player', {
+    get: function() {
+      let element = document.querySelector('[data-controller*="map-player"]')
+      return element &&
+             window.VTT.application
+                   .getControllerForElementAndIdentifier(element, 'map-player')
+    }
+  })
 }).call(window)
