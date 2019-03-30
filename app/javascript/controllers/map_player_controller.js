@@ -32,11 +32,6 @@ export default class extends ApplicationController {
   connect () {
     this.mode = 'player'
     
-    this.shareCursorPosition = _.throttle(this.shareCursorPosition.bind(this), 50, {
-      leading:  false,
-      trailing: true
-    })
-    
     this.showActiveFloor = this.showActiveFloor.bind(this)
     this.trackCursor     = this.trackCursor.bind(this)
     
@@ -59,6 +54,12 @@ export default class extends ApplicationController {
   
   trackCursor () {
     if (this.viewport) {
+      let updateRate = (1000 / 15) // 15 times per second
+      this.shareCursorPosition = _.throttle(this.shareCursorPosition.bind(this), updateRate, {
+        leading:  false,
+        trailing: true
+      })
+      
       this.canvas.viewport.on('pointermove', this.shareCursorPosition)
     }
   }
