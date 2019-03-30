@@ -6,14 +6,20 @@ const liveCursorChannel = consumer.subscriptions.create("LiveCursorChannel", {
     // Called when the subscription is ready for use on the server
   },
   
+  // Called when the subscription has been terminated by the server
   disconnected() {
     console.log('liveCursorChannel disconnected')
-    // Called when the subscription has been terminated by the server
   },
   
+  // Called when there's incoming data on the websocket for this channel
   received(data) {
-    console.log('liveCursorChannel received', data)
-    // Called when there's incoming data on the websocket for this channel
+    let element = document.querySelector(`[data-controller="map--cursor"][data-map--cursor-user-id="${data.user.id}"]`)
+    if (element) {
+      element.dataset['map-CursorX'] = data.position[0]
+      element.dataset['map-CursorY'] = data.position[1]
+      event = new Event('locationUpdated')
+      element.dispatchEvent(event)
+    }
   },
   
   sendPosition (gameId, floor, position) {

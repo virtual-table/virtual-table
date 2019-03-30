@@ -32,7 +32,7 @@ export default class extends ApplicationController {
   connect () {
     this.mode = 'player'
     
-    this.shareCursorPosition = _.throttle(this.shareCursorPosition.bind(this), 100, {
+    this.shareCursorPosition = _.throttle(this.shareCursorPosition.bind(this), 50, {
       leading:  false,
       trailing: true
     })
