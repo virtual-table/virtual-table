@@ -21,7 +21,7 @@ export default class extends Draggable(ObjectController) {
   }
   
   connect () {
-    if (!this.floor) return
+    if (!this.floor || !this.floor.gameMasterLayer) return
     
     this.wall = this.floor.gameMasterLayer.addChild(new PIXI.Graphics())
     this.draw()
