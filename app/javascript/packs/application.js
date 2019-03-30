@@ -7,7 +7,16 @@ import consumer from '../channels/consumer'
 (function() {
   this.VTT || (this.VTT = {})
   
+  const application = Application.start()
+  const context = require.context('../controllers', true, /\.js$/)
+  application.load(definitionsFromContext(context))
+  
+  this.VTT.application = application
+  
   this.VTT.actionCable = consumer
+  for (let subscription of consumer.subscriptions.subscriptions) {
+    subscription.application = application
+  }
   
   this.VTT.turboLinks    = require('turbolinks')
   this.VTT.turboLinks.start()
@@ -20,12 +29,6 @@ import consumer from '../channels/consumer'
   
   this.VTT.activeStorage = require('@rails/activestorage')
   this.VTT.activeStorage.start()
-  
-  const application = Application.start()
-  const context = require.context('../controllers', true, /\.js$/)
-  application.load(definitionsFromContext(context))
-  
-  this.VTT.application = application
   
   Object.defineProperty(this.VTT, 'modal', {
     get: function() {
