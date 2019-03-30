@@ -1,6 +1,8 @@
-import consumer from "../consumer"
+import consumer from '../consumer'
 
 const liveCursorChannel = consumer.subscriptions.create("Map::LiveCursorChannel", {
+  application: null,
+  
   connected() {
     console.log('liveCursorChannel connected')
     // Called when the subscription is ready for use on the server
@@ -13,13 +15,16 @@ const liveCursorChannel = consumer.subscriptions.create("Map::LiveCursorChannel"
   
   // Called when there's incoming data on the websocket for this channel
   received(data) {
-    let element = document.querySelector(`[data-controller="map--cursor"][data-map--cursor-user-id="${data.user.id}"]`)
-    if (element) {
-      element.dataset['map-CursorX'] = data.position[0]
-      element.dataset['map-CursorY'] = data.position[1]
-      element.dataset['map-Floor']   = data.floor
-      event = new Event('locationUpdated')
-      element.dispatchEvent(event)
+    let element = document.querySelector(
+      `[data-controller="map--cursor"][data-map--cursor-user-id="${data.user.id}"]`
+    )
+    
+    if (element && this.application) {
+      let cursor = this.application.getControllerForElementAndIdentifier(element, 'map--cursor')
+      cursor.x = data.position[0]
+      cursor.y = data.position[1]
+      cursor.floor = data.floor
+      cursor.updatePosition()
     }
   },
   
