@@ -10,4 +10,7 @@ class Map::Character < ApplicationRecord
   delegate :map, to: :floor,
     allow_nil: true
   
+  delegate :game, to: :map,
+   allow_nil: true
+  
 end

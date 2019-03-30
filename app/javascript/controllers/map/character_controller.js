@@ -2,6 +2,7 @@ import ObjectController from 'controllers/map/object_controller'
 import PIXI from 'lib/pixi'
 import Draggable from 'lib/map/draggable'
 import Caster from 'lib/map/visibility/caster'
+import characterChannel from 'channels/map/character_channel'
 import _ from 'underscore'
 
 export default class extends Draggable(ObjectController) {
@@ -40,11 +41,7 @@ export default class extends Draggable(ObjectController) {
   connect () {
     if (!this.floor) return
     
-    this.updateForm = _.throttle(
-      this.updateForm.bind(this), 50, {
-      leading:  false,
-      trailing: true
-    })
+    this.prepare()
     
     this.container = new PIXI.Container()
     
@@ -65,6 +62,31 @@ export default class extends Draggable(ObjectController) {
     this.undraw()
   }
   
+  // SETUP:
+  
+  prepare () {
+    this.channel   = characterChannel
+    let updateRate = (1000 / 15) // 15 times per second
+    
+    this.sharePositionAndDimensions = _.throttle(
+      this.sharePositionAndDimensions.bind(this), updateRate, {
+      leading:  false,
+      trailing: true
+    }).bind(this)
+    
+    this.updateForm = this.updateForm.bind(this)
+  }
+  
+  draw() {
+    this.floor.characterLayer.addChild(this.container)
+    this.sizeUpdated()
+    this.locationUpdated()
+  }
+  
+  undraw () {
+    this.floor.characterLayer.removeChild(this.container)
+  }
+  
   addSprite () {
     let sprite = PIXI.Sprite.from(this.spriteURL)
     
@@ -75,21 +97,6 @@ export default class extends Draggable(ObjectController) {
     
     this.container.addChild(sprite)
     this.sprite = sprite
-  }
-  
-  updateForm () {
-    if (this.form) {
-      let form = this.form
-      
-      form.width  = this.width
-      form.height = this.height
-      form.x      = this.x
-      form.y      = this.y
-    }
-  }
-  
-  showForm () {
-    if (this.form) this.form.show()
   }
   
   addLight () {
@@ -103,15 +110,7 @@ export default class extends Draggable(ObjectController) {
     this.light = light
   }
   
-  draw() {
-    this.floor.characterLayer.addChild(this.container)
-    this.sizeUpdated()
-    this.locationUpdated()
-  }
-  
-  undraw () {
-    this.floor.characterLayer.removeChild(this.container)
-  }
+  // EVENTS:
   
   sizeUpdated () {
     if (this.sprite) {
@@ -140,9 +139,45 @@ export default class extends Draggable(ObjectController) {
     }
   }
   
+  onDragMove (event) {
+    super.onDragMove(event)
+    _.defer(this.sharePositionAndDimensions)
+  }
+  
   onDragEnd (event) {
-    if (super.onDragEnd) super.onDragEnd(event)
-    _.defer(this.updateForm.bind(this))
+    super.onDragEnd(event)
+    _.defer(this.updateForm)
+    _.defer(this.sharePositionAndDimensions)
+  }
+  
+  // ACTIONS:
+  
+  sharePositionAndDimensions () {
+    if (this.channel) {
+      let characterId = this.data.get('id')
+      this.channel.sendPositionAndDimensions(
+        characterId, {
+        x:      this.x,
+        y:      this.y,
+        width:  this.width,
+        height: this.height
+      })
+    }
+  }
+  
+  updateForm () {
+    if (this.form) {
+      let form = this.form
+      
+      form.width  = this.width
+      form.height = this.height
+      form.x      = this.x
+      form.y      = this.y
+    }
+  }
+  
+  showForm () {
+    if (this.form) this.form.show()
   }
   
   drawLight (graphics) {
