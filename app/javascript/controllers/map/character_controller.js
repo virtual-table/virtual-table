@@ -112,6 +112,14 @@ export default class extends Draggable(ObjectController) {
   
   // EVENTS:
   
+  attachedToCursor () {
+    this.sprite.anchor.set(1.0)
+  }
+  
+  detachedFromCursor () {
+    this.sprite.anchor.set(0.5)
+  }
+  
   sizeUpdated () {
     if (this.sprite) {
       this.sprite.width  = this.width
@@ -139,13 +147,21 @@ export default class extends Draggable(ObjectController) {
     }
   }
   
+  onDragStart (event) {
+    super.onDragStart(event)
+    
+    this.shareCursorAttached()
+  }
+  
   onDragMove (event) {
     super.onDragMove(event)
-    _.defer(this.sharePosition)
   }
   
   onDragEnd (event) {
     super.onDragEnd(event)
+    
+    this.shareCursorDetached()
+    
     _.defer(this.updateForm)
     _.defer(this.sharePosition)
   }
@@ -201,5 +217,13 @@ export default class extends Draggable(ObjectController) {
   
   sharePosition () {
     this.channel.sendCharacterPosition(this.characterId, this.x, this.y)
+  }
+  
+  shareCursorAttached () {
+    this.channel.sendCursorAttached('Character', this.characterId)
+  }
+  
+  shareCursorDetached () {
+    this.channel.sendCursorDetached('Character', this.characterId)
   }
 }

@@ -49,6 +49,14 @@ const playerChannel = consumer.subscriptions.create("PlayerChannel", {
     this.broadcast('CharacterPosition', characterId, x, y)
   },
   
+  sendCursorAttached (type, id) {
+    this.broadcast('CursorAttached', this.playerId, type, id)
+  },
+  
+  sendCursorDetached (type, id) {
+    this.broadcast('CursorDetached', this.playerId, type, id)
+  },
+  
   sendCursorPosition (x, y) {
     this.broadcast('CursorPosition', this.playerId, x, y)
   },
@@ -65,12 +73,34 @@ const playerChannel = consumer.subscriptions.create("PlayerChannel", {
     if (character) character.updatePosition(x, y)
   },
   
+  receiveCursorAttached (playerId, type, id) {
+    let cursor = this.getCursor(playerId)
+    let object = this.getObject(type, id)
+    
+    console.log('CursorAttached', { cursor: cursor, object: object })
+    
+    if (cursor && object) cursor.attach(object)
+  },
+  
+  receiveCursorDetached (playerId, type, id) {
+    let cursor = this.getCursor(playerId)
+    let object = this.getObject(type, id)
+    
+    if (cursor && object) cursor.detach(object)
+  },
+  
   receiveCursorPosition (playerId, x, y) {
     let cursor = this.getCursor(playerId)
     if (cursor) cursor.updatePosition(x, y)
   },
   
   // HELPERS:
+  
+  getObject (type, id) {
+    const method = `get${type}`
+    if (this[method]) return this[method](id)
+    return null
+  },
   
   getCharacter (characterId) {
     let element = document.querySelector(

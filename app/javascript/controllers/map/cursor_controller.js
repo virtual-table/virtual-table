@@ -57,6 +57,18 @@ export default class extends ObjectController {
     this.updatePosition(this.x, this.y)
   }
   
+  // EVENTS:
+  
+  attach (object) {
+    this.attachment = object
+    if (object.attachedToCursor) object.attachedToCursor()
+  }
+  
+  detach (object) {
+    this.attachment = null
+    if (object.detachedFromCursor) object.detachedFromCursor()
+  }
+  
   // ACTIONS:
   
   updatePosition (x, y) {
@@ -74,6 +86,8 @@ export default class extends ObjectController {
     } else {
       this.container.x = x
       this.container.y = y
+      
+      this.updateAttachmentPositions(x, y)
     }
   }
   
@@ -89,6 +103,9 @@ export default class extends ObjectController {
     if (adx + ady < 1) {
       container.x = destination.x
       container.y = destination.y
+      
+      this.updateAttachmentPositions(destination.x, destination.y)
+      
       return
     }
     
@@ -99,9 +116,16 @@ export default class extends ObjectController {
     
     container.x += xVelocity
     container.y += yVelocity
+    
+    this.updateAttachmentPositions(container.x, container.y)
   }
   
   // HELPERS:
+  
+  updateAttachmentPositions (x, y) {
+    if (this.attachment && this.attachment.updatePosition)
+      this.attachment.updatePosition(x, y)
+  }
   
   isOutOfBounds (x, y) {
     if (x < 0 || y < 0) return true
