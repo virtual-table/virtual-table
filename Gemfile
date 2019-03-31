@@ -6,7 +6,6 @@ ruby '2.6.1'
 # Rails:
 gem 'rails',    '~> 6.0.0.beta3'
 gem 'bootsnap', '>= 1.1.0', require: false
-gem 'puma'
 
 # Database:
 gem 'pg'
@@ -20,12 +19,15 @@ gem 'aws-sdk-s3', require: false
 gem 'image_processing'
 
 # Frontend:
-gem 'sass-rails'
 gem 'webpacker'
+gem 'sass-rails'
 gem 'turbolinks'
 
 # Background:
 gem 'delayed_job_active_record'
+
+# Web Server:
+gem 'puma'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
