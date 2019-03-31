@@ -3,6 +3,7 @@ active_floor = local_assigns[:active_floor]
 %>
 <div class="columns map-editor is-gapless"
      data-controller="map-editor"
+     data-map-editor-player-id="<%= current_player&.id %>"
      data-map-editor-active-floor="<%= dom_id(active_floor) if active_floor %>">
   <div class="column">
     <%= render 'map/editor_canvas', map: map %>

@@ -1,5 +1,6 @@
 <div data-controller="map-player"
      data-map-player-game-id="<%= game.id %>"
+     data-map-player-player-id="<%= current_player&.id %>"
      data-map-player-active-floor="<%= dom_id(active_floor) if active_floor %>">
   <div class="map-canvas"
        data-controller="map--canvas"
@@ -24,13 +25,13 @@
     <div style="display: none;">
       <%= render map.floors %>
       
-      <% game.users.each do |user| %>
+      <% game.players.each do |player| %>
         <div data-controller="map--cursor"
-             data-map--cursor-user-id="<%= user.id %>"
+             data-map--cursor-player-id="<%= player.id %>"
              data-map--cursor-x="-100"
              data-map--cursor-y="-100"
-             data-map--cursor-visible="<%= user == current_user ? false : true %>"
-             data-map--cursor-label="<%= user.name %>">
+             data-map--cursor-visible="true"
+             data-map--cursor-label="<%= player.user.name %>">
         </div>
       <% end %>
     </div>

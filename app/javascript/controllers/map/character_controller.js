@@ -2,10 +2,12 @@ import ObjectController from 'controllers/map/object_controller'
 import PIXI from 'lib/pixi'
 import Draggable from 'lib/map/draggable'
 import Caster from 'lib/map/visibility/caster'
-import characterChannel from 'channels/map/character_channel'
+import playerChannel from 'channels/player_channel'
 import _ from 'underscore'
 
 export default class extends Draggable(ObjectController) {
+  
+  get characterId () { return this.data.get('id') }
   
   get form () {
     let htmlId  = this.data.get('form')
@@ -65,16 +67,14 @@ export default class extends Draggable(ObjectController) {
   // SETUP:
   
   prepare () {
-    this.channel   = characterChannel
-    let updateRate = (1000 / 15) // 15 times per second
-    
-    this.sharePositionAndDimensions = _.throttle(
-      this.sharePositionAndDimensions.bind(this), updateRate, {
-      leading:  false,
-      trailing: true
-    }).bind(this)
+    this.channel = playerChannel
     
     this.updateForm = this.updateForm.bind(this)
+    
+    // BROADCASTING:
+    
+    this.shareDimensions = _.throttle(this.shareDimensions.bind(this), this.channel.broadcastRate, { trailing: true })
+    this.sharePosition   = _.throttle(this.sharePosition.bind(this),   this.channel.broadcastRate, { trailing: true })
   }
   
   draw() {
@@ -141,29 +141,16 @@ export default class extends Draggable(ObjectController) {
   
   onDragMove (event) {
     super.onDragMove(event)
-    _.defer(this.sharePositionAndDimensions)
+    _.defer(this.sharePosition)
   }
   
   onDragEnd (event) {
     super.onDragEnd(event)
     _.defer(this.updateForm)
-    _.defer(this.sharePositionAndDimensions)
+    _.defer(this.sharePosition)
   }
   
   // ACTIONS:
-  
-  sharePositionAndDimensions () {
-    if (this.channel) {
-      let characterId = this.data.get('id')
-      this.channel.sendPositionAndDimensions(
-        characterId, {
-        x:      this.x,
-        y:      this.y,
-        width:  this.width,
-        height: this.height
-      })
-    }
-  }
   
   updateForm () {
     if (this.form) {
@@ -188,5 +175,31 @@ export default class extends Draggable(ObjectController) {
   drawVision (graphics) {
     this.caster.drawVision(graphics)
     return graphics
+  }
+  
+  // BROADCAST:
+  
+  updateDimensions (width, height) {
+    if (this.width != width || this.height != height) {
+      this.width = width
+      this.height = height
+      this.sizeUpdated()
+    }
+  }
+  
+  shareDimensions () {
+    this.channel.sendCharacterDimensions(this.characterId, this.width, this.height)
+  }
+  
+  updatePosition (x, y) {
+    if (this.x != x || this.y != y) {
+      this.x = x
+      this.y = y
+      this.locationUpdated()
+    }
+  }
+  
+  sharePosition () {
+    this.channel.sendCharacterPosition(this.characterId, this.x, this.y)
   }
 }

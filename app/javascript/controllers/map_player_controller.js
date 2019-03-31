@@ -1,6 +1,6 @@
 import _ from 'underscore'
 import ApplicationController from 'controllers/application_controller'
-import liveCursorChannel from 'channels/map/live_cursor_channel'
+import playerChannel from 'channels/player_channel'
 
 export default class extends ApplicationController {
   
@@ -32,6 +32,9 @@ export default class extends ApplicationController {
   connect () {
     this.mode = 'player'
     
+    this.channel = playerChannel
+    this.channel.playerId = parseInt(this.data.get('playerId'))
+    
     this.showActiveFloor = this.showActiveFloor.bind(this)
     this.trackCursor     = this.trackCursor.bind(this)
     
@@ -54,24 +57,14 @@ export default class extends ApplicationController {
   
   trackCursor () {
     if (this.viewport) {
-      let updateRate = (1000 / 15) // 15 times per second
-      this.shareCursorPosition = _.throttle(this.shareCursorPosition.bind(this), updateRate, {
-        leading:  false,
-        trailing: true
-      })
-      
+      this.shareCursorPosition = _.throttle(this.shareCursorPosition.bind(this), this.channel.broadcastRate)
       this.canvas.viewport.on('pointermove', this.shareCursorPosition)
     }
   }
   
   shareCursorPosition (event) {
     let data = event.data
-    if (data && this.mode == 'player') {
-      let gameId = this.data.get('gameId')
-      let floor  = this.activeFloor && this.activeFloor.id
-      let position = data.getLocalPosition(this.viewport)
-      
-      liveCursorChannel.sendPosition(gameId, floor, position)
-    }
+    let position = data.getLocalPosition(this.viewport)
+    this.channel.sendCursorPosition(position.x, position.y)
   }
 }

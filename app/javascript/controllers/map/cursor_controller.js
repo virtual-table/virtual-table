@@ -29,13 +29,14 @@ export default class extends ObjectController {
   
   setupTicker () {
     this.ticker = new PIXI.ticker.Ticker()
-    this.ticker.speed = this.frameRate / this.ticker.FPS
+    this.ticker.start()
+    //this.ticker.speed = this.frameRate / this.ticker.FPS
   }
   
   addCursor () {
     let container = this.container = this.viewport.addChild(new PIXI.Container())
-    container.x = this.x || 0
-    container.y = this.y || 0
+    container.x = this.x
+    container.y = this.y
     
     let cursor = this.cursor = container.addChild(new PIXI.Graphics())
     cursor.beginFill(0x000000)
@@ -53,25 +54,26 @@ export default class extends ObjectController {
     this.destination = { x: this.x, y: this.y }
     this.ticker.add(this.moveCursorToDestination.bind(this))
     
-    this.updatePosition()
+    this.updatePosition(this.x, this.y)
   }
   
-  updatePosition () {
+  // ACTIONS:
+  
+  updatePosition (x, y) {
+    this.x = x
+    this.y = y
+    
     let container = this.container
     if (!container) return
     
-    container.visible = this.visible && !this.isOutOfBounds(this.x, this.y)
+    container.visible = this.visible && !this.isOutOfBounds(x, y)
     
     if (container.visible) {
-      this.destination.x = this.x
-      this.destination.y = this.y
-      
-      this.ticker.start()
+      this.destination.x = x
+      this.destination.y = y
     } else {
-      this.ticker.stop()
-      
-      this.container.x = this.x
-      this.container.y = this.y
+      this.container.x = x
+      this.container.y = y
     }
   }
   
@@ -87,18 +89,19 @@ export default class extends ObjectController {
     if (adx + ady < 1) {
       container.x = destination.x
       container.y = destination.y
-      this.ticker.stop()
       return
     }
     
+    let speed     = 10
     let angle     = Math.atan2(dy, dx)
-    let xVelocity = Math.cos(angle) * (adx / 10)
-    let yVelocity = Math.sin(angle) * (ady / 10)
+    let xVelocity = Math.cos(angle) * (adx / speed)
+    let yVelocity = Math.sin(angle) * (ady / speed)
     
     container.x += xVelocity
     container.y += yVelocity
   }
   
+  // HELPERS:
   
   isOutOfBounds (x, y) {
     if (x < 0 || y < 0) return true

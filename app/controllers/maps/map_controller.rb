@@ -10,5 +10,8 @@ module Maps
       @map = Map.find params[:map_id]
     end
     
+    def current_game
+      @game ||= @map.game
+    end
   end
 end
