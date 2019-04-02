@@ -30,7 +30,7 @@ export default class extends ApplicationController {
   }
   
   connect () {
-    this.mode = 'player'
+    this.mode = this.data.get('playerRole') || 'player'
     
     this.channel = playerChannel
     this.channel.playerId = parseInt(this.data.get('playerId'))
