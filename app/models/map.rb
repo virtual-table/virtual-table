@@ -12,6 +12,15 @@ class Map < ApplicationRecord
   has_many :characters,
     through: :floors
   
+  has_many :rooms,
+    through: :floors
+  
+  has_many :walls,
+    through: :rooms
+  
+  has_many :doors,
+    through: :rooms
+  
   def width
     floors.map(&:width).max
   end
