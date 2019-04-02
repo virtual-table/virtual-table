@@ -6,7 +6,7 @@ import IsometricGrid from 'lib/map/grid/isometric'
 import VerticalHexGrid from 'lib/map/grid/vertical_hexagon'
 import SquareGrid from 'lib/map/grid/square'
 
-require('lib/polyfills/closest')
+require('lib/polyfills/includes')
 
 export default class extends ApplicationController {
   
@@ -106,7 +106,7 @@ export default class extends ApplicationController {
     
     this.addBackgroundLayer()
     
-    if (this.player.mode == 'editor') {
+    if (['editor', 'gm'].includes(this.player.mode)) {
       this.addGameMasterLayer()
     }
     
