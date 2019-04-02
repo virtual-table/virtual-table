@@ -1,2 +1,0 @@
-module Maps::CharactersHelper
-end
