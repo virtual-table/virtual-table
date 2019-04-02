@@ -36,7 +36,7 @@ class Map::Door < ApplicationRecord
   def relay_update
     return unless game.present?
     
-    GameRelayJob.perform_now(game, data: ['DoorUpdated', [attributes]])
+    GameRelayJob.perform_later(game, data: ['DoorUpdated', [attributes]])
   end
   
 end
