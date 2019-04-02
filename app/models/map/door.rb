@@ -8,6 +8,11 @@ class Map::Door < ApplicationRecord
   delegate :map, to: :room,
     allow_nil: true
   
+  delegate :game, to: :map,
+    allow_nil: true
+  
+  after_save :relay_update
+  
   def origin
     [origin_x, origin_y]
   end
@@ -24,6 +29,14 @@ class Map::Door < ApplicationRecord
   def destination=(v)
     self.destination_x = v.first
     self.destination_y = v.last
+  end
+  
+  private
+  
+  def relay_update
+    return unless game.present?
+    
+    GameRelayJob.perform_now(game, data: ['DoorUpdated', [attributes]])
   end
   
 end

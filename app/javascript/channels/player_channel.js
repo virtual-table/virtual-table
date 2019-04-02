@@ -25,7 +25,10 @@ const playerChannel = consumer.subscriptions.create("PlayerChannel", {
     let { playerId, sessionId, data } = message
     if (sessionId != this.sessionId) {
       const method = `receive${data[0]}`
-      if (this[method]) this[method].apply(this, ...data.slice(1))
+      if (this[method]) {
+        let args = data.slice(1)
+        this[method].apply(this, ...args)
+      }
     }
   },
   
@@ -77,8 +80,6 @@ const playerChannel = consumer.subscriptions.create("PlayerChannel", {
     let cursor = this.getCursor(playerId)
     let object = this.getObject(type, id)
     
-    console.log('CursorAttached', { cursor: cursor, object: object })
-    
     if (cursor && object) cursor.attach(object)
   },
   
@@ -92,6 +93,11 @@ const playerChannel = consumer.subscriptions.create("PlayerChannel", {
   receiveCursorPosition (playerId, x, y) {
     let cursor = this.getCursor(playerId)
     if (cursor) cursor.updatePosition(x, y)
+  },
+  
+  receiveDoorUpdated (attributes) {
+    let door = this.getDoor(attributes.id)
+    if (door) door.load(attributes)
   },
   
   // HELPERS:
@@ -121,6 +127,17 @@ const playerChannel = consumer.subscriptions.create("PlayerChannel", {
     if (element && this.application) {
       return this.application
                  .getControllerForElementAndIdentifier(element, 'map--cursor')
+    }
+  },
+  
+  getDoor (doorId) {
+    let element = document.querySelector(
+      `[data-controller="map--door"][data-map--door-id="${doorId}"]`
+    )
+    
+    if (element && this.application) {
+      return this.application
+                 .getControllerForElementAndIdentifier(element, 'map--door')
     }
   },
   

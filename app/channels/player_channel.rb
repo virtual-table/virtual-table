@@ -1,7 +1,7 @@
 class PlayerChannel < ApplicationCable::Channel
   def subscribed
     current_user.players.each do |player|
-      stream_for [player]
+      stream_for player
     end
   end
   

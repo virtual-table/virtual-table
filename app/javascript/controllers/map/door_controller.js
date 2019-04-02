@@ -16,6 +16,8 @@ export default class extends WallController {
   }
   
   draw () {
+    if (!this.wall) return
+    
     let color = this.closed ? 0xFFAA00 : 0x00FF00
     let origin = this.origin
     let destination = this.destination
@@ -33,12 +35,24 @@ export default class extends WallController {
              .lineTo(...this.destination)
   }
   
+  updated () {
+    this.draw()
+    this.floor.updateObstacles()
+  }
+  
   toggleDoor () {
     this.closed = !this.closed
     this.save()
     
-    this.draw()
-    this.floor.updateObstacles()
+    this.updated()
+  }
+  
+  load (attributes) {
+    // TODO: Use all attributes, not just closed.
+    console.log('load', attributes )
+    this.closed = attributes.closed
+    
+    this.updated()
   }
   
   save () {
