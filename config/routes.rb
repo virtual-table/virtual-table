@@ -17,6 +17,7 @@ Rails.application.routes.draw do
       resources :backgrounds
       resources :characters
       resources :floors
+      resources :doors
     end
   end
   
