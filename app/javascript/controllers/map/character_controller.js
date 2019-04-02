@@ -113,11 +113,11 @@ export default class extends Draggable(ObjectController) {
   // EVENTS:
   
   attachedToCursor () {
-    this.sprite.anchor.set(1.0)
+    this.attached = true
   }
   
   detachedFromCursor () {
-    this.sprite.anchor.set(0.5)
+    this.attached = false
   }
   
   sizeUpdated () {
@@ -128,13 +128,22 @@ export default class extends Draggable(ObjectController) {
   }
   
   locationUpdated () {
+    let { x, y, center, width, height } = this 
+    
+    if (this.attached) {
+      x = x - width  / 2
+      y = y - height / 2
+      center[0] -= width / 2
+      center[1] -= height / 2
+    }
+    
     if (this.sprite) {
-      this.sprite.x = this.x + this.width  / 2
-      this.sprite.y = this.y + this.height / 2
+      this.sprite.x = x + width  / 2
+      this.sprite.y = y + height / 2
     }
     
     if (this.caster) {
-      this.caster.origin = this.center
+      this.caster.origin = center
     }
     
     if (this.light) {
