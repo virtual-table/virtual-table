@@ -1,5 +1,6 @@
 import WallController from 'controllers/map/wall_controller'
 import PIXI from 'lib/pixi'
+import Rails from '@rails/ujs'
 
 export default class extends WallController {
   
@@ -34,7 +35,32 @@ export default class extends WallController {
   
   toggleDoor () {
     this.closed = !this.closed
+    this.save()
+    
     this.draw()
     this.floor.updateObstacles()
+  }
+  
+  save () {
+    if (this.data.has('url')) {
+      let body    = {
+        _method: 'PUT',
+        map_door: {
+          closed: this.closed
+        }
+      }
+      
+      let request = new Request(
+        this.data.get('url'), {
+        method: 'PUT',
+        body:   JSON.stringify(body),
+        headers: {
+          'Content-Type': 'application/json',
+          'X-CSRF-Token': Rails.csrfToken()
+        }
+      })
+      
+      fetch(request)
+    }
   }
 }
