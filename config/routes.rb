@@ -12,6 +12,9 @@ Rails.application.routes.draw do
     end
   end
   
+  resources :compendia do
+  end
+  
   resources :maps, except: %i[new create] do
     scope module: 'maps' do
       resources :backgrounds

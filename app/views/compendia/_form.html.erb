@@ -1,0 +1,21 @@
+ <%= bulma_form_for compendium do |f| %>
+  <%= f.field :title do %>
+    <%= f.label      :title %>
+    <%= f.text_field :title %>
+    <%= f.errors     :title %>
+  <% end %>
+  
+  <%= f.field :description do %>
+    <%= f.label          :description %>
+    <%= f.rich_text_area :description %>
+    <%= f.errors         :description %>
+  <% end %>
+  
+  <%= f.field :public do %>
+    <%= f.check_box :public %>
+    <%= f.label     :public %>
+    <%= f.errors    :public %>
+  <% end %>
+  
+  <%= f.submit_or_reset %>
+<% end %>
