@@ -1,32 +1,3 @@
 <section class="section">
-  <div class="container">
-    <header class="level">
-      <div class="level-left">
-        <div class="level-item">
-          <h1 class="title"><%= t '.games' %></h1>
-        </div>
-        <div class="level-item">
-          <%= link_to t('.create_new_game'), new_game_path, class: 'is-small button' %>
-        </div>
-      </div>
-    </header>
-    
-    <% if @players.present? %>
-      <ul>
-        <% @players.each do |play| %>
-          <% game = play.game %>
-          <li>
-            <%= link_to game.title, game %>
-            <span class="tag"><%= play.role %></span>
-            <%=
-              link_to t('.join_session'), play_path(game),
-                class: 'button is-small is-link is-outlined'
-            %>
-          </li>
-        <% end %>
-      </ul>
-    <% else %>
-      <p><%= t '.no_games_available' %></p>
-    <% end %>
-  </div>
+  <%= render 'games', players: @players %>
 </section>
