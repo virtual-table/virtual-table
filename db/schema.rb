@@ -168,6 +168,17 @@ ActiveRecord::Schema.define(version: 2019_04_05_081707) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["game_id"], name: "index_maps_on_game_id"
   end
+  create_table "pages", force: :cascade do |t|
+    t.string "title"
+    t.string "type", default: "Page"
+    t.integer "position"
+    t.bigint "compendium_id"
+    t.bigint "parent_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["compendium_id"], name: "index_pages_on_compendium_id"
+    t.index ["parent_id"], name: "index_pages_on_parent_id"
+  end
 
   create_table "players", force: :cascade do |t|
     t.bigint "game_id"
@@ -197,6 +208,8 @@ ActiveRecord::Schema.define(version: 2019_04_05_081707) do
   add_foreign_key "map_rooms", "map_floors", column: "floor_id"
   add_foreign_key "map_walls", "map_rooms", column: "room_id"
   add_foreign_key "maps", "games"
+  add_foreign_key "pages", "compendia"
+  add_foreign_key "pages", "pages", column: "parent_id"
   add_foreign_key "players", "games"
   add_foreign_key "players", "users"
 end

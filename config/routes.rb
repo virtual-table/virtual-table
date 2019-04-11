@@ -13,6 +13,9 @@ Rails.application.routes.draw do
   end
   
   resources :compendia do
+    scope module: 'compendia' do
+      resources :pages
+    end
   end
   
   resources :maps, except: %i[new create] do

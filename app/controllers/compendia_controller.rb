@@ -5,6 +5,7 @@ class CompendiaController < ApplicationController
   
   def show
     @compendium = Compendium.find params[:id]
+    @pages = @compendium.pages.without_parent
   end
   
   def new
