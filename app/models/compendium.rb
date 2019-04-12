@@ -9,4 +9,9 @@ class Compendium < ApplicationRecord
   
   has_many :maps
   
+  has_many :game_compendiums
+  
+  has_many :games,
+    through: :game_compendiums
+  
 end
