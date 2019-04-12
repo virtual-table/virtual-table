@@ -24,6 +24,7 @@ gem 'sass-rails'
 gem 'turbolinks'
 
 # Background:
+gem 'daemons'
 gem 'delayed_job_active_record'
 
 # Web Server:
