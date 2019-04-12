@@ -48,12 +48,12 @@ import consumer from '../channels/consumer'
     }
   })
   
-  Object.defineProperty(this.VTT, 'player', {
+  Object.defineProperty(this.VTT, 'displayer', {
     get: function() {
-      let element = document.querySelector('[data-controller*="map-player"]')
+      let element = document.querySelector('[data-controller*="map-displayer"]')
       return element &&
              window.VTT.application
-                   .getControllerForElementAndIdentifier(element, 'map-player')
+                   .getControllerForElementAndIdentifier(element, 'map-displayer')
     }
   })
 }).call(window)

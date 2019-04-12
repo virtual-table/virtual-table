@@ -1,8 +1,8 @@
-import MapPlayerController from 'controllers/map_player_controller'
+import MapDisplayerController from 'controllers/map_displayer_controller'
 
 require('lib/polyfills/closest')
 
-export default class extends MapPlayerController {
+export default class extends MapDisplayerController {
   
   static targets = super.targets
   

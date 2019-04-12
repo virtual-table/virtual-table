@@ -1,8 +1,8 @@
-<div data-controller="map-player"
-     data-map-player-game-id="<%= game.id %>"
-     data-map-player-player-id="<%= current_player.id %>"
-     data-map-player-player-role="<%= current_player.role %>"
-     data-map-player-active-floor="<%= dom_id(active_floor) if active_floor %>">
+<div data-controller="map-displayer"
+     data-map-displayer-game-id="<%= game.id %>"
+     data-map-displayer-player-id="<%= current_player.id %>"
+     data-map-displayer-player-role="<%= current_player.role %>"
+     data-map-displayer-active-floor="<%= dom_id(active_floor) if active_floor %>">
   <div class="map-canvas"
        data-controller="map--canvas"
        data-action="resize@window->map--canvas#resize"

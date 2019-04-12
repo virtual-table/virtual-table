@@ -12,9 +12,9 @@ export default class extends ApplicationController {
   
   get id () { return this.element.id }
   
-  get player () {
+  get displayer () {
     return this._player || (
-      this._player = this.findParentController('map-player') ||
+      this._player = this.findParentController('map-displayer') ||
                      this.findParentController('map-editor')
     )
   }
@@ -106,14 +106,14 @@ export default class extends ApplicationController {
     
     this.addBackgroundLayer()
     
-    if (['editor', 'gm'].includes(this.player.mode)) {
+    if (['editor', 'gm'].includes(this.displayer.mode)) {
       this.addGameMasterLayer()
     }
     
     this.addCharacterLayer()
     this.addGridLayer()
     
-    if (this.player.mode == 'player') {
+    if (this.displayer.mode == 'player') {
       this.addLightMask()
       this.addVisionMask()
     }
