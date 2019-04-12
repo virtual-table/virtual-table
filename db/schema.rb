@@ -55,6 +55,12 @@ ActiveRecord::Schema.define(version: 2019_04_05_081707) do
     t.index ["author_id"], name: "index_compendia_on_author_id"
   end
 
+  create_table "content_texts", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer "priority", default: 0, null: false
     t.integer "attempts", default: 0, null: false
