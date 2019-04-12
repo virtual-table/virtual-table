@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_03_27_071542) do
+ActiveRecord::Schema.define(version: 2019_04_12_111155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -46,6 +46,21 @@ ActiveRecord::Schema.define(version: 2019_03_27_071542) do
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
   end
 
+  create_table "compendia", force: :cascade do |t|
+    t.string "title"
+    t.boolean "public", default: false
+    t.bigint "author_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["author_id"], name: "index_compendia_on_author_id"
+  end
+
+  create_table "content_texts", force: :cascade do |t|
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+  end
+
   create_table "delayed_jobs", force: :cascade do |t|
     t.integer "priority", default: 0, null: false
     t.integer "attempts", default: 0, null: false
@@ -59,6 +74,15 @@ ActiveRecord::Schema.define(version: 2019_03_27_071542) do
     t.datetime "created_at", precision: 6
     t.datetime "updated_at", precision: 6
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
+
+  create_table "game_compendia", force: :cascade do |t|
+    t.bigint "game_id", null: false
+    t.bigint "compendium_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["compendium_id"], name: "index_game_compendia_on_compendium_id"
+    t.index ["game_id"], name: "index_game_compendia_on_game_id"
   end
 
   create_table "games", force: :cascade do |t|
@@ -129,7 +153,9 @@ ActiveRecord::Schema.define(version: 2019_03_27_071542) do
     t.integer "level", default: 0
     t.boolean "global_illumination", default: true
     t.string "grid_type", default: "square"
+    t.bigint "page_id"
     t.index ["map_id"], name: "index_map_floors_on_map_id"
+    t.index ["page_id"], name: "index_map_floors_on_page_id"
   end
 
   create_table "map_rooms", force: :cascade do |t|
@@ -138,7 +164,9 @@ ActiveRecord::Schema.define(version: 2019_03_27_071542) do
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "page_id"
     t.index ["floor_id"], name: "index_map_rooms_on_floor_id"
+    t.index ["page_id"], name: "index_map_rooms_on_page_id"
   end
 
   create_table "map_walls", force: :cascade do |t|
@@ -153,11 +181,37 @@ ActiveRecord::Schema.define(version: 2019_03_27_071542) do
   end
 
   create_table "maps", force: :cascade do |t|
-    t.bigint "game_id"
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["game_id"], name: "index_maps_on_game_id"
+    t.bigint "page_id"
+    t.bigint "compendium_id"
+    t.index ["compendium_id"], name: "index_maps_on_compendium_id"
+    t.index ["page_id"], name: "index_maps_on_page_id"
+  end
+
+  create_table "page_contents", force: :cascade do |t|
+    t.bigint "page_id"
+    t.string "content_type"
+    t.bigint "content_id"
+    t.integer "position"
+    t.boolean "visible", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["content_type", "content_id"], name: "index_page_contents_on_content_type_and_content_id"
+    t.index ["page_id"], name: "index_page_contents_on_page_id"
+  end
+
+  create_table "pages", force: :cascade do |t|
+    t.string "title"
+    t.string "type", default: "Page"
+    t.integer "position"
+    t.bigint "compendium_id"
+    t.bigint "parent_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["compendium_id"], name: "index_pages_on_compendium_id"
+    t.index ["parent_id"], name: "index_pages_on_parent_id"
   end
 
   create_table "players", force: :cascade do |t|
@@ -179,14 +233,23 @@ ActiveRecord::Schema.define(version: 2019_03_27_071542) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "compendia", "users", column: "author_id"
+  add_foreign_key "game_compendia", "compendia"
+  add_foreign_key "game_compendia", "games"
   add_foreign_key "games", "users", column: "author_id"
   add_foreign_key "map_backgrounds", "map_floors", column: "floor_id"
   add_foreign_key "map_characters", "map_floors", column: "floor_id"
   add_foreign_key "map_doors", "map_rooms", column: "room_id"
   add_foreign_key "map_floors", "maps"
+  add_foreign_key "map_floors", "pages"
   add_foreign_key "map_rooms", "map_floors", column: "floor_id"
+  add_foreign_key "map_rooms", "pages"
   add_foreign_key "map_walls", "map_rooms", column: "room_id"
-  add_foreign_key "maps", "games"
+  add_foreign_key "maps", "compendia"
+  add_foreign_key "maps", "pages"
+  add_foreign_key "page_contents", "pages"
+  add_foreign_key "pages", "compendia"
+  add_foreign_key "pages", "pages", column: "parent_id"
   add_foreign_key "players", "games"
   add_foreign_key "players", "users"
 end

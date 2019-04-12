@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  root to: 'games#index'
+  root to: 'dashboard#show'
   
   get    'login'  => 'sessions#new',     as: :login
   post   'login'  => 'sessions#create'
@@ -9,6 +9,12 @@ Rails.application.routes.draw do
   resources :games do
     scope module: 'games' do
       resources :maps, only: %i[new create]
+    end
+  end
+  
+  resources :compendia do
+    scope module: 'compendia' do
+      resources :pages
     end
   end
   

@@ -25,10 +25,6 @@ class MapsController < ApplicationController
   
   private
   
-  def current_game
-    @current_game ||= @map.game
-  end
-  
   def map_params
     params.require(:map).permit(%i[
       title

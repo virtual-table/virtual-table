@@ -1,0 +1,8 @@
+<li>
+  <%= link_to page.title, compendium_page_path(page.compendium, page) %>
+  <% if page.children.present? %>
+    <ul>
+      <%= render partial: 'page', collection: page.children %>
+    </ul>
+  <% end %>
+</li>

@@ -1,0 +1,19 @@
+<%= bulma_form_for [compendium, page.becomes(Page)] do |f| %>
+  <%= f.field :title do %>
+    <%= f.label      :title %>
+    <%= f.text_field :title %>
+    <%= f.errors     :title %>
+  <% end %>
+  
+  <%= f.field :parent do %>
+    <%= f.label  :parent %>
+    <%= f.select :parent, page_select_options(compendium.pages.where(parent: nil)) %>
+    <%= f.errors :parent %>
+  <% end %>
+  
+  <%= f.fields_for :contents do |content_fields| %>
+    <%= render 'compendia/page_contents/form_fields', fields: content_fields %>
+  <% end %>
+  
+  <%= f.submit_or_reset %>
+<% end %>

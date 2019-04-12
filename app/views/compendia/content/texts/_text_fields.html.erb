@@ -1,0 +1,16 @@
+<%
+f = fields
+%>
+<p>Text ID: <%= f.number_field :id, disabled: true %></p>
+
+<%= f.field :title do %>
+  <%= f.label      :title %>
+  <%= f.text_field :title %>
+  <%= f.errors     :title %>
+<% end %>
+
+<%= f.field :description do %>
+  <%= f.label          :description %>
+  <%= f.rich_text_area :description %>
+  <%= f.errors         :description %>
+<% end %>

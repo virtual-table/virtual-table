@@ -1,6 +1,8 @@
 class Map < ApplicationRecord
   
-  belongs_to :game
+  belongs_to :page
+  
+  belongs_to :compendium
   
   has_many :floors,
     -> { order(level: :asc) },

@@ -1,0 +1,61 @@
+<section class="section">
+  <div class="container">
+    <header class="level">
+      <div class="level-left">
+        <div class="level-item">
+          <h1 class="title">
+            <%= @compendium.title %>
+          </h1>
+        </div>
+        <div class="level-item">
+          <% if current_user == @compendium.author %>
+            <%=
+              link_to t('.edit_compendium'), [:edit, @compendium],
+                class: 'button is-link is-outlined'
+            %>
+          <% end %>
+        </div>
+      </div>
+    </header>
+    
+    <div class="content">
+      <%= @compendium.description %>
+    </div>
+    
+    <% if current_user == @compendium.author %>
+      <%=
+        link_to t('.destroy_compendium'), @compendium,
+          class: 'button is-danger',
+          data:  {
+            method:  :delete,
+            confirm: t('.confirm_compendium_destruction')
+          }
+      %>
+    <% end %>
+  </div>
+  <div class="container">
+    <header class="level">
+      <div class="level-left">
+        <div class="level-item">
+          <h2 class="title"><%= t '.pages' %></h2>
+        </div>
+        <div class="level-item">
+          <% if current_user == @compendium.author %>
+            <%=
+              link_to t('.new_page'), new_compendium_page_path(@compendium),
+                class: 'button is-link is-outlined'
+            %>
+          <% end %>
+        </div>
+      </div>
+    </header>
+    
+    <% if @pages.present? %>
+      <ul>
+        <%= render partial: 'page', collection: @pages %>
+      </ul>
+    <% else %>
+      <p><%= t '.no_pages_available' %></p>
+    <% end %>
+  </div>
+</section>

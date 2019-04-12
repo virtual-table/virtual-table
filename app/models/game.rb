@@ -10,7 +10,13 @@ class Game < ApplicationRecord
   has_many :users, 
     through: :players
   
-  has_many :maps
+  has_many :game_compendia
+  
+  has_many :compendia,
+    through: :game_compendia
+  
+  has_many :maps,
+    through: :compendia
   
   after_create :add_author_as_player
   

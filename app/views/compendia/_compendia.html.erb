@@ -1,0 +1,24 @@
+<div class="container">
+  <header class="level">
+    <div class="level-left">
+      <div class="level-item">
+        <h1 class="title"><%= t '.compendia' %></h1>
+      </div>
+      <div class="level-item">
+        <%= link_to t('.create_new_compendium'), new_compendium_path, class: 'is-small button' %>
+      </div>
+    </div>
+  </header>
+  
+  <% if compendia.present? %>
+    <ul>
+      <% compendia.each do |compendium| %>
+        <li>
+          <%= link_to compendium.title, compendium %>
+        </li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p><%= t '.no_compendia_available' %></p>
+  <% end %>
+</div>
