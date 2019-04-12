@@ -1,7 +1,5 @@
 class Map::Room < ApplicationRecord
   
-  has_rich_text :description
-  
   belongs_to :floor
   
   delegate :map, to: :floor,

@@ -144,7 +144,9 @@ ActiveRecord::Schema.define(version: 2019_04_11_180052) do
     t.integer "level", default: 0
     t.boolean "global_illumination", default: true
     t.string "grid_type", default: "square"
+    t.bigint "page_id"
     t.index ["map_id"], name: "index_map_floors_on_map_id"
+    t.index ["page_id"], name: "index_map_floors_on_page_id"
   end
 
   create_table "map_rooms", force: :cascade do |t|
@@ -153,7 +155,9 @@ ActiveRecord::Schema.define(version: 2019_04_11_180052) do
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "page_id"
     t.index ["floor_id"], name: "index_map_rooms_on_floor_id"
+    t.index ["page_id"], name: "index_map_rooms_on_page_id"
   end
 
   create_table "map_walls", force: :cascade do |t|
@@ -168,11 +172,13 @@ ActiveRecord::Schema.define(version: 2019_04_11_180052) do
   end
 
   create_table "maps", force: :cascade do |t|
-    t.bigint "game_id"
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["game_id"], name: "index_maps_on_game_id"
+    t.bigint "page_id"
+    t.index ["page_id"], name: "index_maps_on_page_id"
+  end
+
   create_table "page_contents", force: :cascade do |t|
     t.bigint "page_id"
     t.string "content_type"
@@ -222,9 +228,11 @@ ActiveRecord::Schema.define(version: 2019_04_11_180052) do
   add_foreign_key "map_characters", "map_floors", column: "floor_id"
   add_foreign_key "map_doors", "map_rooms", column: "room_id"
   add_foreign_key "map_floors", "maps"
+  add_foreign_key "map_floors", "pages"
   add_foreign_key "map_rooms", "map_floors", column: "floor_id"
+  add_foreign_key "map_rooms", "pages"
   add_foreign_key "map_walls", "map_rooms", column: "room_id"
-  add_foreign_key "maps", "games"
+  add_foreign_key "maps", "pages"
   add_foreign_key "page_contents", "pages"
   add_foreign_key "pages", "compendia"
   add_foreign_key "pages", "pages", column: "parent_id"
