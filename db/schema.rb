@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_11_180052) do
+ActiveRecord::Schema.define(version: 2019_04_12_111155) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -74,6 +74,15 @@ ActiveRecord::Schema.define(version: 2019_04_11_180052) do
     t.datetime "created_at", precision: 6
     t.datetime "updated_at", precision: 6
     t.index ["priority", "run_at"], name: "delayed_jobs_priority"
+  end
+
+  create_table "game_compendia", force: :cascade do |t|
+    t.bigint "game_id", null: false
+    t.bigint "compendium_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["compendium_id"], name: "index_game_compendia_on_compendium_id"
+    t.index ["game_id"], name: "index_game_compendia_on_game_id"
   end
 
   create_table "games", force: :cascade do |t|
@@ -176,6 +185,8 @@ ActiveRecord::Schema.define(version: 2019_04_11_180052) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.bigint "page_id"
+    t.bigint "compendium_id"
+    t.index ["compendium_id"], name: "index_maps_on_compendium_id"
     t.index ["page_id"], name: "index_maps_on_page_id"
   end
 
@@ -223,6 +234,8 @@ ActiveRecord::Schema.define(version: 2019_04_11_180052) do
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
   add_foreign_key "compendia", "users", column: "author_id"
+  add_foreign_key "game_compendia", "compendia"
+  add_foreign_key "game_compendia", "games"
   add_foreign_key "games", "users", column: "author_id"
   add_foreign_key "map_backgrounds", "map_floors", column: "floor_id"
   add_foreign_key "map_characters", "map_floors", column: "floor_id"
@@ -232,6 +245,7 @@ ActiveRecord::Schema.define(version: 2019_04_11_180052) do
   add_foreign_key "map_rooms", "map_floors", column: "floor_id"
   add_foreign_key "map_rooms", "pages"
   add_foreign_key "map_walls", "map_rooms", column: "room_id"
+  add_foreign_key "maps", "compendia"
   add_foreign_key "maps", "pages"
   add_foreign_key "page_contents", "pages"
   add_foreign_key "pages", "compendia"

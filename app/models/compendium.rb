@@ -7,4 +7,6 @@ class Compendium < ApplicationRecord
   
   has_many :pages
   
+  has_many :maps
+  
 end
