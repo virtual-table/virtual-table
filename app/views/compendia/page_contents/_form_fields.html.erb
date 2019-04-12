@@ -1,0 +1,15 @@
+<%
+f = fields
+containable = f.object
+content     = containable.content
+%>
+<%= field_set_tag do %>
+  <p>
+    PageContent ID: <%= f.number_field :id, disabled: true %>
+    Position: <%= f.number_field :position, disabled: true %>
+    Destroy: <%= f.check_box :_destroy %>
+  </p>
+  <%= f.fields_for :content do |content_fields| %>
+    <%= render "compendia/#{content.to_partial_path}_fields", fields: content_fields %>
+  <% end %>
+<% end %>

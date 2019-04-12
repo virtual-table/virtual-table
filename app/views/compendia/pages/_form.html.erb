@@ -11,5 +11,9 @@
     <%= f.errors :parent %>
   <% end %>
   
+  <%= f.fields_for :contents do |content_fields| %>
+    <%= render 'compendia/page_contents/form_fields', fields: content_fields %>
+  <% end %>
+  
   <%= f.submit_or_reset %>
 <% end %>

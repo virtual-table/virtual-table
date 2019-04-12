@@ -23,6 +23,12 @@ module Compendia
     
     def update
       @page = @compendium.pages.find params[:id]
+      if @page.update(page_params)
+        redirect_to [@compendium, @page.becomes(Page)], notice: t('.page_updated')
+      else
+        flash.now[:alert] = t('.page_invalid')
+        render :edit
+      end
     end
     
     def destroy
@@ -35,11 +41,22 @@ module Compendia
     private
     
     def page_params
-      params.fetch(:page, {}).permit(%i[
+      params.fetch(:page, {}).permit(*%i[
         title
         position
         parent_id
-      ])
+      ],
+        contents_attributes: [
+          %i[ id position visible _destroy ],
+          content_attributes: whitelisted_content_attributes
+        ]
+      )
+    end
+    
+    def whitelisted_content_attributes
+      %i[ id ] + (@page&.available_content_types || []).map do |type|
+        type.accessible_attributes
+      end.uniq
     end
     
   end

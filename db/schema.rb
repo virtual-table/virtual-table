@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_05_081707) do
+ActiveRecord::Schema.define(version: 2019_04_11_180052) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -173,7 +173,18 @@ ActiveRecord::Schema.define(version: 2019_04_05_081707) do
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["game_id"], name: "index_maps_on_game_id"
+  create_table "page_contents", force: :cascade do |t|
+    t.bigint "page_id"
+    t.string "content_type"
+    t.bigint "content_id"
+    t.integer "position"
+    t.boolean "visible", default: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["content_type", "content_id"], name: "index_page_contents_on_content_type_and_content_id"
+    t.index ["page_id"], name: "index_page_contents_on_page_id"
   end
+
   create_table "pages", force: :cascade do |t|
     t.string "title"
     t.string "type", default: "Page"
@@ -214,6 +225,7 @@ ActiveRecord::Schema.define(version: 2019_04_05_081707) do
   add_foreign_key "map_rooms", "map_floors", column: "floor_id"
   add_foreign_key "map_walls", "map_rooms", column: "room_id"
   add_foreign_key "maps", "games"
+  add_foreign_key "page_contents", "pages"
   add_foreign_key "pages", "compendia"
   add_foreign_key "pages", "pages", column: "parent_id"
   add_foreign_key "players", "games"
