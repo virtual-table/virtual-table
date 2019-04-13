@@ -1,3 +1,27 @@
-<%=
-  render 'map/displayer', game: @game, map: @map, active_floor: @active_floor
-%>
+<div class="columns is-gapless">
+  <div class="column is-full-mobile is-half-tablet is-one-third-desktop is-one-quarter-widescreen is-one-fifth-fullhd">
+    <div data-controller="video-chat">
+      <ol>
+        <% @game.players.each do |player| %>
+          <% if player.user == current_user %>
+            <li data-target="video-chat.host" data-player-id="<%= player.id %>">
+              <strong><%= current_user.name %></strong>
+              <video autoplay></video>
+            </li>
+          <% else %>
+            <li data-target="video-chat.participant" data-player-id="<%= player.id %>">
+              <em><%= player.user.name %></em>
+              <video autoplay></video>
+            </li>
+          <% end %>
+        <% end %>
+      </ol>
+    </div>
+  </div>
+  
+  <div class="column">
+    <%=
+      render 'map/displayer', game: @game, map: @map, active_floor: @active_floor
+    %>
+  </div>
+</div>

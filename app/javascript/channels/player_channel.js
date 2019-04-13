@@ -64,6 +64,11 @@ const playerChannel = consumer.subscriptions.create("PlayerChannel", {
     this.broadcast('CursorPosition', this.playerId, x, y)
   },
   
+  sendVideoChatBroadcast (...args) {
+    console.log('sendVideoChatBroadcast', ...args)
+    this.broadcast('VideoChatBroadcast', ...args)
+  },
+  
   // RECEIVERS:
   
   receiveCharacterDimensions (characterId, width, height) {
@@ -98,6 +103,12 @@ const playerChannel = consumer.subscriptions.create("PlayerChannel", {
   receiveDoorUpdated (attributes) {
     let door = this.getDoor(attributes.id)
     if (door) door.load(attributes)
+  },
+  
+  receiveVideoChatBroadcast (...args) {
+    console.log('receiveVideoChatBroadcast', ...args)
+    let chat = this.getVideoChat()
+    if (chat) chat.receiveBroadcast(...args)
   },
   
   // HELPERS:
@@ -138,6 +149,15 @@ const playerChannel = consumer.subscriptions.create("PlayerChannel", {
     if (element && this.application) {
       return this.application
                  .getControllerForElementAndIdentifier(element, 'map--door')
+    }
+  },
+  
+  getVideoChat () {
+    let element = document.querySelector('[data-controller="video-chat"]')
+    
+    if (element && this.application) {
+      return this.application
+                 .getControllerForElementAndIdentifier(element, 'video-chat')
     }
   },
   
