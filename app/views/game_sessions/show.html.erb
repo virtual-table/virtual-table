@@ -6,6 +6,8 @@
           <% if player.user == current_user %>
             <li data-target="video-chat.host" data-player-id="<%= player.id %>">
               <strong><%= current_user.name %></strong>
+              <a data-action="click->video-chat#join">(re)join</a>
+              <a data-action="click->video-chat#leave">leave</a>
               <video autoplay></video>
             </li>
           <% else %>

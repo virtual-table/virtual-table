@@ -16,7 +16,7 @@ export default class extends ApplicationController {
   
   get mediaConstraints () {
     return {
-      audio: false,
+      audio: true,
       video: true
     }
   }
@@ -58,6 +58,10 @@ export default class extends ApplicationController {
           type: ADD_PLAYER,
           from: this.hostId
         })
+        
+        for (const [playerId, pc] of Object.entries(this.peers)) {
+          this.connectStream(pc, stream)
+        }
       }
     )
   }
@@ -115,13 +119,10 @@ export default class extends ApplicationController {
     
     if (this.hostStream) {
       this.connectStream(pc, this.hostStream)
-    } else {
-      const stream = await navigator.mediaDevices.getUserMedia(this.mediaConstraints)
-      this.connectStream(pc, stream)
     }
     
     if (isOffer) {
-      pc.createOffer()
+      pc.createOffer({ offerToReceiveVideo: true, offerToReceiveAudio: true })
         .then(offer => pc.setLocalDescription(offer))
         .then(() => {
           this.sendBroadcast({
@@ -146,7 +147,6 @@ export default class extends ApplicationController {
     
     pc.ontrack = (event) => {
       const video = this.getParticipantVideo(playerId)
-      if (!video || video.srcObject) return
       
       video.autoplay  = 'autoplay'
       video.srcObject = event.streams[0]
@@ -164,17 +164,21 @@ export default class extends ApplicationController {
     return pc
   }
   
+  offerStream (playerId, stream) {
+    let pc = this.peers[playerId]
+  }
+  
   connectStream (pc, stream) {
     const tracks = stream.getTracks()
     tracks.forEach(track => pc.addTrack(track, stream))
   }
   
-  exchange (playerId, data) {
+  async exchange (playerId, data) {
     const { sdp, candidate } = data
     let pc = this.peers[playerId]
     
     if (!this.peers[playerId]) {
-      pc = this.createPeerConnection(playerId, false)
+      pc = await this.createPeerConnection(playerId, false)
     }
     
     if (candidate) {
