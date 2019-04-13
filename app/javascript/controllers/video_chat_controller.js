@@ -53,6 +53,8 @@ export default class extends ApplicationController {
         this.hostStream = stream
         this.hostVideo.srcObject = stream
         this.hostVideo.muted = true
+        this.hostVideo.autoplay = 'autoplay'
+        this.hostVideo.playsinline = 'playsinline'
         
         this.sendBroadcast({
           type: ADD_PLAYER,
@@ -148,8 +150,9 @@ export default class extends ApplicationController {
     pc.ontrack = (event) => {
       const video = this.getParticipantVideo(playerId)
       
-      video.autoplay  = 'autoplay'
-      video.srcObject = event.streams[0]
+      video.autoplay    = 'autoplay'
+      video.playsinline = 'playsinline'
+      video.srcObject   = event.streams[0]
     }
     
     pc.oniceconnectionstatechange = (event) => {

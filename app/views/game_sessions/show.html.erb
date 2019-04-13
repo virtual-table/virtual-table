@@ -8,12 +8,12 @@
               <strong><%= current_user.name %></strong>
               <a data-action="click->video-chat#join">(re)join</a>
               <a data-action="click->video-chat#leave">leave</a>
-              <video autoplay></video>
+              <video autoplay playsinline></video>
             </li>
           <% else %>
             <li data-target="video-chat.participant" data-player-id="<%= player.id %>">
               <em><%= player.user.name %></em>
-              <video autoplay></video>
+              <video autoplay playsinline></video>
             </li>
           <% end %>
         <% end %>
