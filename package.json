@@ -9,6 +9,7 @@
     "@rails/webpacker": "^4.0.2",
     "pixi-viewport": "^3.21.2",
     "pixi.js": "^4.8.6",
+    "simple-peer": "^9.3.0",
     "stimulus": "^1.1.1",
     "trix": "^1.0.0",
     "turbolinks": "^5.2.0",

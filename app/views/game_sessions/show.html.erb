@@ -4,14 +4,14 @@
       <ol>
         <% @game.players.each do |player| %>
           <% if player.user == current_user %>
-            <li data-target="video-chat.host" data-player-id="<%= player.id %>">
+            <li data-target="video-chat.host" data-participant-id="<%= player.id %>">
               <strong><%= current_user.name %></strong>
-              <a data-action="click->video-chat#join">(re)join</a>
+              <a data-action="click->video-chat#join">join</a>
               <a data-action="click->video-chat#leave">leave</a>
               <video autoplay playsinline></video>
             </li>
           <% else %>
-            <li data-target="video-chat.participant" data-player-id="<%= player.id %>">
+            <li data-target="video-chat.participant" data-participant-id="<%= player.id %>">
               <em><%= player.user.name %></em>
               <video autoplay playsinline></video>
             </li>

@@ -4,20 +4,40 @@ const playerChannel = consumer.subscriptions.create("PlayerChannel", {
   
   // SETTINGS:
   
-  playerId:      null, // needs to be set before anything is broadcasted
+  playerId:      null,      // needs to be set before anything is broadcasted
   broadcastRate: 1000 / 30, // 30 FPS
   
   // CONNECTION:
   
   // Called when the subscription is ready for use on the server
   connected() {
+    this.peers     = {}
     this.sessionId = this.generateSessionIdentifier()
     console.log('PlayerChannel connected', this)
   },
   
   // Called when the subscription has been terminated by the server
   disconnected() {
+    this.disconnectAllPeers()
     console.log('PlayerChannel disconnected')
+  },
+  
+  disconnectPeer (playerId) {
+    const peer = this.peers[playerId]
+    
+    if (peer) {
+      peer.destroy()
+    }
+    
+    this.peers[playerId] = null
+  },
+  
+  disconnectAllPeers () {
+    for (const [playerId, peer] of Object.entries(this.peers)) {
+      peer.destroy()
+    }
+    
+    this.peers = {}
   },
   
   // Called when there's incoming data on the websocket for this channel
@@ -64,9 +84,8 @@ const playerChannel = consumer.subscriptions.create("PlayerChannel", {
     this.broadcast('CursorPosition', this.playerId, x, y)
   },
   
-  sendVideoChatBroadcast (...args) {
-    console.log('sendVideoChatBroadcast', ...args)
-    this.broadcast('VideoChatBroadcast', ...args)
+  sendVideoChatBroadcast (data) {
+    this.broadcast('VideoChatBroadcast', data)
   },
   
   // RECEIVERS:
@@ -105,10 +124,9 @@ const playerChannel = consumer.subscriptions.create("PlayerChannel", {
     if (door) door.load(attributes)
   },
   
-  receiveVideoChatBroadcast (...args) {
-    console.log('receiveVideoChatBroadcast', ...args)
+  receiveVideoChatBroadcast (data = {}) {
     let chat = this.getVideoChat()
-    if (chat) chat.receiveBroadcast(...args)
+    if (chat) chat.receiveBroadcast(data)
   },
   
   // HELPERS:

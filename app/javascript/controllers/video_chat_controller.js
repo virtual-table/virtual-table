@@ -1,10 +1,12 @@
 import ApplicationController from 'controllers/application_controller'
 import playerChannel from 'channels/player_channel'
+import Peer from 'simple-peer'
+import _ from 'underscore'
 
 // Broadcast Types
-const ADD_PLAYER    = 'ADD_PLAYER'
-const EXCHANGE      = 'EXCHANGE'
-const REMOVE_PLAYER = 'REMOVE_PLAYER'
+const ADD_PARTICIPANT    = 'ADD_PARTICIPANT'
+const EXCHANGE_SIGNAL    = 'EXCHANGE_SIGNAL'
+const REMOVE_PARTICIPANT = 'REMOVE_PARTICIPANT'
 
 const ice = {
   iceServers: [{ urls: 'stun:stun.l.google.com:19302' }]
@@ -22,7 +24,7 @@ export default class extends ApplicationController {
   }
   
   get hostId () {
-    return this.hostTarget.dataset.playerId
+    return this.hostTarget.dataset.participantId
   }
   
   get hostVideo () {
@@ -30,14 +32,20 @@ export default class extends ApplicationController {
   }
   
   connect () {
-    this.peers   = {}
     this.channel = playerChannel
     this.channel.playerId = parseInt(this.hostId)
-    this.join()
+    
+    this.announceParticipation = this.announceParticipation.bind(this)
+    this.join = this.join.bind(this)
+    this.leave = this.leave.bind(this)
+    
+    _.defer(this.leave)
+    _.defer(this.announceParticipation)
   }
   
   disconnect () {
     this.leave()
+    window.removeEventListener('unload', this.leave)
   }
   
   stopCapture () {
@@ -48,171 +56,138 @@ export default class extends ApplicationController {
   }
   
   join () {
-    navigator.mediaDevices.getUserMedia(this.mediaConstraints).then(
-      (stream) => {
-        this.hostStream = stream
-        this.hostVideo.srcObject = stream
-        this.hostVideo.muted = true
-        this.hostVideo.autoplay = 'autoplay'
-        this.hostVideo.playsinline = 'playsinline'
-        
-        this.sendBroadcast({
-          type: ADD_PLAYER,
-          from: this.hostId
-        })
-        
-        for (const [playerId, pc] of Object.entries(this.peers)) {
-          this.connectStream(pc, stream)
-        }
-      }
-    )
+    this.announceParticipation()
+    
+    navigator.mediaDevices
+             .getUserMedia(this.mediaConstraints)
+             .then(this.streamMedia.bind(this))
   }
   
   leave () {
     this.sendBroadcast({
-      type: REMOVE_PLAYER,
+      type: REMOVE_PARTICIPANT,
       from: this.hostId
     })
+    
+    if (this.hostStream) {
+      for (const [participantId, peer] of Object.entries(this.channel.peers)) {
+        peer.removeStream(this.hostStream)
+      }
+    }
+    
+    this.channel.disconnectAllPeers()
     
     this.hostVideo.srcObject = null
     this.stopCapture()
   }
   
-  sendBroadcast (...args) {
-    this.channel.sendVideoChatBroadcast(...args)
+  announceParticipation() {
+    this.sendBroadcast({
+      type: ADD_PARTICIPANT,
+      from: this.hostId
+    })
+  }
+  
+  sendBroadcast (data = {}) {
+    this.channel.sendVideoChatBroadcast(data)
   }
   
   receiveBroadcast (data) {
     let { type, from, to } = data
     
-    if (from == this.hostId) return
-    
     switch (type) {
-      case ADD_PLAYER:
-        return this.addPlayerVideo(from)
+      case ADD_PARTICIPANT:
+        this.getParticipant(from)
+        break
       
-      case REMOVE_PLAYER:
-        return this.removePlayerVideo(from)
+      case REMOVE_PARTICIPANT:
+        this.removeParticipant(from)
+        break
       
-      case EXCHANGE:
-        if (to !== this.hostId) return
-        return this.exchange(from, data)
+      case EXCHANGE_SIGNAL:
+        if (to == this.hostId) this.receiveSignal(from, data.signal)
+        break
       
       default:
         console.warn('Unsupported broadcast type', type)
-        return
+        break
     }
-    
-    console.log('receiveBroadcast', type, playerId, data)
   }
   
-  removePlayerVideo (playerId) {
-    let video = this.getParticipantVideo(playerId)
-    video.srcObject = null
-    delete this.peers[playerId]
+  broadcastSignal (participantId, data) {
+    const signal = JSON.stringify(data)
+    this.sendBroadcast({
+      type:   EXCHANGE_SIGNAL,
+      from:   this.hostId,
+      to:     participantId,
+      signal: signal
+    })
   }
   
-  addPlayerVideo (playerId) {
-    this.createPeerConnection(playerId, true)
+  receiveSignal (participantId, signal) {
+    const peer = this.getParticipant(participantId)
+    peer.signal(signal)
   }
   
-  async createPeerConnection (playerId, isOffer) {
-    let pc = this.peers[playerId] = new RTCPeerConnection(ice)
-    
-    if (this.hostStream) {
-      this.connectStream(pc, this.hostStream)
-    }
-    
-    if (isOffer) {
-      pc.createOffer({ offerToReceiveVideo: true, offerToReceiveAudio: true })
-        .then(offer => pc.setLocalDescription(offer))
-        .then(() => {
-          this.sendBroadcast({
-            type: EXCHANGE,
-            from: this.hostId,
-            to:   playerId,
-            sdp:  pc.localDescription
-          })
-        }).catch(console.error)
-    }
-    
-    pc.onicecandidate = (event) => {
-      if (event.candidate) {
-        this.sendBroadcast({
-          type:      EXCHANGE,
-          from:      this.hostId,
-          to:        playerId,
-          candidate: event.candidate
-        })
-      }
-    };
-    
-    pc.ontrack = (event) => {
-      const video = this.getParticipantVideo(playerId)
+  getParticipant (participantId) {
+    if (!this.channel.peers[participantId]) {
+      const initiator = [participantId, this.hostId].sort()[0] == this.hostId
+      const stream = participantId !== this.hostId && this.hostStream
+      const peer = this.channel.peers[participantId] = new Peer({ initiator: initiator, stream: stream })
       
-      video.autoplay    = 'autoplay'
-      video.playsinline = 'playsinline'
-      video.srcObject   = event.streams[0]
+      peer.on('signal', (signal) => this.broadcastSignal(participantId, signal))
+      
+      peer.on('data',    (d) => console.log(`received: ${d}`))
+      peer.on('connect', () => peer.send(`connected ${participantId} with ${this.hostId}`))
+      
+      peer.on('stream', (stream) => this.streamParticipantVideo(participantId, stream))
+      
+      this.announceParticipation()
     }
     
-    pc.oniceconnectionstatechange = (event) => {
-      if (pc.iceConnectionState == 'disconnected') {
-        this.sendBroadcast({
-          type: REMOVE_PLAYER,
-          from: playerId
-        })
+    return this.channel.peers[participantId]
+  }
+  
+  removeParticipant (participantId) {
+    const video = this.getParticipantVideo(participantId)
+    
+    if (video) {
+      video.pause()
+      video.srcObject = null
+      video.load()
+    }
+    
+    this.channel.disconnectPeer(participantId)
+  }
+  
+  streamMedia (stream) {
+    this.streamToVideo(stream, this.hostVideo, true)
+    this.hostStream = stream
+    
+    for (const [participantId, peer] of Object.entries(this.channel.peers)) {
+      if (participantId !== this.hostId) {
+        peer.addStream(stream)
       }
     }
-    
-    return pc
   }
   
-  offerStream (playerId, stream) {
-    let pc = this.peers[playerId]
-  }
-  
-  connectStream (pc, stream) {
-    const tracks = stream.getTracks()
-    tracks.forEach(track => pc.addTrack(track, stream))
-  }
-  
-  async exchange (playerId, data) {
-    const { sdp, candidate } = data
-    let pc = this.peers[playerId]
-    
-    if (!this.peers[playerId]) {
-      pc = await this.createPeerConnection(playerId, false)
-    }
-    
-    if (candidate) {
-      pc.addIceCandidate(new RTCIceCandidate(candidate))
-    }
-    
-    if (sdp) {
-      pc.setRemoteDescription(new RTCSessionDescription(sdp))
-        .then(() => {
-          if (sdp.type === 'offer') {
-            pc.createAnswer()
-              .then((answer) => pc.setLocalDescription(answer))
-              .then(()=> {
-                this.sendBroadcast({
-                  type: EXCHANGE,
-                  from: this.hostId,
-                  to:   playerId,
-                  sdp:  pc.localDescription
-                })
-              }).catch(console.error)
-          }
-        })
+  streamToVideo (stream, video, muted = false) {
+    if (stream && video) {
+      video.srcObject = stream
+      video.muted = muted
+      video.autoplay = 'autoplay'
+      video.playsinline = 'playsinline'
+      video.play()
     }
   }
   
-  logError (error) {
-    console.warn('Error:', error)
+  streamParticipantVideo (participantId, stream) {
+    const video = this.getParticipantVideo(participantId)
+    this.streamToVideo(stream, video)
   }
   
-  getParticipantVideo (playerId) {
-    const participant = this.participantTargets.find((el) => el.dataset.playerId == playerId)
-    return participant.querySelector('video')
+  getParticipantVideo (participantId) {
+    const participant = this.participantTargets.find((el) => el.dataset.participantId == participantId)
+    return participant && participant.querySelector('video')
   }
 }
