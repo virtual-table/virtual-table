@@ -69,12 +69,6 @@ export default class extends ApplicationController {
       from: this.hostId
     })
     
-    if (this.hostStream) {
-      for (const [participantId, peer] of Object.entries(this.channel.peers)) {
-        peer.removeStream(this.hostStream)
-      }
-    }
-    
     this.channel.disconnectAllPeers()
     
     this.hostVideo.srcObject = null
@@ -177,7 +171,6 @@ export default class extends ApplicationController {
       video.muted = muted
       video.autoplay = 'autoplay'
       video.playsinline = 'playsinline'
-      video.play()
     }
   }
   
