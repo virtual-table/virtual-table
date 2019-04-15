@@ -131,6 +131,9 @@ export default class extends ApplicationController {
   receiveSignal (participantId, signal) {
     const peer = this.getParticipant(participantId)
     peer.signal(signal)
+    
+    const element = this.getParticipantElement(participantId)
+    if (element) element.style.display = 'block'
   }
   
   getParticipant (participantId) {
@@ -153,12 +156,17 @@ export default class extends ApplicationController {
   }
   
   removeParticipant (participantId) {
-    const video = this.getParticipantVideo(participantId)
+    const participant = this.getParticipantElement(participantId)
     
-    if (video) {
-      video.pause()
-      video.srcObject = null
-      video.load()
+    if (participant) {
+      const video = this.getParticipantVideo(participantId)
+      participant.style.display = 'none'
+      
+      if (video) {
+        video.pause()
+        video.srcObject = null
+        video.load()
+      }
     }
     
     this.channel.disconnectPeer(participantId)
@@ -230,8 +238,12 @@ export default class extends ApplicationController {
     this.streamToVideo(stream, video)
   }
   
+  getParticipantElement (participantId) {
+    return this.participantTargets.find((el) => el.dataset.participantId == participantId)
+  }
+  
   getParticipantVideo (participantId) {
-    const participant = this.participantTargets.find((el) => el.dataset.participantId == participantId)
+    const participant = this.getParticipantElement(participantId)
     return participant && participant.querySelector('video')
   }
 }

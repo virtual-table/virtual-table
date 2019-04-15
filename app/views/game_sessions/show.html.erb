@@ -13,7 +13,7 @@
               </select>
             </li>
           <% else %>
-            <li data-target="video-chat.participant" data-participant-id="<%= player.id %>">
+            <li data-target="video-chat.participant" data-participant-id="<%= player.id %>" style="display: none;">
               <em><%= player.user.name %></em>
               <video autoplay playsinline></video>
             </li>
