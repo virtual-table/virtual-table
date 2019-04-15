@@ -101,6 +101,7 @@ export default class extends ApplicationController {
       video.muted       = muted
       video.autoplay    = 'autoplay'
       video.playsinline = 'playsinline'
+      video.play()
     }
   }
   

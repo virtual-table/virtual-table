@@ -70,8 +70,6 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
       const init = [sessionId, this.sessionId].sort()[0] == this.sessionId
       const peer = new Peer({ initiator: init, stream: this.stream })
       
-      console.log('new Peer', init)
-      
       peer.on('signal',  (signal) => this.broadcastP2PSignal(sessionId, signal))
       peer.on('stream',  (stream) => this.receiveP2PStream(playerId, sessionId, stream))
       peer.on('close',   () => this.disconnectedFromPeer(sessionId))
@@ -113,11 +111,9 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
   },
   
   startP2PStream (stream) {
-    console.log('startP2PStream', stream)
     this.stream = stream
     
     for (let [playerId, sessionId, peer] of this.participants) {
-      console.log('addStream to peer', peer, stream)
       peer.addStream(stream)
     }
   },
