@@ -63,12 +63,6 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
     this.sendPeerParticipant()
   },
   
-  connectedToPeer (sessionId) {
-    const peer = this.getPeerForSession(sessionId)
-    console.log('connectedToPeer', sessionId, peer)
-    if (peer) peer.send(`Connected ${this.sessionId} to ${sessionId}`)
-  },
-  
   connectToPeer (playerId, sessionId) {
     if (sessionId == this.sessionId) return
     
@@ -97,6 +91,7 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
     )
     
     if (index) {
+      let playerId = this.participants[index][0]
       this.participants = this.participants.splice(index, 1)
     }
   },
@@ -223,15 +218,15 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
   },
   
   receiveP2PStream (playerId, sessionId, stream) {
-    console.log(`Stream from ${playerId} (${sessionId})`, stream)
-    
     const chat = this.getVideoChat()
     if (chat) chat.addStream(playerId, stream)
   },
   
   receivePeerParticipant (playerId, sessionId) {
-    console.log('PeerParticipant', playerId, sessionId)
     this.connectToPeer(playerId, sessionId)
+    
+    const chat = this.getVideoChat()
+    if (chat) chat.setParticipantStatus(playerId, 'online')
   },
   
   // HELPERS:

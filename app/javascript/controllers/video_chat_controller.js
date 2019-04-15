@@ -68,6 +68,21 @@ export default class extends ApplicationController {
     }
   }
   
+  setParticipantStatus (participantId, status) {
+    const element = this.getParticipantElement(participantId)
+    if (!element) return
+    
+    switch (status) {
+      case 'online':
+        element.style.display = 'block'
+        break
+      
+      case 'offline':
+        element.style.display = 'none'
+        break
+    }
+  }
+  
   stopStreaming () {
     const stream = this.hostStream
     
