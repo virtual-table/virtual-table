@@ -202,22 +202,26 @@ export default class extends ApplicationController {
   }
   
   gotDevices (devices) {
-    this.devices = devices
+    this.devices = devices.filter((device) => device.kind == 'videoinput')
     
     if (this.hasDevicesTarget) {
       let select = this.devicesTarget
       select.innerHTML = ''
       
-      devices.forEach((device, i) => {
-        if (device.kind === 'videoinput') {
-          let option = document.createElement('option')
-          option.value = device.deviceId
-          
-          let label = document.createTextNode(device.label || `Camera ${i + 1}`)
-          option.appendChild(label)
-          select.appendChild(option)
-        }
+      this.devices.forEach((device, i) => {
+        let option = document.createElement('option')
+        option.value = device.deviceId
+        
+        let label = document.createTextNode(device.label || `Camera ${i + 1}`)
+        option.appendChild(label)
+        select.appendChild(option)
       })
+      
+      if (this.devices.length > 1) {
+        select.style.display = 'inline'
+      } else {
+        select.style.display = 'none'
+      }
     }
   }
   
