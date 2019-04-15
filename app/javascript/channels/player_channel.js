@@ -35,7 +35,7 @@ const playerChannel = consumer.subscriptions.create("PlayerChannel", {
   disconnectAllPeers () {
     if (this.peers) {
       for (const [playerId, peer] of Object.entries(this.peers)) {
-        peer.destroy()
+        peer && peer.destroy()
       }
     }
     
