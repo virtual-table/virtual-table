@@ -14,13 +14,17 @@ const ice = {
 
 export default class extends ApplicationController {
   
-  static targets = ['host', 'participant']
+  static targets = ['host', 'participant', 'devices']
   
   get mediaConstraints () {
-    return {
+    return this._mediaConstraints || (this._mediaConstraints = {
       audio: true,
       video: true
-    }
+    })
+  }
+  
+  set mediaConstraints (v) {
+    this._mediaConstraints = v
   }
   
   get hostId () {
@@ -50,6 +54,12 @@ export default class extends ApplicationController {
   
   stopCapture () {
     if (this.hostStream) {
+      for (const [participantId, peer] of Object.entries(this.channel.peers)) {
+        if (participantId !== this.hostId && peer) {
+          peer.removeStream(this.hostStream)
+        }
+      }
+      
       for (let track of this.hostStream.getTracks()) track.stop()
       delete this.hostStream
     }
@@ -159,9 +169,13 @@ export default class extends ApplicationController {
     this.hostStream = stream
     
     for (const [participantId, peer] of Object.entries(this.channel.peers)) {
-      if (participantId !== this.hostId) {
+      if (participantId !== this.hostId && peer) {
         peer.addStream(stream)
       }
+    }
+    
+    if (!this.devices) {
+      this.gatherDevices()
     }
   }
   
@@ -171,6 +185,39 @@ export default class extends ApplicationController {
       video.muted = muted
       video.autoplay = 'autoplay'
       video.playsinline = 'playsinline'
+    }
+  }
+  
+  changeDevice () {
+    if (this.hostStream) {
+      this.stopCapture()
+      
+      this.mediaConstraints = _.extend(this.mediaConstraints, { video: { deviceId: { exact: this.devicesTarget.value } } })
+      this.join()
+    }
+  }
+  
+  gatherDevices () {
+    navigator.mediaDevices.enumerateDevices().then(this.gotDevices.bind(this))
+  }
+  
+  gotDevices (devices) {
+    this.devices = devices
+    
+    if (this.hasDevicesTarget) {
+      let select = this.devicesTarget
+      select.innerHTML = ''
+      
+      devices.forEach((device, i) => {
+        if (device.kind === 'videoinput') {
+          let option = document.createElement('option')
+          option.value = device.deviceId
+          
+          let label = document.createTextNode(device.label || `Camera ${i + 1}`)
+          option.appendChild(label)
+          select.appendChild(option)
+        }
+      })
     }
   }
   
