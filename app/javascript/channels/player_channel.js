@@ -1,50 +1,39 @@
-import consumer from "./consumer"
+import consumer from './consumer'
+import Peer from 'simple-peer'
+import _ from 'underscore'
 
-const playerChannel = consumer.subscriptions.create("PlayerChannel", {
+const playerChannel = consumer.subscriptions.create('PlayerChannel', {
   
   // SETTINGS:
   
-  playerId:      null,      // needs to be set before anything is broadcasted
+  playerId:      null,      // Needs to be set before anything is broadcasted
+  sessionId:     null,      // Wil be set on connection
   broadcastRate: 1000 / 30, // 30 FPS
   
   // CONNECTION:
   
   // Called when the subscription is ready for use on the server
-  connected() {
-    this.peers     = {}
-    this.sessionId = this.generateSessionIdentifier()
+  connected () {
+    this.participants = []
+    this.sessionId    = this.generateSessionIdentifier()
+    
+    this.attemptP2PConnection = this.attemptP2PConnection.bind(this)
+    _.defer(this.attemptP2PConnection)
+    
     console.log('PlayerChannel connected', this)
   },
   
   // Called when the subscription has been terminated by the server
-  disconnected() {
-    this.disconnectAllPeers()
+  disconnected () {
+    this.disconnectP2P()
+    
     console.log('PlayerChannel disconnected')
   },
   
-  disconnectPeer (playerId) {
-    const peer = this.peers[playerId]
-    
-    if (peer) {
-      peer.destroy()
-    }
-    
-    this.peers[playerId] = null
-  },
-  
-  disconnectAllPeers () {
-    if (this.peers) {
-      for (const [playerId, peer] of Object.entries(this.peers)) {
-        peer && peer.destroy()
-      }
-    }
-    
-    this.peers = {}
-  },
-  
   // Called when there's incoming data on the websocket for this channel
-  received(message) {
+  received (message) {
     let { playerId, sessionId, data } = message
+    
     if (sessionId != this.sessionId) {
       const method = `receive${data[0]}`
       if (this[method]) {
@@ -54,7 +43,105 @@ const playerChannel = consumer.subscriptions.create("PlayerChannel", {
     }
   },
   
+  // P2P:
+  
+  disconnectP2P () {
+    for (let [playerId, sessionId, peer] of this.participants) {
+      peer.destroy()
+    }
+  },
+  
+  attemptP2PConnection () {
+    if (this.playerId) {
+      this.announceP2PAvailability()
+    } else {
+      _.delay(this.attemptP2PConnection, 100)
+    }
+  },
+  
+  announceP2PAvailability () {
+    this.sendPeerParticipant()
+  },
+  
+  connectedToPeer (sessionId) {
+    const peer = this.getPeerForSession(sessionId)
+    console.log('connectedToPeer', sessionId, peer)
+    if (peer) peer.send(`Connected ${this.sessionId} to ${sessionId}`)
+  },
+  
+  connectToPeer (playerId, sessionId) {
+    if (sessionId == this.sessionId) return
+    
+    if (!this.getPeerForSession(sessionId)) {
+      const init = [sessionId, this.sessionId].sort()[0] == this.sessionId
+      const peer = new Peer({ initiator: init, stream: this.stream })
+      
+      console.log('new Peer', init)
+      
+      peer.on('signal',  (signal) => this.broadcastP2PSignal(sessionId, signal))
+      peer.on('stream',  (stream) => this.receiveP2PStream(playerId, sessionId, stream))
+      peer.on('close',   () => this.disconnectedFromPeer(sessionId))
+      
+      peer.on('data',    (d) => console.log(`Received: ${d}`))
+      peer.on('connect', ()  => peer.send(`Connected ${this.sessionId} to ${sessionId}`))
+      
+      this.announceP2PAvailability()
+      
+      this.participants.push([playerId, sessionId, peer])
+    }
+  },
+  
+  disconnectedFromPeer (sessionId) {
+    let index = this.participants.findIndex(
+      ([pId, sId, peer]) => sId == sessionId
+    )
+    
+    if (index) {
+      this.participants = this.participants.splice(index, 1)
+    }
+  },
+  
+  disconnectPeer (sessionId) {
+    const peer = this.getPeerForSession(sessionId)
+    if (peer) peer.destroy()
+  },
+  
+  stopP2PStream (stream) {
+    this.stream = null
+    
+    for (let [playerId, sessionId, peer] of this.participants) {
+      try {
+        peer.removeStream(stream)
+      } catch (error) {
+      }
+    }
+  },
+  
+  startP2PStream (stream) {
+    console.log('startP2PStream', stream)
+    this.stream = stream
+    
+    for (let [playerId, sessionId, peer] of this.participants) {
+      console.log('addStream to peer', peer, stream)
+      peer.addStream(stream)
+    }
+  },
+  
   // SENDERS:
+  
+  broadcastP2PSignal (sessionId, signal) {
+    this.perform('broadcast', {
+      playerId:  this.playerId,
+      sessionId: this.sessionId,
+      data:      [
+        'P2PSignal', [{
+          from:   this.sessionId,
+          to:     sessionId,
+          signal: JSON.stringify(signal)
+        }]
+      ]
+    })
+  },
   
   broadcast (method, ...args) {
     if (this.playerId) {
@@ -86,8 +173,8 @@ const playerChannel = consumer.subscriptions.create("PlayerChannel", {
     this.broadcast('CursorPosition', this.playerId, x, y)
   },
   
-  sendVideoChatBroadcast (data) {
-    this.broadcast('VideoChatBroadcast', data)
+  sendPeerParticipant () {
+    this.broadcast('PeerParticipant', this.playerId, this.sessionId)
   },
   
   // RECEIVERS:
@@ -126,9 +213,25 @@ const playerChannel = consumer.subscriptions.create("PlayerChannel", {
     if (door) door.load(attributes)
   },
   
-  receiveVideoChatBroadcast (data = {}) {
-    let chat = this.getVideoChat()
-    if (chat) chat.receiveBroadcast(data)
+  receiveP2PSignal (data = {}) {
+    const { from, to, signal } = data
+    
+    if (to == this.sessionId) {
+      const peer = this.getPeerForSession(from)
+      if (peer) peer.signal(signal)
+    }
+  },
+  
+  receiveP2PStream (playerId, sessionId, stream) {
+    console.log(`Stream from ${playerId} (${sessionId})`, stream)
+    
+    const chat = this.getVideoChat()
+    if (chat) chat.addStream(playerId, stream)
+  },
+  
+  receivePeerParticipant (playerId, sessionId) {
+    console.log('PeerParticipant', playerId, sessionId)
+    this.connectToPeer(playerId, sessionId)
   },
   
   // HELPERS:
@@ -169,6 +272,25 @@ const playerChannel = consumer.subscriptions.create("PlayerChannel", {
     if (element && this.application) {
       return this.application
                  .getControllerForElementAndIdentifier(element, 'map--door')
+    }
+  },
+  
+  getPeersForPlayer (playerId) {
+    this.participants.filter(
+      ([pId, sId, peer]) => pId == playerId
+    ).map(
+      ([pId, sId, peer]) => peer
+    )
+  },
+  
+  getPeerForSession (sessionId) {
+    const participant = this.participants.find(
+      ([pId, sId, peer]) => sId == sessionId
+    )
+    
+    if (participant) {
+      const [playerId, sessionId, peer] = participant
+      return peer
     }
   },
   

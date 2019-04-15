@@ -6,14 +6,16 @@
           <% if player.user == current_user %>
             <li data-target="video-chat.host" data-participant-id="<%= player.id %>">
               <strong><%= current_user.name %></strong>
-              <a data-action="click->video-chat#join">join</a>
-              <a data-action="click->video-chat#leave">leave</a>
+              <a data-action="click->video-chat#startStreaming">start</a>
+              <a data-action="click->video-chat#stopStreaming">stop</a>
               <video autoplay playsinline></video>
-              <select data-target="video-chat.devices" data-action="change->video-chat#changeDevice" style="display: none">
+              <select data-target="video-chat.devices"
+                      data-action="change->video-chat#changeStreamingDevice"
+                      style="display: none">
               </select>
             </li>
           <% else %>
-            <li data-target="video-chat.participant" data-participant-id="<%= player.id %>" style="display: none;">
+            <li data-target="video-chat.participant" data-participant-id="<%= player.id %>">
               <em><%= player.user.name %></em>
               <video autoplay playsinline></video>
             </li>
