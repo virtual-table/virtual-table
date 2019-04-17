@@ -11,9 +11,11 @@
     <%= f.errors :parent %>
   <% end %>
   
-  <%= f.fields_for :contents do |content_fields| %>
-    <%= render 'compendia/page_contents/form_fields', fields: content_fields %>
-  <% end %>
+  <div data-controller="compendium--editor">
+    <%= f.fields_for :contents do |content_fields| %>
+      <%= render 'compendia/page_contents/form_fields', fields: content_fields %>
+    <% end %>
+  </div>
   
   <%= f.submit_or_reset %>
 <% end %>

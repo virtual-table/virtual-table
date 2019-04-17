@@ -3,7 +3,11 @@ f = fields
 containable = f.object
 content     = containable.content
 %>
-<%= field_set_tag do %>
+<%= field_set_tag nil, data: { target: 'compendium--editor.content' } do %>
+  <p>
+    <%= link_to t('.move_up'),   '#', data: { action: 'click->compendium--editor#moveContent', direction: 'up'   } %>
+    <%= link_to t('.move_down'), '#', data: { action: 'click->compendium--editor#moveContent', direction: 'down' } %>
+  </p>
   <p>
     PageContent ID: <%= f.number_field :id, disabled: true %>
     Position: <%= f.number_field :position, disabled: true %>
