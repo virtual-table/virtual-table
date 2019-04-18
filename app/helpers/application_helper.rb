@@ -3,4 +3,12 @@ module ApplicationHelper
     options[:builder] = BulmaFormBuilder
     form_for(record, options, &block)
   end
+  
+  def bulma_form_contents_for(record, options = {}, &block)
+    options[:builder] = BulmaFormBuilder
+    
+    form_for(record, options) do |form|
+      return yield form
+    end
+  end
 end

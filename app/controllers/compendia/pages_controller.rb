@@ -26,6 +26,7 @@ module Compendia
       if @page.update(page_params)
         redirect_to [@compendium, @page.becomes(Page)], notice: t('.page_updated')
       else
+        raise @page.errors.inspect
         flash.now[:alert] = t('.page_invalid')
         render :edit
       end
@@ -47,7 +48,7 @@ module Compendia
         parent_id
       ],
         contents_attributes: [
-          %i[ id position visible _destroy ],
+          %i[ id position visible _destroy content_type content_id ],
           content_attributes: whitelisted_content_attributes
         ]
       )

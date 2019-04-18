@@ -12,7 +12,9 @@ class Page < ApplicationRecord
   
   has_many :contents,
     -> { order(position: :asc) },
-    class_name: 'PageContent'
+    class_name: 'PageContent',
+    inverse_of: :page,
+    autosave:   true
   
   accepts_nested_attributes_for :contents,
     allow_destroy: true
@@ -28,11 +30,7 @@ class Page < ApplicationRecord
   end
   
   def available_content_types
-    Content.constants.map do |constant|
-      Content.const_get(constant)
-    end.find_all do |constant|
-      constant < ApplicationRecord
-    end
+    PageContent.available_content_types
   end
   
 end

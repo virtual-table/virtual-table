@@ -9,9 +9,11 @@ content     = containable.content
     <%= link_to t('.move_down'), '#', data: { action: 'click->compendium--editor#moveContent', direction: 'down' } %>
   </p>
   <p>
-    PageContent ID: <%= f.number_field :id, disabled: true %>
-    Position: <%= f.number_field :position, disabled: true %>
+    PageContent ID: <%= f.number_field :id %>
+    Position: <%= f.number_field :position %>
     Destroy: <%= f.check_box :_destroy %>
+    Content Type: <%= f.text_field :content_type %>
+    Content Id: <%= f.number_field :content_id %>
   </p>
   <%= f.fields_for :content do |content_fields| %>
     <%= render "compendia/#{content.to_partial_path}_fields", fields: content_fields %>

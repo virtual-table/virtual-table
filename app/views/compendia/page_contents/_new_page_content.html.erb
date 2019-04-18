@@ -1,0 +1,16 @@
+<ul data-target="compendium--editor.addContentList">
+  <% page.available_content_types.each do |content_type| %>
+    <li>
+      <%=
+        link_to t(".new_#{content_type.to_s.underscore}"),
+          new_compendium_page_content_path(compendium, page,
+            content_type: content_type.to_s,
+            position:     '__POSITION_PLACEHOLDER__'
+          ),
+          data: {
+            action: 'click->compendium--editor#addContent'
+          }
+      %>
+    </li>
+  <% end %>
+</ul>

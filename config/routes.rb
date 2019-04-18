@@ -14,7 +14,9 @@ Rails.application.routes.draw do
   
   resources :compendia do
     scope module: 'compendia' do
-      resources :pages
+      resources :pages do
+        resources :contents, controller: 'page_contents'
+      end
     end
   end
   

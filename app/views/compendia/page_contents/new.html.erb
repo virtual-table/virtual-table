@@ -1,0 +1,24 @@
+<% if request.xhr? %>
+  <%= bulma_form_contents_for [@compendium, @page.becomes(Page)] do |f| %>
+    <%= f.fields_for :contents, @page_content, child_index: '__NEW_CONTENT_PLACEHOLDER__' do |content_fields| %>
+      <%=
+        render 'compendia/page_contents/form_fields',
+          fields: content_fields
+      %>
+    <% end %>
+  <% end %>
+  <%=
+    render 'compendia/page_contents/new_page_content',
+      compendium: @compendium,
+      page:       @page
+  %>
+<% else %>
+  <%= bulma_form_for [@compendium, @page_content] do |form| %>
+    <%=
+      render 'compendia/page_contents/form_fields',
+        fields: form
+    %>
+    
+    <%= form.submit_or_reset %>
+  <% end %>
+<% end %>
