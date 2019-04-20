@@ -3,7 +3,6 @@
   "private": true,
   "dependencies": {
     "@rails/actioncable": "^6.0.0-alpha",
-    "@rails/actiontext": "^6.0.0-beta2",
     "@rails/activestorage": "^6.0.0-alpha",
     "@rails/ujs": "^6.0.0-alpha",
     "@rails/webpacker": "^4.0.2",
@@ -11,7 +10,6 @@
     "pixi.js": "^4.8.6",
     "simple-peer": "^9.3.0",
     "stimulus": "^1.1.1",
-    "trix": "^1.0.0",
     "turbolinks": "^5.2.0",
     "underscore": "^1.9.1"
   },

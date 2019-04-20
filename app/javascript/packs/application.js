@@ -18,14 +18,11 @@ import consumer from '../channels/consumer'
     subscription.application = application
   }
   
-  this.VTT.turboLinks    = require('turbolinks')
+  this.VTT.turboLinks = require('turbolinks')
   this.VTT.turboLinks.start()
   
   this.VTT.ujs = require('@rails/ujs')
   this.VTT.ujs.start()
-  
-  this.VTT.trix       = require('trix')
-  this.VTT.actionText = require('@rails/actiontext')
   
   this.VTT.activeStorage = require('@rails/activestorage')
   this.VTT.activeStorage.start()

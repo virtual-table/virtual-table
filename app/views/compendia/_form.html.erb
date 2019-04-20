@@ -6,9 +6,9 @@
   <% end %>
   
   <%= f.field :description do %>
-    <%= f.label          :description %>
-    <%= f.rich_text_area :description %>
-    <%= f.errors         :description %>
+    <%= f.label     :description %>
+    <%= f.text_area :description %>
+    <%= f.errors    :description %>
   <% end %>
   
   <%= f.field :public do %>

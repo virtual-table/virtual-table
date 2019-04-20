@@ -9,7 +9,9 @@ module Content
       %i[ title description ]
     end
     
-    has_rich_text :description
+    def description_html
+      description&.html_safe
+    end
     
   end
 end

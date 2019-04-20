@@ -1,7 +1,5 @@
 class Compendium < ApplicationRecord
   
-  has_rich_text :description
-  
   belongs_to :author,
     class_name: 'User'
   
@@ -13,5 +11,9 @@ class Compendium < ApplicationRecord
   
   has_many :games,
     through: :game_compendiums
+  
+  def description_html
+    description&.html_safe
+  end
   
 end

@@ -1,7 +1,5 @@
 class Game < ApplicationRecord
   
-  has_rich_text :description
-  
   belongs_to :author,
     class_name: 'User'
   
@@ -24,6 +22,10 @@ class Game < ApplicationRecord
     unless users.include?(author)
       players.create user: author, role: 'gm'
     end
+  end
+  
+  def description_html
+    description&.html_safe
   end
   
 end
