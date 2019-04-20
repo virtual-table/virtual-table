@@ -5,9 +5,10 @@
     <%= f.errors     :title %>
   <% end %>
   
-  <%= f.field :description do %>
+  <%= f.field :description, control: { data: { controller: 'html-editor' } } do %>
     <%= f.label     :description %>
-    <%= f.text_area :description %>
+    <%= content_tag :div, '',     data: { target: 'html-editor.editor' } %>
+    <%= f.text_area :description, data: { target: 'html-editor.input'  } %>
     <%= f.errors    :description %>
   <% end %>
   
