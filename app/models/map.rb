@@ -1,6 +1,8 @@
 class Map < ApplicationRecord
   
   belongs_to :page,
+    class_name: 'Page::MapPage',
+    autosave:   true,
     dependent:  :destroy
   
   belongs_to :compendium
@@ -25,6 +27,9 @@ class Map < ApplicationRecord
   has_many :doors,
     through: :rooms
   
+  before_validation :build_page,  on: :create
+  before_validation :update_page, on: :update
+  
   def width
     floors.map(&:width).max
   end
@@ -33,4 +38,11 @@ class Map < ApplicationRecord
     floors.map(&:height).max
   end
   
+  def build_page(attributes = {})
+    super attributes.merge(compendium: compendium, title: title)
+  end
+  
+  def update_page
+    page.title = title
+  end
 end
