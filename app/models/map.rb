@@ -5,8 +5,9 @@ class Map < ApplicationRecord
   belongs_to :compendium
   
   has_many :floors,
-    -> { order(level: :asc) },
-    class_name: 'Map::Floor'
+    -> { order(level: :desc) },
+    class_name: 'Map::Floor',
+    dependent:  :destroy
   
   has_many :backgrounds,
     through: :floors
