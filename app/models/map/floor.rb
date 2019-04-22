@@ -2,11 +2,16 @@ class Map::Floor < ApplicationRecord
   
   belongs_to :map
   
-  has_many :backgrounds
+  has_many :backgrounds,
+    dependent: :destroy
   
-  has_many :rooms
+  has_many :rooms,
+    dependent: :destroy
   
-  has_many :characters
+  has_many :characters,
+    dependent: :destroy
+  
+  
   
   def width
     columns * grid_size

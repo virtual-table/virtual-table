@@ -7,14 +7,16 @@ class Page < ApplicationRecord
     optional: true
   
   has_many :children,
-    class_name: 'Page',
-    foreign_key: 'parent_id'
+    class_name:  'Page',
+    foreign_key: 'parent_id',
+    dependent:   :destroy
   
   has_many :contents,
     -> { order(position: :asc) },
     class_name: 'PageContent',
     inverse_of: :page,
-    autosave:   true
+    autosave:   true,
+    dependent:  :destroy
   
   accepts_nested_attributes_for :contents,
     allow_destroy: true

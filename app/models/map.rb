@@ -1,6 +1,7 @@
 class Map < ApplicationRecord
   
-  belongs_to :page
+  belongs_to :page,
+    dependent:  :destroy
   
   belongs_to :compendium
   

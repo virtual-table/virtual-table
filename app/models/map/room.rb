@@ -5,8 +5,11 @@ class Map::Room < ApplicationRecord
   delegate :map, to: :floor,
     allow_nil: true
   
-  has_many :walls
+  has_many :walls,
+    dependent: :destroy
   
-  has_many :doors
+  has_many :doors,
+    dependent: :destroy
+  
   
 end
