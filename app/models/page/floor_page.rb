@@ -5,4 +5,12 @@ class Page::FloorPage < ::Page
     foreign_key: 'page_id',
     dependent:   :destroy
   
+  after_update :update_floor
+  
+  private
+  
+  def update_floor
+    floor.title = title
+    floor.save if floor.changed?
+  end
 end
