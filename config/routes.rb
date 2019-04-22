@@ -6,14 +6,11 @@ Rails.application.routes.draw do
   delete 'logout' => 'sessions#destroy', as: :logout
   
   resources :users
-  resources :games do
-    scope module: 'games' do
-      resources :maps, only: %i[new create]
-    end
-  end
+  resources :games
   
   resources :compendia do
     scope module: 'compendia' do
+      resources :maps, only: %i[new create]
       resources :pages do
         resources :contents, controller: 'page_contents'
       end

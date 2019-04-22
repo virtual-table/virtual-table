@@ -37,6 +37,31 @@
     <header class="level">
       <div class="level-left">
         <div class="level-item">
+          <h2 class="title"><%= t '.maps' %></h2>
+        </div>
+        <div class="level-item">
+          <% if current_user == @compendium.author %>
+            <%=
+              link_to t('.new_map'), new_compendium_map_path(@compendium),
+                class: 'button is-link is-outlined'
+            %>
+          <% end %>
+        </div>
+      </div>
+    </header>
+    
+    <% if @maps.present? %>
+      <ul>
+        <%= render partial: 'map', collection: @maps %>
+      </ul>
+    <% else %>
+      <p><%= t '.no_maps_available' %></p>
+    <% end %>
+  </div>
+  <div class="container">
+    <header class="level">
+      <div class="level-left">
+        <div class="level-item">
           <h2 class="title"><%= t '.pages' %></h2>
         </div>
         <div class="level-item">

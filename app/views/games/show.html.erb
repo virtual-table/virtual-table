@@ -26,16 +26,7 @@
 </section>
 <section class="section">
   <div class="container">
-    <header class="level">
-      <div class="level-left">
-        <div class="level-item">
-          <h2 class="title is-4"><%= t '.maps' %></h2>
-        </div>
-        <div class="level-item">
-          <%= link_to t('.create_new_map'), new_game_map_path(@game), class: 'is-small button' %>
-        </div>
-      </div>
-    </header>
+    <h2 class="title is-4"><%= t '.maps' %></h2>
     <div class="content">
       <% if @maps.present? %>
         <ul>

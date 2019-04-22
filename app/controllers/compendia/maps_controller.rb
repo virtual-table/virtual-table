@@ -1,15 +1,16 @@
-module Games
-  class MapsController < GameController
+module Compendia
+  class MapsController < CompendiumController
     def new
-      @map = @game.maps.new
+      @map = @compendium.maps.new
     end
     
     def create
-      @map = @game.maps.build map_params
+      @map = @compendium.maps.build map_params
       
       if @map.save
         redirect_to @map, notice: t('.map_created')
       else
+        raise @map.errors.inspect
         flash.now[:alert] = t('.map_invalid')
         render :new
       end
