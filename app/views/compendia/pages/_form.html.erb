@@ -15,8 +15,21 @@ root_pages = compendium.pages.where(parent: nil)
     <%= f.errors :parent_id %>
   <% end %>
   
-  <div data-controller="compendium--editor">
-    <%= f.fields_for :contents do |content_fields| %>
+  <% unless page.new_record? %>
+    <div data-controller="compendium--editor">
+      <%= f.fields_for :contents do |content_fields| %>
+        <%=
+          new_page_content_position += 1
+          render 'compendia/page_contents/new_page_content',
+            compendium: compendium,
+            page:       page,
+            position:   new_page_content_position
+        %>
+        <%=
+          render 'compendia/page_contents/form_fields',
+            fields: content_fields
+        %>
+      <% end %>
       <%=
         new_page_content_position += 1
         render 'compendia/page_contents/new_page_content',
@@ -24,19 +37,8 @@ root_pages = compendium.pages.where(parent: nil)
           page:       page,
           position:   new_page_content_position
       %>
-      <%=
-        render 'compendia/page_contents/form_fields',
-          fields: content_fields
-      %>
-    <% end %>
-    <%=
-      new_page_content_position += 1
-      render 'compendia/page_contents/new_page_content',
-        compendium: compendium,
-        page:       page,
-        position:   new_page_content_position
-    %>
-  </div>
+    </div>
+  <% end %>
   
   <%= f.submit_or_reset %>
 <% end %>
