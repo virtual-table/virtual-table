@@ -29,6 +29,11 @@ export default class extends ApplicationController {
     this.inputTarget.style.display = 'none'
   }
   
+  disconnect () {
+    let widgets = this.element.querySelectorAll('.ql-toolbar, .ql-clipboard, .ql-tooltip')
+    widgets.forEach((widget) => widget.parentNode.removeChild(widget))
+  }
+  
   updateInput () {
     this.inputTarget.value = this.editorHTML
   }
