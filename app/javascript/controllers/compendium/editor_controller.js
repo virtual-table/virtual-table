@@ -8,7 +8,11 @@ const NEW_CONTENT_PLACEHOLDER = '__NEW_CONTENT_PLACEHOLDER__'
 
 export default class extends ApplicationController {
   
-  static targets = ['addContentList', 'content']
+  static targets = ['addContentList']
+  
+  get contents () {
+    return this.findChildControllers('compendium--content')
+  }
   
   connect () {
     this.updateAddContentListPositions()
@@ -32,21 +36,17 @@ export default class extends ApplicationController {
     }
   }
   
-  moveContent (event) {
-    let target = event.currentTarget
+  moveContent (content, direction) {
+    let borg   = content
+    let victim = this.contents.find(
+      (el, i) => {
+        let content = this.contents[direction == 'up' ? i + 1 : i - 1]
+        return content && content.element && content.element == borg.element
+      }
+    )
     
-    if (target) {
-      let direction = target.dataset.direction
-      let borg      = target.closest('[data-target*="compendium--editor.content"]')
-      let victim    = this.contentTargets.find(
-        (el, i) => borg == this.contentTargets[direction == 'up' ? i + 1 : i - 1]
-      )
-      
-      if (borg && victim) this.swapElements(borg, victim)
-      this.updateContentPositions()
-    }
-    
-    event.preventDefault()
+    if (borg && victim) this.swapElements(borg.element, victim.element)
+    this.updateContentPositions()
   }
   
   // MUTATIONS:
@@ -54,7 +54,7 @@ export default class extends ApplicationController {
   insertContent (html, link) {
     let addContentList = link.closest('[data-target*="compendium--editor.addContentList"]')
     if (addContentList) {
-      html = html.split(NEW_CONTENT_PLACEHOLDER).join(this.contentTargets.length)
+      html = html.split(NEW_CONTENT_PLACEHOLDER).join(this.contents.length)
       
       addContentList.insertAdjacentHTML('afterend', html)
       
@@ -82,22 +82,7 @@ export default class extends ApplicationController {
   }
   
   updateContentPositions () {
-    const lastIndex = this.contentTargets.length - 1
-    this.contentTargets.forEach((fieldset, index) => {
-      let position = fieldset.querySelector('input[name$="[position]"]')
-      let moveUp   = fieldset.querySelector('[data-direction="up"]')
-      let moveDown = fieldset.querySelector('[data-direction="down"]')
-      
-      position.value = index
-      moveUp.classList.remove('disabled')
-      moveDown.classList.remove('disabled')
-      
-      if (index == 0) {
-        moveUp.classList.add('disabled')
-      } else if (index == lastIndex) {
-        moveDown.classList.add('disabled')
-      }
-    })
+    this.contents.forEach((content, index) => content.position = index)
   }
   
   swapElements (borg, victim) {

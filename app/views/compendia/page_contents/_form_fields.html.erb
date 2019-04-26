@@ -3,18 +3,19 @@ f = fields
 containable = f.object
 content     = containable.content
 %>
-<%= field_set_tag nil, data: { target: 'compendium--editor.content' } do %>
+<%= field_set_tag nil, data: { controller: 'compendium--content' } do %>
   <p>
-    <%= link_to t('.move_up'),   '#', data: { action: 'click->compendium--editor#moveContent', direction: 'up'   } %>
-    <%= link_to t('.move_down'), '#', data: { action: 'click->compendium--editor#moveContent', direction: 'down' } %>
+    <%= link_to t('.move_up'),   '#', data: { action: 'click->compendium--content#moveUp'   } %>
+    <%= link_to t('.move_down'), '#', data: { action: 'click->compendium--content#moveDown' } %>
+    <%= link_to t('.delete'),    '#', data: { action: 'click->compendium--content#delete'   } %>
   </p>
-  <p>
-    PageContent ID: <%= f.number_field :id %>
-    Position: <%= f.number_field :position %>
-    Destroy: <%= f.check_box :_destroy %>
-    Content Type: <%= f.text_field :content_type %>
-    Content Id: <%= f.number_field :content_id %>
-  </p>
+  
+  <%= f.hidden_field :id           %>
+  <%= f.hidden_field :position, data: { target: 'compendium--content.positionField' } %>
+  <%= f.hidden_field :_destroy     %>
+  <%= f.hidden_field :content_type %>
+  <%= f.hidden_field :content_id   %>
+  
   <%= f.fields_for :content do |content_fields| %>
     <%= render "compendia/#{content.to_partial_path}_fields", fields: content_fields %>
   <% end %>
