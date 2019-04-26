@@ -43,7 +43,7 @@ export default class extends ApplicationController {
   }
   
   get obstacles () {
-    let walls = this.walls.map((wall) => new PIXI.Polygon([wall.origin, wall.destination]))
+    let walls = this.walls.map((wall) => new PIXI.Polygon(wall.path))
     let doors = this.closedDoors.map((door) => new PIXI.Polygon([door.origin, door.destination]))
     
     return walls.concat(doors)

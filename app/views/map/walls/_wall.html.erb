@@ -4,10 +4,9 @@
     class: 'map-wall',
     id:    dom_id(wall),
     data: {
-      target:                'map-editor.wall',
-      controller:            'map--wall',
-      map__wall_origin:      wall.origin.join(','),
-      map__wall_destination: wall.destination.join(',')
+      target:         'map-editor.wall',
+      controller:     'map--wall',
+      map__wall_path: wall.path.to_json
     }
   ) do
 %>

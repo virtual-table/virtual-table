@@ -4,20 +4,16 @@ import Draggable from 'lib/map/draggable'
 
 export default class extends Draggable(ObjectController) {
   
-  get floor () {
-    return this.room && this.room.floor
-  }
-  
   get room () {
     return this._room || (this._room = this.findParentController('map--room'))
   }
   
-  get origin () {
-    return this.data.get('origin').split(',').map((point) => parseFloat(point))
+  get floor () {
+    return this.room && this.room.floor
   }
   
-  get destination () {
-    return this.data.get('destination').split(',').map((point) => parseFloat(point))
+  get path () {
+    return JSON.parse(this.data.get('path'))
   }
   
   connect () {
@@ -36,10 +32,15 @@ export default class extends Draggable(ObjectController) {
   }
   
   draw () {
-    this.wall.clear()
-             .lineStyle(2, 0xFF0000, 1)
-             .moveTo(...this.origin)
-             .lineTo(...this.destination)
+    let line = this.wall.clear().lineStyle(2, 0xFF0000, 1)
+    let path = this.path
+    
+    let point = path.shift()
+    line.moveTo(...point)
+    
+    while (point = path.shift()) {
+      line.lineTo(...point)
+    }
   }
   
   undraw () {

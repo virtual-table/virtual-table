@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_20_110910) do
+ActiveRecord::Schema.define(version: 2019_04_26_105955) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -164,12 +164,9 @@ ActiveRecord::Schema.define(version: 2019_04_20_110910) do
 
   create_table "map_walls", force: :cascade do |t|
     t.bigint "room_id"
-    t.integer "origin_x"
-    t.integer "origin_y"
-    t.integer "destination_x"
-    t.integer "destination_y"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.json "path"
     t.index ["room_id"], name: "index_map_walls_on_room_id"
   end
 
