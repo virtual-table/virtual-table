@@ -11,6 +11,12 @@ module Compendia
     
     def create
       @page = @compendium.pages.build page_params
+      if @page.save
+        redirect_to [@compendium, @page.becomes(Page)], notice: t('.page_created')
+      else
+        flash.now[:alert] = t('.page_invalid')
+        render :new
+      end
     end
     
     def show
@@ -26,7 +32,6 @@ module Compendia
       if @page.update(page_params)
         redirect_to [@compendium, @page.becomes(Page)], notice: t('.page_updated')
       else
-        raise @page.errors.inspect
         flash.now[:alert] = t('.page_invalid')
         render :edit
       end
