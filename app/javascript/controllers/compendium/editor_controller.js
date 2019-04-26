@@ -49,6 +49,12 @@ export default class extends ApplicationController {
     this.updateContentPositions()
   }
   
+  trashContent (content) {
+    let addContentList = this.addContentListTargets[content.position]
+    content.element.style.display = 'none'
+    addContentList.style.display = 'none'
+  }
+  
   // MUTATIONS:
   
   insertContent (html, link) {

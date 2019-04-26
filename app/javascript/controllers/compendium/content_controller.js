@@ -2,7 +2,7 @@ import ApplicationController from 'controllers/application_controller'
 
 export default class extends ApplicationController {
   
-  static targets = ['positionField']
+  static targets = ['positionField', 'deleteField']
   
   get editor   () { return this.findParentController('compendium--editor') }
   get siblings () { return this.editor.contents }
@@ -26,6 +26,12 @@ export default class extends ApplicationController {
     } else if (newPosition == lastPosition) {
       moveDown.classList.add('disabled')
     }
+  }
+  
+  delete (event) {
+    this.deleteFieldTarget.value = 'true'
+    this.editor.trashContent(this)
+    event.preventDefault()
   }
   
   moveUp (event) {

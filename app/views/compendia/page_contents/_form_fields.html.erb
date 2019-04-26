@@ -12,7 +12,7 @@ content     = containable.content
   
   <%= f.hidden_field :id           %>
   <%= f.hidden_field :position, data: { target: 'compendium--content.positionField' } %>
-  <%= f.hidden_field :_destroy     %>
+  <%= f.hidden_field :_destroy, data: { target: 'compendium--content.deleteField'   } %>
   <%= f.hidden_field :content_type %>
   <%= f.hidden_field :content_id   %>
   
