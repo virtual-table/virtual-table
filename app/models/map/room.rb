@@ -10,12 +10,6 @@ class Map::Room < ApplicationRecord
   delegate :map, to: :floor,
     allow_nil: true
   
-  has_many :walls,
-    dependent: :destroy
-  
-  has_many :doors,
-    dependent: :destroy
-  
   before_validation :build_page,  on: :create
   before_validation :update_page, on: :update
   

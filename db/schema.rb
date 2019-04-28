@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_04_26_124624) do
+ActiveRecord::Schema.define(version: 2019_04_28_072547) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -119,7 +119,6 @@ ActiveRecord::Schema.define(version: 2019_04_26_124624) do
   end
 
   create_table "map_doors", force: :cascade do |t|
-    t.bigint "room_id"
     t.integer "origin_x"
     t.integer "origin_y"
     t.integer "destination_x"
@@ -127,7 +126,8 @@ ActiveRecord::Schema.define(version: 2019_04_26_124624) do
     t.boolean "closed", default: true
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.index ["room_id"], name: "index_map_doors_on_room_id"
+    t.bigint "floor_id"
+    t.index ["floor_id"], name: "index_map_doors_on_floor_id"
   end
 
   create_table "map_floors", force: :cascade do |t|
@@ -164,11 +164,11 @@ ActiveRecord::Schema.define(version: 2019_04_26_124624) do
   end
 
   create_table "map_walls", force: :cascade do |t|
-    t.bigint "room_id"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.json "path"
-    t.index ["room_id"], name: "index_map_walls_on_room_id"
+    t.bigint "floor_id"
+    t.index ["floor_id"], name: "index_map_walls_on_floor_id"
   end
 
   create_table "maps", force: :cascade do |t|
@@ -230,12 +230,12 @@ ActiveRecord::Schema.define(version: 2019_04_26_124624) do
   add_foreign_key "games", "users", column: "author_id"
   add_foreign_key "map_backgrounds", "map_floors", column: "floor_id"
   add_foreign_key "map_characters", "map_floors", column: "floor_id"
-  add_foreign_key "map_doors", "map_rooms", column: "room_id"
+  add_foreign_key "map_doors", "map_floors", column: "floor_id"
   add_foreign_key "map_floors", "maps"
   add_foreign_key "map_floors", "pages"
   add_foreign_key "map_rooms", "map_floors", column: "floor_id"
   add_foreign_key "map_rooms", "pages"
-  add_foreign_key "map_walls", "map_rooms", column: "room_id"
+  add_foreign_key "map_walls", "map_floors", column: "floor_id"
   add_foreign_key "maps", "compendia"
   add_foreign_key "maps", "pages"
   add_foreign_key "page_contents", "pages"

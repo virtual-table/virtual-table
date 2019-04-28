@@ -13,6 +13,12 @@ class Map::Floor < ApplicationRecord
   has_many :rooms,
     dependent: :destroy
   
+  has_many :walls,
+    dependent: :destroy
+  
+  has_many :doors,
+    dependent: :destroy
+  
   has_many :characters,
     dependent: :destroy
   

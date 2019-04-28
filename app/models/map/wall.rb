@@ -1,11 +1,8 @@
 class Map::Wall < ApplicationRecord
   
-  belongs_to :room
+  belongs_to :floor
   
-  delegate :floor, to: :room,
-    allow_nil: true
-  
-  delegate :map, to: :room,
+  delegate :map, to: :floor,
     allow_nil: true
   
   def origin

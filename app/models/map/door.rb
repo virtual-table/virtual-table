@@ -1,14 +1,11 @@
 class Map::Door < ApplicationRecord
   
-  belongs_to :room
+  belongs_to :floor
   
-  delegate :floor, to: :room,
-    allow_nil: true
-  
-  delegate :map, to: :room,
+  delegate :map, to: :floor,
     allow_nil: true
     
-  delegate :compendium, to: :map,
+  delegate :compendium, to: :floor,
     allow_nil: true
   
   after_save :relay_update
