@@ -8,18 +8,9 @@ export default class extends ApplicationController {
     return this._floor || (this._floor = this.findParentController('map--floor'))
   }
   
-  get walls () {
-    return this.findChildControllers('map--wall')
+  get bounds () {
+    return JSON.parse(this.data.get('bounds'))
   }
-  
-  get doors () {
-    return this.findChildControllers('map--door')
-  }
-  
-  get closedDoors () {
-    return this.doors.filter((door) => door.closed)
-  }
-  get bounds () { return JSON.parse(this.data.get('bounds')) }
   
   get center () {
     let points = this.bounds
@@ -39,13 +30,6 @@ export default class extends ApplicationController {
       xSum / xPoints.length,
       ySum / yPoints.length
     ]
-  }
-  
-  get obstacles () {
-    let walls = this.walls.map((wall) => new PIXI.Polygon(wall.path))
-    let doors = this.closedDoors.map((door) => new PIXI.Polygon([door.origin, door.destination]))
-    
-    return walls.concat(doors)
   }
   
   get shortCode () {

@@ -93,8 +93,23 @@ export default class extends ApplicationController {
     ])
   }
   
+  get walls () {
+    return this.findChildControllers('map--wall')
+  }
+  
+  get doors () {
+    return this.findChildControllers('map--door')
+  }
+  
+  get closedDoors () {
+    return this.doors.filter((door) => door.closed)
+  }
+  
   get obstacles () {
-    return _.flatten(this.rooms.map((room) => room.obstacles))
+    let walls = this.walls.map((wall) => new PIXI.Polygon(wall.path))
+    let doors = this.closedDoors.map((door) => new PIXI.Polygon([door.origin, door.destination]))
+    
+    return walls.concat(doors)
   }
   
   connect () {
