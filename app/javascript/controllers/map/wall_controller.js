@@ -4,12 +4,8 @@ import Draggable from 'lib/map/draggable'
 
 export default class extends Draggable(ObjectController) {
   
-  get room () {
-    return this._room || (this._room = this.findParentController('map--room'))
-  }
-  
   get floor () {
-    return this.room && this.room.floor
+    return this._floor || (this._floor = this.findParentController('map--floor'))
   }
   
   get path () {

@@ -4,12 +4,8 @@ import Rails from '@rails/ujs'
 
 export default class extends ObjectController {
   
-  get room () {
-    return this._room || (this._room = this.findParentController('map--room'))
-  }
-  
   get floor () {
-    return this.room && this.room.floor
+    return this._floor || (this._floor = this.findParentController('map--floor'))
   }
   
   get origin () {
