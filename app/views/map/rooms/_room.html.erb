@@ -7,7 +7,8 @@
       target:               'map-editor.room',
       controller:           'map--room',
       map__room_short_code: room.short_code,
-      map__room_title:      room.title
+      map__room_title:      room.title,
+      map__room_bounds:     room.bounds.to_json
     }
   ) do
 %>

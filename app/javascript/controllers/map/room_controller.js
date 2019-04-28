@@ -19,19 +19,18 @@ export default class extends ApplicationController {
   get closedDoors () {
     return this.doors.filter((door) => door.closed)
   }
+  get bounds () { return JSON.parse(this.data.get('bounds')) }
   
   get center () {
-    let points = []
-    for (let polygon of this.obstacles) {
-      points = points.concat(polygon.points)
-    }
+    let points = this.bounds
     
     let xPoints = points.map((point) => point[0])
     let yPoints = points.map((point) => point[1])
     
     let xSum = 0
     let ySum = 0
-    for(var i = 0, l = xPoints.length; i < l; i++) {
+    
+    for (let i = 0; i < xPoints.length; i++) {
       xSum += xPoints[i]
       ySum += yPoints[i]
     }
