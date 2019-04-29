@@ -1,4 +1,14 @@
 export default (superclass) => class extends superclass {
+  get offsetLeft () {
+    let [ centerLeft, centerTop ] = this.center
+    return centerLeft - this.x
+  }
+  
+  get offsetTop () {
+    let [ centerLeft, centerTop ] = this.center
+    return centerTop - this.y
+  }
+  
   setupDraggable (sprite) {
     sprite.on('pointerdown',      this.onDragStart.bind(this))
           .on('pointerup',        this.onDragEnd.bind(this))
@@ -28,8 +38,8 @@ export default (superclass) => class extends superclass {
       this.draggable.alpha = 0.5
       
       let newPosition = this.draggingData.getLocalPosition(this.draggable.parent)
-      this.x = newPosition.x - this.width  / 2
-      this.y = newPosition.y - this.height / 2
+      this.x = newPosition.x - this.offsetLeft
+      this.y = newPosition.y - this.offsetTop
     }
   }
   
@@ -41,8 +51,8 @@ export default (superclass) => class extends superclass {
       this.draggable.alpha = 1
       
       let newPosition = this.draggingData.getLocalPosition(this.draggable.parent)
-      this.x = newPosition.x - this.width  / 2
-      this.y = newPosition.y - this.height / 2
+      this.x = newPosition.x - this.offsetLeft
+      this.y = newPosition.y - this.offsetTop
       
       this.draggingData = null
     }
@@ -51,8 +61,8 @@ export default (superclass) => class extends superclass {
   onDragMove (event) {
     if (this.draggingEnabled && this.dragging) {
       let newPosition = this.draggingData.getLocalPosition(this.draggable.parent)
-      this.x = newPosition.x - this.width  / 2
-      this.y = newPosition.y - this.height / 2
+      this.x = newPosition.x - this.offsetLeft
+      this.y = newPosition.y - this.offsetTop
     }
   }
 }

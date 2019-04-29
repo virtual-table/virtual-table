@@ -7,6 +7,10 @@ import _ from 'underscore'
 
 export default class extends Draggable(ObjectController) {
   
+  get center () {
+    return [ this.x, this.y ]
+  }
+  
   get characterId () { return this.data.get('id') }
   
   get form () {
@@ -130,16 +134,9 @@ export default class extends Draggable(ObjectController) {
   locationUpdated () {
     let { x, y, center, width, height } = this 
     
-    if (this.attached) {
-      x = x - width  / 2
-      y = y - height / 2
-      center[0] -= width / 2
-      center[1] -= height / 2
-    }
-    
     if (this.sprite) {
-      this.sprite.x = x + width  / 2
-      this.sprite.y = y + height / 2
+      this.sprite.x = x
+      this.sprite.y = y
     }
     
     if (this.caster) {
@@ -168,6 +165,10 @@ export default class extends Draggable(ObjectController) {
   
   onDragEnd (event) {
     super.onDragEnd(event)
+    
+    if (this.floor.snapToGrid) {
+      [ this.x, this.y ] = this.floor.grid.snapToCenter(this.x, this.y)
+    }
     
     this.shareCursorDetached()
     

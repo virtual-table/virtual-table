@@ -31,6 +31,11 @@ export default class extends ApplicationController {
     return this.floors.map((floor) => floor.backgrounds).flat()
   }
   
+  get snapToGrid () {
+    // TODO: Check if some key is pressed?
+    return true
+  }
+  
   connect () {
     this.resize()
     

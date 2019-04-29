@@ -44,6 +44,10 @@ export default class extends ApplicationController {
   
   get scale () { return parseInt(this.data.get('scale') || 5) }
   
+  get snapToGrid () {
+    return !!this.grid && this.canvas.snapToGrid
+  }
+  
   get grid () {
     return this._grid || (
       this._grid = new this.gridType(this.columns, this.rows, this.gridSize)

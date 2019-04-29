@@ -43,6 +43,25 @@ export default class {
     }), true), _.iteratee((edge) => _.flatten(edge).join(',')))
   }
   
+  snapToCenter (left, top) {
+    let whole = this.tileSize
+    let half  = whole / 2
+    
+    return [
+      Math.round((left - half) / whole) * whole + half,
+      Math.round((top - half)  / whole) * whole + half
+    ]
+  }
+  
+  snapToVertex (left, top) {
+    let whole = this.tileSize
+    
+    return [
+      Math.round(left / whole) * whole,
+      Math.round(top  / whole) * whole
+    ]
+  }
+  
   drawGrid (graphics) {
     if (!this.edges) this.preprocess()
     this.edges.forEach((edge) => graphics.moveTo(...edge[0]).lineTo(...edge[1]))
