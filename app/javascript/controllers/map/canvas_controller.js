@@ -1,5 +1,6 @@
 import ApplicationController from 'controllers/application_controller'
 import PIXI from 'lib/pixi'
+import hotkeys from 'hotkeys-js'
 
 export default class extends ApplicationController {
   
@@ -32,15 +33,29 @@ export default class extends ApplicationController {
   }
   
   get snapToGrid () {
-    // TODO: Check if some key is pressed?
-    return true
+    return !hotkeys.isPressed('shift')
   }
   
   connect () {
     this.resize()
     
+    this.setupHotkeys()
     this.setupPixi()
     this.setupViewport()
+  }
+  
+  disconnect () {
+    this.destroyHotkeys()
+  }
+  
+  setupHotkeys () {
+    this.hotkey = this.hotkey.bind(this)
+    
+    hotkeys('*', { keyup: true, keydown: true }, this.hotkey)
+  }
+  
+  destroyHotkeys () {
+    hotkeys.unbind('*', { keyup: true, keydown: true }, this.hotkey)
   }
   
   setupPixi () {
@@ -89,6 +104,8 @@ export default class extends ApplicationController {
     }
   }
   
+  hotkey (event, handler) {
+  }
   
   zoomIn () {
     this.viewport.zoomPercent(0.25, true)
