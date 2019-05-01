@@ -1,0 +1,55 @@
+<%
+room ||= local_assigns[:room_panel]
+map  ||= room.map
+
+if room.persisted?
+  form_url = map_room_path(map, room)
+else
+  form_url = map_rooms_path(map)
+end
+%>
+<nav class="panel" id="<%= dom_id(room, :panel) %>" data-controller="map--panel">
+  <div class="panel-heading">
+    <%=
+      link_to '<', "##{dom_id(room.floor, :panel)}",
+        class: 'button is-small is-link is-outlined',
+        data: {
+          action: 'click->map--panel#openPanel'
+        }
+    %>
+    <%= room.full_title %>
+    <%=
+      link_to t('.edit'),
+        edit_map_room_path(room.map, room),
+        class: 'button is-small',
+        data: { remote: true }
+    %>
+  </div>
+  <%= bulma_form_for room, url: form_url, html: { class: 'panel-block' } do |f| %>
+    <%= f.field :title do %>
+      <%= f.label      :title %>
+      <%= f.text_field :title %>
+      <%= f.errors     :title %>
+    <% end %>
+    
+    <%= f.field :short_code do %>
+      <%= f.label      :short_code %>
+      <%= f.text_field :short_code %>
+      <%= f.errors     :short_code %>
+    <% end %>
+    
+    <%= f.field :floor_id do %>
+      <%= f.label  :floor_id %>
+      <%= f.select :floor_id, @map.floors.map { |f| [f.title, f.id] } %>
+      <%= f.errors :floor_id %>
+    <% end %>
+    
+    <%= f.field :bounds_json do %>
+      <%= f.label     :bounds_json %>
+      <%= f.text_area :bounds_json %>
+      <%= f.errors    :bounds_json %>
+    <% end %>
+    
+    <%= f.submit_or_reset %>
+  <% end %>
+</nav>

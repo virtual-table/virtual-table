@@ -1,0 +1,24 @@
+<%
+map = floor.map
+%>
+<div id="<%= dom_id(floor, :rooms_tab) %>" data-target="map--panel.tab">
+  <% floor.rooms.each do |room| %>
+    <div class="panel-block">
+      <%=
+        link_to room.full_title, "##{dom_id(room, :panel)}",
+          data: {
+            action: 'click->map--panel#openPanel'
+          }
+      %>
+    </div>
+  <% end %>
+  <div class="panel-block">
+    <%=
+      link_to t('.new_room'), new_map_room_path(map, map_room: { floor_id: floor.id }),
+        class: 'button is-small is-link is-outlined is-fullwidth',
+        data:  {
+          remote: true
+        }
+    %>
+  </div>
+</div>

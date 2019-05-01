@@ -23,6 +23,7 @@ Rails.application.routes.draw do
       resources :characters
       resources :floors
       resources :doors
+      resources :rooms
     end
   end
   
