@@ -10,6 +10,24 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <body data-controller="modal" data-target="modal.container">
+    <nav class="main-nav" role="navigation" aria-label="main navigation">
+      <div class="main-nav__branding">
+        <%= link_to 'Virtual Table', root_path, class: 'main-nav__logo' %>
+      </div>
+      
+      <ul class="main-nav__items">
+        <li><a href="#">Index</a></li>
+        <li class="main-nav__item">
+          <a href="#">Games</a>
+          
+          <ul class="main-nav__dropdown">
+            <li><a href="#">New game</a></li>
+          </ul>
+        </li>
+      </ul>
+    </nav>
+    
+    
     <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
       <div class="navbar-brand">
         <%= link_to 'Virtual Table', root_path, class: 'navbar-item' %>
