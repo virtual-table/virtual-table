@@ -1,0 +1,11 @@
+<h1>Rolled: <%= @roll %></h1>
+<p>Result: <strong><%= @result.to_s %></strong></p>
+<ul>
+  <% @result.each do |section| %>
+    <% if section.to_s.include?('d') %>
+      <li><%= section.to_s %>: <%= section.total %></li>
+    <% else %>
+      <li><%= section.total %></li>
+    <% end %>
+  <% end %>
+</ul>
