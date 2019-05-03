@@ -1,4 +1,9 @@
 class DiceRollsController < ApplicationController
+  def index
+    params[:roll] = '(Attack) 1d20+15'
+    create
+  end
+  
   def create
     @roll = params[:roll].presence
     

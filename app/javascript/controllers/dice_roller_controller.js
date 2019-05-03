@@ -1,11 +1,11 @@
 import ApplicationController from 'controllers/application_controller'
 import * as THREE from 'three'
 import * as CANNON from 'cannon'
-import { DiceManager, DiceD20 } from 'threejs-dice'
+import { DiceManager, DiceD4, DiceD6, DiceD8, DiceD10, DiceD12, DiceD20 } from 'threejs-dice'
 
 export default class extends ApplicationController {
   
-  static targets = ['canvas']
+  static targets = ['canvas', 'dice']
   
   get availableHeight () {
     return 600
@@ -19,7 +19,6 @@ export default class extends ApplicationController {
   get aspectRatio () { return this.availableWidth / this.availableHeight }
   
   connect () {
-    console.log(DiceD20)
     this.dice = []
     
     let scene    = this.scene    = new THREE.Scene()
@@ -121,35 +120,58 @@ export default class extends ApplicationController {
   }
   
   addDice () {
-    for (var i = 0; i < 20; i++) {
-      var die = new DiceD20({size: 1.5, backColor: '#000000', fontColor: '#ffffff' })
-      this.scene.add(die.getObject())
+    this.diceTargets.forEach((diceElement, index) => {
+      const sides = parseInt(diceElement.dataset.diceSides)
+      let dieOptions = { size: 1.5, backColor: '#000000', fontColor: '#ffffff' }
+      let die
+      
+      console.log('addDice', diceElement, index, sides)
+      
+      switch (sides) {
+        case 4:  die = new DiceD4(dieOptions);  break
+        case 6:  die = new DiceD6(dieOptions);  break
+        case 8:  die = new DiceD8(dieOptions);  break
+        case 10: die = new DiceD10(dieOptions); break
+        case 12: die = new DiceD12(dieOptions); break
+        case 20: die = new DiceD20(dieOptions); break
+      }
+      
+      console.log(die)
+      
+      if (die) {
+        this.scene.add(die.getObject())
+      }
+      
       this.dice.push(die)
-    }
+    })
   }
   
   roll () {
-    var diceValues = []
-    for (var i = 0; i < this.dice.length; i++) {
-      let yRand  = Math.random() * 20
-      let die    = this.dice[i]
-      let dieObj = die.getObject()
-      
-      dieObj.position.x = -15 - (i % 3) * 1.5
-      dieObj.position.y = 2 + Math.floor(i / 3) * 1.5
-      dieObj.position.z = -15 + (i % 3) * 1.5
-      dieObj.quaternion.x = (Math.random()*90-45) * Math.PI / 180
-      dieObj.quaternion.z = (Math.random()*90-45) * Math.PI / 180
-      die.updateBodyFromMesh()
-      
-      let roll = 20 // Math.random() * 19;
-      
-      dieObj.body.velocity.set(25 + roll, 40 + yRand, 15 + roll)
-      dieObj.body.angularVelocity.set(20 * Math.random() -10, 20 * Math.random() -10, 20 * Math.random() -10)
-      
-      diceValues.push({ dice: die, value: roll });
-    }
+    let diceValues = []
     
-    DiceManager.prepareValues(diceValues);
+    this.diceTargets.forEach((diceElement, index) => {
+      const die    = this.dice[index]
+      const result = parseInt(diceElement.dataset.diceResult)
+      
+      if (die) {
+        let yRand  = Math.random() * 20
+        let object = die.getObject()
+        
+        object.position.x = -15 - (index % 3) * 1.5
+        object.position.y = 2 + Math.floor(index / 3) * 1.5
+        object.position.z = -15 + (index % 3) * 1.5
+        object.quaternion.x = (Math.random()*90-45) * Math.PI / 180
+        object.quaternion.z = (Math.random()*90-45) * Math.PI / 180
+        
+        die.updateBodyFromMesh()
+        
+        object.body.velocity.set(25 + result, 40 + yRand, 15 + result)
+        object.body.angularVelocity.set(20 * Math.random() -10, 20 * Math.random() -10, 20 * Math.random() -10)
+        
+        diceValues.push({ dice: die, value: result })
+      }
+    })
+    
+    DiceManager.prepareValues(diceValues)
   }
 }

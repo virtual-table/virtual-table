@@ -5,9 +5,6 @@ Rails.application.routes.draw do
   post   'login'  => 'sessions#create'
   delete 'logout' => 'sessions#destroy', as: :logout
   
-  get  'rolls' => 'rolls#new',   as: :new_roll
-  post 'rolls' => 'rolls#create'
-  
   resources :users
   resources :games
   
