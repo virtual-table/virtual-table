@@ -47,6 +47,8 @@ export default class extends ApplicationController {
     this.setupFloor()
     this.setupSkyBox()
     
+    let controls = this.controls = new THREE.OrbitControls(camera, renderer.domElement)
+    
     this.setupPhysics()
     this.addDice()
     
