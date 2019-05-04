@@ -6,6 +6,7 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
   
   // SETTINGS:
   
+  participants:  [],
   playerId:      null,      // Needs to be set before anything is broadcasted
   sessionId:     null,      // Wil be set on connection
   broadcastRate: 1000 / 30, // 30 FPS
@@ -14,8 +15,7 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
   
   // Called when the subscription is ready for use on the server
   connected () {
-    this.participants = []
-    this.sessionId    = this.generateSessionIdentifier()
+    this.sessionId = this.generateSessionIdentifier()
     
     this.attemptP2PConnection = this.attemptP2PConnection.bind(this)
     _.defer(this.attemptP2PConnection)
