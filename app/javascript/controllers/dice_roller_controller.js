@@ -1,7 +1,13 @@
 import ApplicationController from 'controllers/application_controller'
 import * as THREE from 'three'
 import * as CANNON from 'cannon'
-import { DiceManager, DiceD4, DiceD6, DiceD8, DiceD10, DiceD12, DiceD20 } from 'threejs-dice'
+import DiceManager from 'lib/dice/dice_manager'
+import D4 from 'lib/dice/d4'
+import D6 from 'lib/dice/d6'
+import D8 from 'lib/dice/d8'
+import D10 from 'lib/dice/d10'
+import D12 from 'lib/dice/d12'
+import D20 from 'lib/dice/d20'
 
 export default class extends ApplicationController {
   
@@ -20,7 +26,7 @@ export default class extends ApplicationController {
   
   connect () {
     this.dice = []
-    
+    console.log(DiceManager, D4)
     let scene    = this.scene    = new THREE.Scene()
     let camera   = this.camera   = new THREE.PerspectiveCamera(this.viewAngle, this.aspectRatio, 1, 20000)
     
@@ -128,12 +134,12 @@ export default class extends ApplicationController {
       console.log('addDice', diceElement, index, sides)
       
       switch (sides) {
-        case 4:  die = new DiceD4(dieOptions);  break
-        case 6:  die = new DiceD6(dieOptions);  break
-        case 8:  die = new DiceD8(dieOptions);  break
-        case 10: die = new DiceD10(dieOptions); break
-        case 12: die = new DiceD12(dieOptions); break
-        case 20: die = new DiceD20(dieOptions); break
+        case 4:  die = new D4(dieOptions);  break
+        case 6:  die = new D6(dieOptions);  break
+        case 8:  die = new D8(dieOptions);  break
+        case 10: die = new D10(dieOptions); break
+        case 12: die = new D12(dieOptions); break
+        case 20: die = new D20(dieOptions); break
       }
       
       console.log(die)
