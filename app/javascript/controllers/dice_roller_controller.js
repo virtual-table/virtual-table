@@ -26,7 +26,7 @@ export default class extends ApplicationController {
   
   connect () {
     this.dice = []
-    console.log(DiceManager, D4)
+    
     let scene    = this.scene    = new THREE.Scene()
     let camera   = this.camera   = new THREE.PerspectiveCamera(this.viewAngle, this.aspectRatio, 1, 20000)
     
@@ -133,7 +133,6 @@ export default class extends ApplicationController {
       let dieOptions = { size: 1.5, backColor: '#000000', fontColor: '#ffffff' }
       let die
       
-      console.log('addDice', diceElement, index, sides)
       
       switch (sides) {
         case 4:  die = new D4(dieOptions);  break
