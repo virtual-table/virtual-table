@@ -1,6 +1,6 @@
 class DiceRollsController < ApplicationController
   def index
-    params[:roll] = '(Attack) 1d20+15'
+    params[:roll] = '(Test) 1d4 + 1d6 + 1d8 + 1d10 + 1d12'
     create
   end
   
