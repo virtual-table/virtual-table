@@ -1,3 +1,14 @@
+<%
+colors = [
+  '#000000',
+  '#AA0000',
+  '#AA00AA',
+  '#00AA00',
+  '#00AAAA',
+  '#0000AA'
+]
+index = 0
+%>
 <div data-controller="dice-roller">
   <h1>Rolled: <%= @roll %></h1>
   <p>Result: <strong><%= @result.to_s %></strong></p>
@@ -6,10 +17,15 @@
       <% case section %>
       <% when DiceBag::RollPart   %>
         <% section.tally.each do |result| %>
-          <li data-target="dice-roller.dice" data-dice-sides="<%= section.sides %>" data-dice-result="<%= result %>">
-            <strong>d<%= section.sides %>:</strong> <%= result %>
+          <li data-target="dice-roller.dice"
+              data-dice-sides="<%= section.sides %>"
+              data-dice-result="<%= result %>"
+              data-dice-background-color="<%= colors[index] || colors.first %>"
+              data-dice-foreground-color="#ffffff">
+            <strong style="background-color: <%= colors[index] || colors.first %>; color: #fff">d<%= section.sides %></strong> <%= result %>
           </li>
         <% end %>
+        <% index += 1 %>
       <% when DiceBag::StaticPart %>
         <li><%= section.total %></li>
       <% end %>

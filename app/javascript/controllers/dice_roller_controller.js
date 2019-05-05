@@ -130,8 +130,12 @@ export default class extends ApplicationController {
   addDice () {
     this.diceTargets.forEach((diceElement, index) => {
       const sides = parseInt(diceElement.dataset.diceSides)
-      let dieOptions = { size: 1.5, backColor: '#000000', fontColor: '#ffffff' }
       let die
+      let dieOptions = { 
+        size: 1.5,
+        backColor: diceElement.dataset.diceBackgroundColor || '#000000', 
+        fontColor: diceElement.dataset.diceForegroundColor || '#ffffff'
+      }
       
       
       switch (sides) {
