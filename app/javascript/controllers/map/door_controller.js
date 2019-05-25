@@ -63,7 +63,7 @@ export default class extends ObjectController {
   
   load (attributes) {
     // TODO: Use all attributes, not just closed.
-    console.log('load', attributes )
+    
     this.closed = attributes.closed
     
     this.updated()

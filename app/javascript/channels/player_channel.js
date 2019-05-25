@@ -19,15 +19,11 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
     
     this.attemptP2PConnection = this.attemptP2PConnection.bind(this)
     _.defer(this.attemptP2PConnection)
-    
-    console.log('PlayerChannel connected', this)
   },
   
   // Called when the subscription has been terminated by the server
   disconnected () {
     this.disconnectP2P()
-    
-    console.log('PlayerChannel disconnected')
   },
   
   // Called when there's incoming data on the websocket for this channel
@@ -74,7 +70,7 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
       peer.on('stream',  (stream) => this.receiveP2PStream(playerId, sessionId, stream))
       peer.on('close',   () => this.disconnectedFromPeer(sessionId))
       
-      peer.on('data',    (d) => console.log(`Received: ${d}`))
+      // peer.on('data',    (d) => console.log(`Received: ${d}`))
       peer.on('connect', ()  => peer.send(`Connected ${this.sessionId} to ${sessionId}`))
       
       this.announceP2PAvailability()

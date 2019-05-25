@@ -148,8 +148,6 @@ export default class extends ApplicationController {
         case 20: die = new D20(dieOptions); break
       }
       
-      console.log(die)
-      
       if (die) {
         this.scene.add(die.getObject())
       }
