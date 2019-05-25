@@ -2,7 +2,7 @@ import CANNON from 'lib/cannon'
 import THREE from 'lib/three'
 import DiceManager from 'lib/dice/dice_manager'
 
-export default class DiceObject {
+export default class Die {
   /**
    * @constructor
    * @param {object} options
@@ -246,20 +246,27 @@ export default class DiceObject {
     return Math.max(128, Math.pow(2, Math.floor(Math.log(approx) / Math.log(2))));
   }
   
-  createTextTexture(text, color, backColor) {
-    let canvas = document.createElement("canvas");
-    let context = canvas.getContext("2d");
-    let ts = this.calculateTextureSize(this.size / 2 + this.size * this.textMargin) * 2;
+  createTextTexture (text, color, backColor) {
+    let canvas = document.createElement('canvas');
+    let context = canvas.getContext('2d');
+    let ts = this.calculateTextureSize(this.size + this.size * 2 * this.textMargin) * 2;
+    
     canvas.width = canvas.height = ts;
-    context.font = ts / (1 + 2 * this.textMargin) + "pt Arial";
+    context.font = ts / (1 + 2 * this.textMargin) + 'pt Arial';
     context.fillStyle = backColor;
     context.fillRect(0, 0, canvas.width, canvas.height);
-    context.textAlign = "center";
-    context.textBaseline = "middle";
+    context.textAlign = 'center';
+    context.textBaseline = 'middle';
     context.fillStyle = color;
     context.fillText(text, canvas.width / 2, canvas.height / 2);
+    
+    if (text == '6' || text == '9') {
+      context.fillText('  .', canvas.width / 2, canvas.height / 2);
+    }
+    
     let texture = new THREE.Texture(canvas);
     texture.needsUpdate = true;
+    
     return texture;
   }
   
@@ -267,11 +274,7 @@ export default class DiceObject {
     let materials = [];
     for (let i = 0; i < this.faceTexts.length; ++i) {
       let texture = null;
-      if (this.customTextTextureFunction) {
-        texture = this.customTextTextureFunction(this.faceTexts[i], this.labelColor, this.diceColor);
-      } else {
-        texture = this.createTextTexture(this.faceTexts[i], this.labelColor, this.diceColor);
-      }
+      texture = this.createTextTexture(this.faceTexts[i], this.labelColor, this.diceColor)
       
       materials.push(new THREE.MeshPhongMaterial(Object.assign({}, this.materialOptions, { map: texture })));
     }

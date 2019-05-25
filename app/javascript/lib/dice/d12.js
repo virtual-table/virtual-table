@@ -1,6 +1,6 @@
-import DiceObject from 'lib/dice/dice_object'
+import Die from 'lib/dice/die'
 
-export default class extends DiceObject {
+export default class extends Die {
   constructor(options) {
     super(options);
 
