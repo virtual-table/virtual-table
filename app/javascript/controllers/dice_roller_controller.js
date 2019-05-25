@@ -14,11 +14,11 @@ export default class extends ApplicationController {
   static targets = ['canvas', 'dice']
   
   get availableHeight () {
-    return 600
+    return this.canvasTarget.offsetHeight
   }
   
   get availableWidth () {
-    return 800
+    return this.canvasTarget.offsetWidth
   }
   
   get viewAngle () { return 45 }
