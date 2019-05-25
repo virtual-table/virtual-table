@@ -21,19 +21,20 @@ export default class extends ApplicationController {
     return this.canvasTarget.offsetWidth
   }
   
-  get viewAngle () { return 45 }
+  get worldHeight () { return this.availableHeight / this.aspectRatio / Math.tan(10 * Math.PI / 180) }
+  
+  get viewAngle ()   { return 40 }
   get aspectRatio () { return this.availableWidth / this.availableHeight }
   
   connect () {
     this.dice = []
     
     let scene    = this.scene    = new THREE.Scene()
-    let camera   = this.camera   = new THREE.PerspectiveCamera(this.viewAngle, this.aspectRatio, 1, 20000)
-    
-    scene.add(camera)
-    camera.position.set(0, 40, 30)
+    let camera   = this.camera   = new THREE.PerspectiveCamera(this.viewAngle, this.aspectRatio, 1, this.worldHeight * 1.3)
+    camera.position.set(0, this.worldHeight / 20, 10)
     camera.up.set(0, 0, -1)
     camera.lookAt(0, 0, 0)
+    scene.add(camera)
     
     let renderer = this.renderer = new THREE.WebGLRenderer( {antialias:true} )
     renderer.setSize(this.availableWidth, this.availableHeight)
