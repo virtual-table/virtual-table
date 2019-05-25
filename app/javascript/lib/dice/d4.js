@@ -16,8 +16,27 @@ export default class extends Die {
     this.mass = 300;
     this.inertia = 5;
     this.invertUpside = true;
-
+    
     this.create();
+  }
+  
+  shiftUpperValue(toValue) {
+    let fromValue = this.getUpsideValue()
+    
+    if (toValue != fromValue) {
+      super.shiftUpperValue(toValue)
+      
+      // to shift faces on a d4, we need to alter faceTexts and recreate the textures from it
+      let num = toValue - fromValue;
+      if (num < 0) num += 4;
+      this.faceTexts = [
+        [[], [0, 0, 0], [2, 4, 3], [1, 3, 4], [2, 1, 4], [1, 2, 3]],
+        [[], [0, 0, 0], [2, 3, 4], [3, 1, 4], [2, 4, 1], [3, 2, 1]],
+        [[], [0, 0, 0], [4, 3, 2], [3, 4, 1], [4, 2, 1], [3, 1, 2]],
+        [[], [0, 0, 0], [4, 2, 3], [1, 4, 3], [4, 1, 2], [1, 3, 2]]
+      ][num];
+      this.object.material = this.getMaterials()
+    }
   }
   
   createTextTexture (text, color, backColor) {
