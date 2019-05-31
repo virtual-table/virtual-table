@@ -1,27 +1,48 @@
 import * as CANNON from 'cannon';
 import * as THREE from 'three';
 
-class DiceManagerSingleton {
-  constructor() {
-    this.world = null;
+export default class DiceTray {
+  constructor (scene, world) {
+    this.dicePools = []
+    this.scene = scene
+    this.world = world
+    this.materials = {}
+    
+    this.setup()
   }
   
-  setWorld(world) {
-    this.world = world;
+  setup () {
+    let { world, scene } = this
     
-    this.diceBodyMaterial = new CANNON.Material();
-    this.floorBodyMaterial = new CANNON.Material();
-    this.barrierBodyMaterial = new CANNON.Material();
+    let diceMaterial  = this.materials.dice  = new CANNON.Material()
+    let floorMaterial = this.materials.floor = new CANNON.Material()
+    let wallMaterial  = this.materials.wall  = new CANNON.Material()
     
-    world.addContactMaterial(
-      new CANNON.ContactMaterial(this.floorBodyMaterial, this.diceBodyMaterial, { friction: 0.01, restitution: 0.5 })
-    );
-    world.addContactMaterial(
-      new CANNON.ContactMaterial(this.barrierBodyMaterial, this.diceBodyMaterial, { friction: 0, restitution: 1.0 })
-    );
-    world.addContactMaterial(
-      new CANNON.ContactMaterial(this.diceBodyMaterial, this.diceBodyMaterial, { friction: 0, restitution: 0.5 })
-    );
+    world.addContactMaterial(new CANNON.ContactMaterial(floorMaterial, diceMaterial, { friction: 0.01, restitution: 0.5 }))
+    world.addContactMaterial(new CANNON.ContactMaterial(wallMaterial,  diceMaterial, { friction: 0,    restitution: 1.0 }))
+    world.addContactMaterial(new CANNON.ContactMaterial(diceMaterial,  diceMaterial, { friction: 0,    restitution: 0.5 }))
+    
+    let material = new THREE.MeshPhongMaterial( { color: 0x00aa00, side: THREE.DoubleSide } )
+    let geometry = new THREE.PlaneGeometry(30, 30, 10, 10)
+    let floor    = new THREE.Mesh(geometry, material)
+    
+    floor.receiveShadow  = true
+    floor.rotation.x = Math.PI / 2
+    
+    let floorBody = new CANNON.Body({ mass: 0, shape: new CANNON.Plane(), material: floorMaterial })
+    floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2)
+    
+    world.add(floorBody)
+    scene.add(floor)
+  }
+  
+  addDicePool (dice) {
+    for (let die of dice) {
+      die.tray = this
+      this.scene.add(die.getObject())
+    }
+    
+    this.dicePools.push(dice)
   }
   
   /**
@@ -63,7 +84,7 @@ class DiceManagerSingleton {
       }
       
       if (allStable) {
-        DiceManager.world.removeEventListener('postStep', check);
+        this.world.removeEventListener('postStep', check);
         
         for (let i = 0; i < diceValues.length; i++) {
           diceValues[i].dice.shiftUpperValue(diceValues[i].value);
@@ -73,13 +94,10 @@ class DiceManagerSingleton {
         
         this.throwRunning = false;
       } else {
-        DiceManager.world.step(DiceManager.world.dt);
+        this.world.step(this.world.dt);
       }
     };
     
     this.world.addEventListener('postStep', check);
   }
 }
-
-const DiceManager = new DiceManagerSingleton()
-export default DiceManager

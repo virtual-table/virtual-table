@@ -1,7 +1,7 @@
 import ApplicationController from 'controllers/application_controller'
 import * as THREE from 'three'
 import * as CANNON from 'cannon'
-import DiceManager from 'lib/dice/dice_manager'
+import DiceTray from 'lib/dice/dice_tray'
 import D4 from 'lib/dice/d4'
 import D6 from 'lib/dice/d6'
 import D8 from 'lib/dice/d8'
@@ -27,10 +27,8 @@ export default class extends ApplicationController {
   get aspectRatio () { return this.availableWidth / this.availableHeight }
   
   connect () {
-    this.dice = []
-    
-    let scene    = this.scene    = new THREE.Scene()
-    let camera   = this.camera   = new THREE.PerspectiveCamera(this.viewAngle, this.aspectRatio, 1, this.worldHeight * 1.3)
+    let scene    = this.scene  = new THREE.Scene()
+    let camera   = this.camera = new THREE.PerspectiveCamera(this.viewAngle, this.aspectRatio, 1, this.worldHeight * 1.3)
     camera.position.set(0, this.worldHeight / 20, 10)
     camera.up.set(0, 0, -1)
     camera.lookAt(0, 0, 0)
@@ -45,12 +43,13 @@ export default class extends ApplicationController {
     this.canvasTarget.appendChild(renderer.domElement)
     
     this.setupLighting()
-    this.setupFloor()
     this.setupSkyBox()
     
     let controls = this.controls = new THREE.OrbitControls(camera, renderer.domElement)
     
     this.setupPhysics()
+    
+    this.tray = new DiceTray(this.scene, this.world)
     this.addDice()
     
     this.animate()
@@ -67,7 +66,9 @@ export default class extends ApplicationController {
   render () {
     this.world.step(1.0 / 60.0)
     
-    for (let die of this.dice) die.updateMeshFromBody()
+    for (let dicePool of this.tray.dicePools) {
+      for (let die of dicePool) die.updateMeshFromBody()
+    }
     
     this.renderer.render(this.scene, this.camera)
   }
@@ -93,17 +94,6 @@ export default class extends ApplicationController {
     this.scene.add(spot)
   }
   
-  setupFloor () {
-    let material = new THREE.MeshPhongMaterial( { color: 0x00aa00, side: THREE.DoubleSide } )
-    let geometry = new THREE.PlaneGeometry(30, 30, 10, 10)
-    let floor    = new THREE.Mesh(geometry, material)
-    
-    floor.receiveShadow  = true
-    floor.rotation.x = Math.PI / 2
-    
-    this.scene.add(floor)
-  }
-  
   setupSkyBox () {
     let geometry = new THREE.CubeGeometry( 10000, 10000, 10000 )
     let material = new THREE.MeshPhongMaterial( { color: 0x9999ff, side: THREE.BackSide } )
@@ -118,41 +108,29 @@ export default class extends ApplicationController {
     world.gravity.set(0, -9.82 * 20, 0)
     world.broadphase = new CANNON.NaiveBroadphase()
     world.solver.iterations = 16
-    
-    let floorBody = new CANNON.Body({ mass: 0, shape: new CANNON.Plane(), material: DiceManager.floorBodyMaterial })
-    floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2)
-    world.add(floorBody)
-    
-    // ADD WALLS:
-    
-    DiceManager.setWorld(world)
   }
   
   addDice () {
     this.diceTargets.forEach((diceElement, index) => {
       const sides = parseInt(diceElement.dataset.diceSides)
-      let die
+      
+      let dicePool   = []
       let dieOptions = { 
         size: 1.5,
         backColor: diceElement.dataset.diceBackgroundColor || '#000000', 
         fontColor: diceElement.dataset.diceForegroundColor || '#ffffff'
       }
       
-      
       switch (sides) {
-        case 4:  die = new D4(dieOptions);  break
-        case 6:  die = new D6(dieOptions);  break
-        case 8:  die = new D8(dieOptions);  break
-        case 10: die = new D10(dieOptions); break
-        case 12: die = new D12(dieOptions); break
-        case 20: die = new D20(dieOptions); break
+        case 4:  dicePool = [ new  D4(dieOptions) ]; break
+        case 6:  dicePool = [ new  D6(dieOptions) ]; break
+        case 8:  dicePool = [ new  D8(dieOptions) ]; break
+        case 10: dicePool = [ new D10(dieOptions) ]; break
+        case 12: dicePool = [ new D12(dieOptions) ]; break
+        case 20: dicePool = [ new D20(dieOptions) ]; break
       }
       
-      if (die) {
-        this.scene.add(die.getObject())
-      }
-      
-      this.dice.push(die)
+      this.tray.addDicePool(dicePool)
     })
   }
   
@@ -160,10 +138,10 @@ export default class extends ApplicationController {
     let diceValues = []
     
     this.diceTargets.forEach((diceElement, index) => {
-      const die    = this.dice[index]
-      const result = parseInt(diceElement.dataset.diceResult)
+      const dicePool = this.tray.dicePools[index]
+      const result   = parseInt(diceElement.dataset.diceResult)
       
-      if (die) {
+      for (let die of dicePool) {
         let yRand  = Math.random() * 20
         let object = die.getObject()
         
@@ -182,6 +160,6 @@ export default class extends ApplicationController {
       }
     })
     
-    DiceManager.prepareValues(diceValues)
+    this.tray.prepareValues(diceValues)
   }
 }

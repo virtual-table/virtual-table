@@ -1,8 +1,24 @@
 import CANNON from 'lib/cannon'
 import THREE from 'lib/three'
-import DiceManager from 'lib/dice/dice_manager'
 
 export default class Die {
+  
+  get tray ()     { return this._tray }
+  set tray (tray) {
+    this._tray = tray
+    
+    this.object.body = new CANNON.Body({
+      mass:     this.mass,
+      shape:    this.object.geometry.cannon_shape,
+      material: tray.materials.dice
+    });
+    
+    this.object.body.linearDamping = 0.1;
+    this.object.body.angularDamping = 0.1;
+    
+    tray.world.add(this.object.body);
+  }
+  
   /**
    * @constructor
    * @param {object} options
@@ -45,7 +61,7 @@ export default class Die {
     return options;
   }
   
-  emulateThrow(callback) {
+  emulateThrow(world, callback) {
     let stableCount = 0;
     
     let check = () => {
@@ -53,17 +69,17 @@ export default class Die {
         stableCount++;
         
         if (stableCount === 50) {
-          DiceManager.world.removeEventListener('postStep', check);
+          world.removeEventListener('postStep', check);
           callback(this.getUpsideValue());
         }
       } else {
         stableCount = 0;
       }
       
-      DiceManager.world.step(DiceManager.world.dt);
+      world.step(world.dt);
     };
     
-    DiceManager.world.addEventListener('postStep', check);
+    world.addEventListener('postStep', check);
   }
   
   isFinished() {
@@ -286,20 +302,11 @@ export default class Die {
   }
   
   create() {
-    if (!DiceManager.world) throw new Error('You must call DiceManager.setWorld(world) first.');
     this.object = new THREE.Mesh(this.getGeometry(), new THREE.MultiMaterial(this.getMaterials()));
     
     this.object.reveiceShadow = true;
     this.object.castShadow = true;
     this.object.diceObject = this;
-    this.object.body = new CANNON.Body({
-      mass: this.mass,
-      shape: this.object.geometry.cannon_shape,
-      material: DiceManager.diceBodyMaterial
-    });
-    this.object.body.linearDamping = 0.1;
-    this.object.body.angularDamping = 0.1;
-    DiceManager.world.add(this.object.body);
     
     return this.object;
   }
