@@ -1,0 +1,19 @@
+.modal {
+  display: none;
+  
+  &.is-active {
+    @include flexbox(flex, row, wrap, center, center);
+  }
+}
+
+.modal__background {
+  
+}
+
+.modal__content {
+  
+}
+
+.modal__close {
+  
+}

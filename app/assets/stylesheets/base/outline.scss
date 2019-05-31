@@ -1,0 +1,24 @@
+//
+// Body
+// =====================================
+body {
+  color: #222;
+  font-size: 14px;
+  line-height: 24px;
+  font-family: var(--system-font-stack);
+  background: #fff;
+}
+
+// Forms
+// =====================================
+input, textarea, select,
+button {
+  color: #222;
+  font-size: 14px;
+  line-height: 24px;
+  font-family: var(--system-font-stack);
+}
+
+button, input[type="submit"] {
+  cursor: pointer;
+}

@@ -1,0 +1,40 @@
+.map-editor {
+  margin-bottom: 0 !important;
+  
+  &.columns {
+    flex-direction: row-reverse;
+  }
+  
+  .panel-block {
+    display: block;
+  }
+  
+  .panel-heading {
+    border-radius: 0;
+  }
+}
+
+.map-editor-floor {
+  .level {
+    margin-bottom: 0;
+  }
+  .map-editor-floor-contents {
+    display: none;
+  }
+  
+  &.is-active {
+    > .level {
+      margin-bottom: 1rem;
+    }
+    
+    .map-editor-floor-contents {
+      display: block;
+      margin: -8px -13px;
+      margin-bottom: -9px;
+    }
+  }
+  
+  .panel-tabs {
+    border-bottom: 0;
+  }
+}

@@ -1,14 +1,13 @@
-<div class="container">
-  <header class="level">
-    <div class="level-left">
-      <div class="level-item">
-        <h1 class="title"><%= t '.compendia' %></h1>
-      </div>
-      <div class="level-item">
-        <%= link_to t('.create_new_compendium'), new_compendium_path, class: 'is-small button' %>
-      </div>
-    </div>
+<section class="section-block section-block--compendia">
+  <header class="section-block__header">
+    <h2>
+      <%= t '.compendia' %>
+    </h2>
   </header>
+  
+  <div class="section-block__actions">
+    <%= link_to t('.create_new_compendium'), new_compendium_path, class: 'button' %>
+  </div>
   
   <% if compendia.present? %>
     <ul>
@@ -21,4 +20,4 @@
   <% else %>
     <p><%= t '.no_compendia_available' %></p>
   <% end %>
-</div>
+</section>

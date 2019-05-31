@@ -1,86 +1,83 @@
-<section class="section">
-  <div class="container">
-    <header class="level">
-      <div class="level-left">
-        <div class="level-item">
-          <h1 class="title">
-            <%= @compendium.title %>
-          </h1>
-        </div>
-        <div class="level-item">
-          <% if current_user == @compendium.author %>
-            <%=
-              link_to t('.edit_compendium'), [:edit, @compendium],
-                class: 'button is-link is-outlined'
-            %>
-          <% end %>
-        </div>
+<main class="content" role="main">
+  <div class="wrapper">
+    <section class="section-block section-block--compendia">
+      <header class="section-block__header">
+        <h2>
+          <%= @compendium.title %>
+        </h2>
+        
+        <%= @compendium.description_html %>
+      </header>
+      
+      <div class="section-block__actions">
+        <% if current_user == @compendium.author %>
+          <%=
+            link_to t('.edit_compendium'), [:edit, @compendium],
+              class: 'button is-link is-outlined'
+          %>
+        <% end %>
+        
+        <% if current_user == @compendium.author %>
+          <%=
+            link_to t('.destroy_compendium'), @compendium,
+              class: 'button is-danger',
+              data:  {
+                method:  :delete,
+                confirm: t('.confirm_compendium_destruction')
+              }
+          %>
+        <% end %>
       </div>
-    </header>
+    </section>
     
-    <div class="content">
-      <%= @compendium.description_html %>
-    </div>
-    
-    <% if current_user == @compendium.author %>
-      <%=
-        link_to t('.destroy_compendium'), @compendium,
-          class: 'button is-danger',
-          data:  {
-            method:  :delete,
-            confirm: t('.confirm_compendium_destruction')
-          }
-      %>
-    <% end %>
-  </div>
-  <div class="container">
-    <header class="level">
-      <div class="level-left">
-        <div class="level-item">
-          <h2 class="title"><%= t '.maps' %></h2>
-        </div>
-        <div class="level-item">
-          <% if current_user == @compendium.author %>
-            <%=
-              link_to t('.new_map'), new_compendium_map_path(@compendium),
-                class: 'button is-link is-outlined'
-            %>
-          <% end %>
-        </div>
+    <section class="section-block section-block--maps">
+      <header class="section-block__header">
+        <h2>
+          <%= t '.maps' %>
+        </h2>
+      </header>
+      
+      <div class="section-block__actions">
+        <% if current_user == @compendium.author %>
+          <%=
+            link_to t('.new_map'), new_compendium_map_path(@compendium),
+              class: 'button is-link is-outlined'
+          %>
+        <% end %>
       </div>
-    </header>
+      
+      <% if @maps.present? %>
+        <ul>
+          <%= render partial: 'map', collection: @maps %>
+        </ul>
+      <% else %>
+        <p><%= t '.no_maps_available' %></p>
+      <% end %>
+    </section>
     
-    <% if @maps.present? %>
-      <ul>
-        <%= render partial: 'map', collection: @maps %>
-      </ul>
-    <% else %>
-      <p><%= t '.no_maps_available' %></p>
-    <% end %>
-  </div>
-  <div class="container">
-    <header class="level">
-      <div class="level-left">
-        <div class="level-item">
-          <h2 class="title"><%= t '.pages' %></h2>
-        </div>
-        <div class="level-item">
-          <% if current_user == @compendium.author %>
-            <%=
-              link_to t('.new_page'), new_compendium_page_path(@compendium),
-                class: 'button is-link is-outlined'
-            %>
-          <% end %>
-        </div>
+    <section class="section-block section-block--pages">
+      <header class="section-block__header">
+        <h2>
+          <%= t '.pages' %>
+        </h2>
+      </header>
+      
+      <div class="section-block__actions">
+        <% if current_user == @compendium.author %>
+          <%=
+            link_to t('.new_page'), new_compendium_page_path(@compendium),
+              class: 'button is-link is-outlined'
+          %>
+        <% end %>
       </div>
-    </header>
-    
-    <% if @pages.present? %>
-      <ul>
-        <%= render partial: 'page', collection: @pages %>
-      </ul>
-    <% else %>
-      <p><%= t '.no_pages_available' %></p>
-    <% end %>
+      
+      <% if @pages.present? %>
+        <ul>
+          <%= render partial: 'page', collection: @pages %>
+        </ul>
+      <% else %>
+        <p><%= t '.no_pages_available' %></p>
+      <% end %>
+    </section>
   </div>
-</section>
+</main>

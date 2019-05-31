@@ -1,6 +1,13 @@
-<section class="section">
-  <div class="container">
-    <h1 class="title"><%= t '.edit_compendium' %></h1>
-    <%= render 'form', compendium: @compendium %>
+<main class="content" role="main">
+  <div class="wrapper">
+    <section class="section-block section-block--edit-compendium">
+      <header class="section-block__header">
+        <h2>
+          <%= t '.edit_compedium' %>
+        </h2>
+      </header>
+      
+      <%= render 'form', compendium: @compendium %>
+    </section>
   </div>
-</section>
+</main>

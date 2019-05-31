@@ -1,23 +1,20 @@
-<section class="section">
-  <div class="container">
-    <header class="level">
-      <div class="level-left">
-        <div class="level-item">
-          <h1 class="title">
-            <%= page.title %>
-          </h1>
-        </div>
-        <div class="level-item">
-          <%=
-            link_to t('.edit_page'), edit_compendium_page_path(page.compendium, page),
-              class: 'button is-small is-link is-outlined'
-          %>
-        </div>
+<main class="content" role="main">
+  <div class="wrapper">
+    <section class="section-block section-block--edit-compendium">
+      <header class="section-block__header">
+        <h2>
+          <%= page.title %>
+        </h2>
+      </header>
+      
+      <div class="section-block__actions">
+        <%=
+          link_to t('.edit_page'), edit_compendium_page_path(page.compendium, page),
+            class: 'button is-small is-link is-outlined'
+        %> 
       </div>
-    </header>
-    
-    <div class="content">
+      
       <%= render page.contents %>
-    </div>
+    </section>
   </div>
-</section>
+</main>

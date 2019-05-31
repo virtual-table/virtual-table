@@ -25,14 +25,13 @@ export default class extends Controller {
              data-target="modal.modal"
              data-action="keydown@window->modal#handleKeyEvent">
           
-          <div class="modal-background"
-               data-action="click->modal#close">
+          <div class="modal__background" data-action="click->modal#close">
           </div>
           
-          <div data-target="modal.content" id="modal_content">
+          <div data-target="modal.content" id="modal_content" class="modal__content">
           </div>
           
-          <button class="modal-close is-large" aria-label="close"
+          <button class="modal__close" aria-label="close"
                   data-target="modal.close"
                   data-action="click->modal#close"></button>
         </div>

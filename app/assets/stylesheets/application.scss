@@ -1,18 +1,42 @@
-/*
- * This is a manifest file that'll be compiled into application.css, which will include all the files
- * listed below.
- *
- * Any CSS and SCSS file within this directory, lib/assets/stylesheets, or any plugin's
- * vendor/assets/stylesheets directory can be referenced here using a relative path.
- *
- * You're free to add application-wide styles to this file and they'll appear at the bottom of the
- * compiled file so the styles you add here take precedence over styles defined in any other CSS/SCSS
- * files in this directory. Styles in this file should be added after the last require_* statement.
- * It is generally better to create a new file per style scope.
- *
- *= require_tree .
- *= require_self
- */
+// Utilities: Mixins
+// =====================================
+@import 'utilities/mixins/respond-to';
+@import 'utilities/mixins/wrappers';
+@import 'utilities/mixins/flexbox';
 
- @import 'components/main-navigation';
- @import 'utilities/mixins/flexbox';
+// Base
+// =====================================
+@import 'base/variables';
+@import 'base/reset';
+@import 'base/outline';
+
+// Components: Layout
+// =====================================
+@import 'components/layout/main-navigation';
+@import 'components/layout/main-content';
+
+
+// Components: Map
+// =====================================
+@import 'components/map/map-editor';
+@import 'components/map/map-canvas';
+
+// Components: Compendium
+// =====================================
+// @import 'components/compendium/...';
+
+// Components: Shared
+// =====================================
+@import 'components/shared/modals';
+@import 'components/shared/flash-messages';
+@import 'components/shared/section-block';
+
+// Vendor: Quill
+// =====================================
+@import 'vendor/quill/core';
+@import 'vendor/quill/snow';
+
+// Utilities: Helpers
+// =====================================
+@import 'utilities/helpers/wrappers';
+@import 'utilities/helpers/buttons';

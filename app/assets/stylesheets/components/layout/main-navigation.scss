@@ -1,0 +1,53 @@
+.main-navigation {
+  @include flexbox(flex, row, wrap, flex-start, center);
+  background: #aaa;
+  padding: {
+    right: 24px;
+    left: 24px;
+  }
+}
+
+.main-navigation__branding {
+  font-weight: 600;
+}
+
+.main-navigation__items {
+  @include flexbox();
+  margin-left: auto;
+}
+
+.main-navigation__item {
+  position: relative;
+  
+  a {
+    display: block;
+    padding: 24px;
+  }
+  
+  &:hover,
+  a:hover {
+    background: #bbb;
+  }
+}
+
+.main-navigation__dropdown {
+  display: none;
+  
+  .main-navigation__item:hover & {
+    position: absolute;
+    right: 0;
+    display: block;
+    width: 200px;
+    background: #fff;
+    box-shadow: rgba(0,0,0,.3) 0 1px 2px;
+  }
+  
+  .main-navigation__item a {
+    padding: 18px;
+    border-bottom: 1px solid #ddd;
+  }
+  
+  .main-navigation__item:last-child a {
+    border-bottom: none;
+  }
+}

@@ -1,0 +1,19 @@
+//
+// Respond to: min
+// ==================================
+//
+@mixin respond-to-min($width: "") {
+  @media only screen and (min-width: $width) {
+    @content;
+  }
+}
+
+//
+// Respond to: max
+// ==================================
+//
+@mixin respond-to-max($width: "") {
+  @media only screen and (max-width: $width) {
+    @content;
+  }
+}

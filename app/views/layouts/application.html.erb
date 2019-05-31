@@ -10,68 +10,39 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <body data-controller="modal" data-target="modal.container">
-    <nav class="main-nav" role="navigation" aria-label="main navigation">
-      <div class="main-nav__branding">
-        <%= link_to 'Virtual Table', root_path, class: 'main-nav__logo' %>
-      </div>
+    <nav class="main-navigation" role="navigation" aria-label="main navigation">
+      <span class="main-navigation__branding">
+        <%= link_to 'Virtual Table', root_path %>
+      </span>
       
-      <ul class="main-nav__items">
-        <li><a href="#">Index</a></li>
-        <li class="main-nav__item">
-          <a href="#">Games</a>
-          
-          <ul class="main-nav__dropdown">
-            <li><a href="#">New game</a></li>
-          </ul>
-        </li>
-      </ul>
-    </nav>
-    
-    
-    <nav class="navbar is-primary" role="navigation" aria-label="main navigation">
-      <div class="navbar-brand">
-        <%= link_to 'Virtual Table', root_path, class: 'navbar-item' %>
-        
-        <a role="button" class="navbar-burger burger" aria-label="menu" aria-expanded="false" data-target="navbarBasicExample">
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-          <span aria-hidden="true"></span>
-        </a>
-      </div>
-      
-      <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-start">
-        </div>
-        
-        <div class="navbar-end">
-          <% if logged_in? %>
-            <div class="navbar-item has-dropdown is-hoverable">
-              <%= link_to t('.games'), games_path, class: 'navbar-link' %>
-              
-              <div class="navbar-dropdown">
-                <% current_user.games.each do |game| %>
-                  <%= link_to game.title, game, class: 'navbar-item' %>
-                <% end %>
-                <hr class="navbar-divider">
-                <%= link_to t('.new_game'), new_game_path, class: 'navbar-item' %>
-              </div>
-            </div>
-          <% end %>
-          
-          <div class="navbar-item">
-            <div class="buttons">
-              <% if logged_in? %>
-                <%= link_to t('.logout'), logout_path, class: 'button is-light', data: { method: :delete } %>
-              <% else %>
-                <%= link_to new_user_path, class: 'button is-primary' do %>
-                  <strong><%= t '.signup' %></strong>
-                <% end %>
-                <%= link_to t('.login'), login_path, class: 'button is-light' %>
+      <ul class="main-navigation__items">
+        <% if logged_in? %>
+          <li class="main-navigation__item">
+            <%= link_to t('.games'), games_path %>
+            
+            <ul class="main-navigation__dropdown">
+              <% current_user.games.each do |game| %>
+                <li class="main-navigation__item">
+                  <%= link_to game.title, game %>
+                </li>
               <% end %>
-            </div>
-          </div>
-        </div>
-      </div>
+              <li class="main-navigation__item">
+                <%= link_to t('.new_game'), new_game_path %>
+              </li>
+            </ul>
+          </li>
+          <li class="main-navigation__item">
+            <%= link_to t('.logout'), logout_path, data: { method: :delete } %>
+          </li>
+        <% else %>
+          <li class="main-navigation__item">
+            <%= link_to t('.signup'), new_user_path %>
+          </li>
+          <li class="main-navigation__item">
+            <%= link_to t('.login'), login_path %>
+          </li>
+        <% end %>
+      </ul>
     </nav>
     
     <%= render 'shared/notice', message: notice if notice %>

@@ -1,0 +1,17 @@
+.flash-message {
+  background: #eee;
+  padding: 18px 24px;
+}
+
+.flash-message--success,
+.flash-message--error {
+  color: #fff;
+}
+
+.flash-message--success {
+  background: #28a745;
+}
+
+.flash-message--error {
+  background: #dc3545;
+}
