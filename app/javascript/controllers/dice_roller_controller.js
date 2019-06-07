@@ -46,93 +46,23 @@ export default class extends ApplicationController {
     return this.canvasTarget.offsetWidth
   }
   
-  get worldHeight () { return this.availableHeight / this.aspectRatio / Math.tan(10 * Math.PI / 180) }
-  
-  get viewAngle ()   { return 40 }
-  get aspectRatio () { return this.availableWidth / this.availableHeight }
-  
   connect () {
-    let scene    = this.scene  = new THREE.Scene()
-    let camera   = this.camera = new THREE.PerspectiveCamera(this.viewAngle, this.aspectRatio, 1, this.worldHeight * 1.3)
-    camera.position.set(0, this.worldHeight / 20, 10)
-    camera.up.set(0, 0, -1)
-    camera.lookAt(0, 0, 0)
-    scene.add(camera)
+    let dimensions = {
+      width:      this.availableWidth,
+      height:     this.availableHeight,
+      pixelRatio: window.devicePixelRatio ? window.devicePixelRatio : 1
+    }
     
-    let renderer = this.renderer = new THREE.WebGLRenderer( {antialias:true} )
-    renderer.setSize(this.availableWidth, this.availableHeight)
-    renderer.setPixelRatio(window.devicePixelRatio ? window.devicePixelRatio : 1)
-    renderer.shadowMap.enabled = true
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap
+    let tray = this.tray = new DiceTray(this.scene, this.world, dimensions)
     
-    this.canvasTarget.appendChild(renderer.domElement)
+    this.canvasTarget.appendChild(this.tray.renderer.domElement)
     
-    this.setupLighting()
-    this.setupSkyBox()
+    let controls = this.controls = new THREE.OrbitControls(tray.camera, tray.renderer.domElement)
     
-    let controls = this.controls = new THREE.OrbitControls(camera, renderer.domElement)
-    
-    this.setupPhysics()
-    
-    this.tray = new DiceTray(this.scene, this.world)
     this.addDice()
     
-    this.animate()
+    this.tray.animate()
     this.roll()
-  }
-  
-  animate () {
-    if (this.scene) {
-      this.render()
-      requestAnimationFrame(this.animate.bind(this))
-    }
-  }
-  
-  render () {
-    this.world.step(1.0 / 60.0)
-    
-    for (let dicePool of this.tray.dicePools) {
-      for (let die of dicePool) die.updateMeshFromBody()
-    }
-    
-    this.renderer.render(this.scene, this.camera)
-  }
-  
-  setupLighting () {
-    let ambient = new THREE.AmbientLight(0xffffff, 0.3)
-    this.scene.add(ambient)
-    
-    let directional = new THREE.DirectionalLight(0xffffff, 0.5)
-    directional.position.x = -1000
-    directional.position.y = 1000
-    directional.position.z = 1000
-    this.scene.add(directional)
-    
-    let spot = new THREE.SpotLight(0xefdfd5, 1.3)
-    spot.position.y = 100
-    spot.target.position.set(0, 0, 0)
-    spot.castShadow = true
-    spot.shadow.camera.near = 50
-    spot.shadow.camera.far = 110
-    spot.shadow.mapSize.width = 1024
-    spot.shadow.mapSize.height = 1024
-    this.scene.add(spot)
-  }
-  
-  setupSkyBox () {
-    let geometry = new THREE.CubeGeometry( 10000, 10000, 10000 )
-    let material = new THREE.MeshPhongMaterial( { color: 0x9999ff, side: THREE.BackSide } )
-    let skyBox   = new THREE.Mesh( geometry, material )
-    this.scene.add(skyBox)
-    this.scene.fog = new THREE.FogExp2( 0x9999ff, 0.00025 )
-  }
-  
-  setupPhysics () {
-    let world = this.world = new CANNON.World()
-    
-    world.gravity.set(0, -9.82 * 20, 0)
-    world.broadphase = new CANNON.NaiveBroadphase()
-    world.solver.iterations = 16
   }
   
   addDice () {
