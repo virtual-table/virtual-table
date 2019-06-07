@@ -11,7 +11,32 @@ import D20 from 'lib/dice/d20'
 
 export default class extends ApplicationController {
   
-  static targets = ['canvas', 'dice']
+  static targets = ['canvas', 'dice', 'seed']
+  
+  get randomCounter () {
+    return this._randomCounter || (this._randomCounter = 0)
+  }
+  
+  set randomCounter (newCount) {
+    this._randomCounter = newCount
+  }
+  
+  get seed () {
+    if (this._seed) {
+      return this._seed
+    } else if (this.hasSeedTarget) {
+      if (this.seedTarget.value) {
+        this._seed = parseInt(this.seedTarget.value)
+      } else {
+        this._seed = parseInt(this.seedTarget.innerText.trim())
+      }
+      
+    } else {
+      this._seed = Math.random() * 1000000
+    }
+    
+    return this._seed
+  }
   
   get availableHeight () {
     return this.canvasTarget.offsetHeight
@@ -142,24 +167,29 @@ export default class extends ApplicationController {
       const result   = parseInt(diceElement.dataset.diceResult)
       
       for (let die of dicePool) {
-        let yRand  = Math.random() * 20
+        let yRand  = this.random() * 20
         let object = die.getObject()
         
         object.position.x = -15 - (index % 3) * 1.5
         object.position.y = 2 + Math.floor(index / 3) * 1.5
         object.position.z = -15 + (index % 3) * 1.5
-        object.quaternion.x = (Math.random()*90-45) * Math.PI / 180
-        object.quaternion.z = (Math.random()*90-45) * Math.PI / 180
+        object.quaternion.x = (this.random()*90-45) * Math.PI / 180
+        object.quaternion.z = (this.random()*90-45) * Math.PI / 180
         
         die.updateBodyFromMesh()
         
         object.body.velocity.set(25 + result, 40 + yRand, 15 + result)
-        object.body.angularVelocity.set(20 * Math.random() -10, 20 * Math.random() -10, 20 * Math.random() -10)
+        object.body.angularVelocity.set(20 * this.random() -10, 20 * this.random() -10, 20 * this.random() -10)
         
         diceValues.push({ dice: die, value: result })
       }
     })
     
     this.tray.prepareValues(diceValues)
+  }
+  
+  random () {
+    let x = Math.sin(this.seed + this.randomCounter++) * 1000
+    return x - Math.floor(x)
   }
 }

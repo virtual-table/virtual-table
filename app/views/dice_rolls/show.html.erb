@@ -10,7 +10,10 @@ colors = [
 index = 0
 %>
 <div data-controller="dice-roller">
-  <h1>Rolled: <%= @roll %></h1>
+  <h1>
+    Rolled: <%= @roll %>
+    (seed: <strong data-target="dice-roller.seed"><%= @seed %></strong>)
+  </h1>
   <p>Result: <strong><%= @result.to_s %></strong></p>
   <ul>
     <% @result.each do |section| %>
