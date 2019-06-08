@@ -38,25 +38,16 @@ export default class extends ApplicationController {
     return this._seed
   }
   
-  get availableHeight () {
-    return this.canvasTarget.offsetHeight
-  }
-  
-  get availableWidth () {
-    return this.canvasTarget.offsetWidth
+  get dimensions () {
+    return {
+      width:      this.canvasTarget.offsetWidth,
+      height:     this.canvasTarget.offsetHeight,
+      pixelRatio: window.devicePixelRatio ? window.devicePixelRatio : 1
+    }
   }
   
   connect () {
-    let dimensions = {
-      width:      this.availableWidth,
-      height:     this.availableHeight,
-      pixelRatio: window.devicePixelRatio ? window.devicePixelRatio : 1
-    }
-    
-    let tray = this.tray = new DiceTray(this.scene, this.world, dimensions)
-    
-    this.canvasTarget.appendChild(this.tray.renderer.domElement)
-    
+    let tray = this.tray = new DiceTray(this.canvasTarget, this.dimensions)
     let controls = this.controls = new THREE.OrbitControls(tray.camera, tray.renderer.domElement)
     
     this.addDice()

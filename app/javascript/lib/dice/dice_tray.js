@@ -2,11 +2,11 @@ import * as CANNON from 'cannon';
 import * as THREE from 'three';
 
 export default class DiceTray {
-  constructor (scene, world, dimensions) {
-    this.dicePools = []
+  constructor (container, dimensions) {
+    this.container  = container
+    this.dicePools  = []
     this.dimensions = dimensions
-    this.world = world
-    this.materials = {}
+    this.materials  = {}
     
     this.setup()
   }
@@ -14,13 +14,21 @@ export default class DiceTray {
   // SETUP:
   
   setup () {
+    this.setupDimensions()
     this.setupWorld()
     this.setupScene()
     
     this.setupCamera()
     this.setupRenderer()
+    
+    this.container.appendChild(this.renderer.domElement)
   }
   
+  setupDimensions () {
+    let dimensions = this.dimensions
+    dimensions.aspect = dimensions.width / dimensions.height
+    dimensions.scale  = (this.dimensions.width ** 2 + this.dimensions.height ** 2) / 13
+  }
   
   setupScene () {
     let scene = this.scene = new THREE.Scene()
