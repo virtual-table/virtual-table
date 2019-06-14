@@ -28,4 +28,6 @@ Rails.application.routes.draw do
   end
   
   resources :play, controller: :game_sessions, only: %i[index show]
+  
+  resources :dice_rolls, only: %i[index new create show]
 end

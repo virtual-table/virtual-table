@@ -1,0 +1,5 @@
+<%= form_tag dice_rolls_path do %>
+  <%= text_field_tag   :roll, '(Test) 1d4 + 1d6 + 1d8 + 1d10 + 1d12 + 1d20'  %>
+  <%= number_field_tag :seed, random_seed %>
+  <%= submit_tag t('.roll') %>
+<%  end %>

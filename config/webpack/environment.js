@@ -6,4 +6,9 @@ environment.plugins.append(
   new webpack.ProvidePlugin({ PIXI: 'lib/pixi' })
 )
 
+environment.plugins.append(
+  'ProvidePlugin:THREE',
+  new webpack.ProvidePlugin({ THREE: 'three' })
+)
+
 module.exports = environment
