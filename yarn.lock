@@ -4567,6 +4567,13 @@ optimize-css-assets-webpack-plugin@^5.0.1:
     cssnano "^4.1.0"
     last-call-webpack-plugin "^3.0.0"
 
+orbit-controls-es6@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/orbit-controls-es6/-/orbit-controls-es6-2.0.0.tgz#c11d52e918e1c9944e479da075099dff7efe721a"
+  integrity sha512-1daiSVU/GN2fIjIMtBjVCiCSZh8eOOPyOe5GjHioDMnDpQzDbGRfux5idM54Y3BdIn8QTv3KqHK1suVzEgRC0A==
+  dependencies:
+    three "0.97.0"
+
 original@^1.0.0:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/original/-/original-1.0.2.tgz#e442a61cffe1c5fd20a65f3261c26663b303f25f"
@@ -6646,6 +6653,11 @@ three-js@^79.0.0:
   version "79.0.0"
   resolved "https://registry.yarnpkg.com/three-js/-/three-js-79.0.0.tgz#0318eaacab286ddcf88fa3e1977e8a6ee6957b59"
   integrity sha1-AxjqrKsobdz4j6Phl36KbuaVe1k=
+
+three@0.97.0:
+  version "0.97.0"
+  resolved "https://registry.yarnpkg.com/three/-/three-0.97.0.tgz#76141e1b0ace14246fe9198a458fefddc98a4e30"
+  integrity sha512-ctZF79O1R2aMIDnz9cV5GUIONyFnYvfQKg4+EAwEVaEr1mgy99rglstH6hhRdIThu3SOa4Ns5da/Ee5fTbWc9A==
 
 three@^0.90.0:
   version "0.90.0"

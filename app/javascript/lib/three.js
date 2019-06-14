@@ -1,8 +1,7 @@
 import * as THREE from 'three'
+import OrbitControls from 'orbit-controls-es6'
 
-require('three/examples/js/controls/OrbitControls.js')
-require('three/examples/js/loaders/OBJLoader.js')
-
-global.THREE = THREE = THREE
+global.THREE = THREE
+THREE.OrbitControls = OrbitControls
 
 export default THREE
