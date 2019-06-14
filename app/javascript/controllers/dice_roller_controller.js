@@ -8,6 +8,7 @@ import D8 from 'lib/dice/d8'
 import D10 from 'lib/dice/d10'
 import D12 from 'lib/dice/d12'
 import D20 from 'lib/dice/d20'
+import OrbitControls from 'orbit-controls-es6'
 
 export default class extends ApplicationController {
   
@@ -48,7 +49,7 @@ export default class extends ApplicationController {
   
   connect () {
     let tray = this.tray = new DiceTray(this.canvasTarget, this.dimensions)
-    let controls = this.controls = new THREE.OrbitControls(tray.camera, tray.renderer.domElement)
+    let controls = this.controls = new OrbitControls(tray.camera, tray.renderer.domElement)
     
     this.addDice()
     
