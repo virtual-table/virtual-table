@@ -2,11 +2,11 @@
 // Body
 // =====================================
 body {
-  color: #222;
-  font-size: 14px;
-  line-height: 24px;
-  font-family: var(--system-font-stack);
-  background: #fff;
+  color: #d8d8d8;
+  font-size: var(--default-font-size);
+  line-height: var(--default-line-height);
+  font-family: var(--default-font-stack);
+  background: #0A0A0A;
 }
 
 // Forms
@@ -14,9 +14,9 @@ body {
 input, textarea, select,
 button {
   color: #222;
-  font-size: 14px;
-  line-height: 24px;
-  font-family: var(--system-font-stack);
+  font-size: var(--default-font-size);
+  line-height: var(--default-line-height);
+  font-family: var(--default-font-stack);
 }
 
 button, input[type="submit"] {

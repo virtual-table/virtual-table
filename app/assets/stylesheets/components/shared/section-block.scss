@@ -1,17 +1,28 @@
 .section-block {
-  margin-bottom: 24px;
+  margin-bottom: calc(var(--spacing-unit) * 8);
 }
 
 .section-block__header {
-  margin-bottom: 18px;
+  @include flexbox(flex, row, wrap, flex-start, center);
+  padding-bottom: calc(var(--spacing-unit) * 3);
+  margin-bottom: calc(var(--spacing-unit) * 3);
+  border-bottom: 1px solid #222;
   
   h1, h2 {
-    font-size: 21px;
-    line-height: 30px;
-    font-weight: 600;
+    font-size: 28px;
+    line-height: 36px;
+    font-weight: 400;
   }
 }
 
 .section-block__actions {
-  margin-bottom: 18px;
+  margin-left: auto;
+}
+
+.section-block__content {
+  width: 100%;
+  
+  a {
+    color: #fff;
+  }
 }

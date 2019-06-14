@@ -1,11 +1,18 @@
-.button {
+a.button, button.button,
+input[type="submit"].button {
   @include flexbox(inline-flex, row, wrap, center, center);
-  height: 36px;
-  font-size: 14px;
+  height: calc(var(--spacing-unit) * 5);
+  color: #222;
+  font-size: var(--default-font-size);
   line-height: 1;
   text-decoration: none;
   background: #fff;
-  padding: 6px 12px;
+  padding: {
+    top: var(--spacing-unit);
+    right: calc(var(--spacing-unit) * 2);
+    bottom: var(--spacing-unit);
+    left: calc(var(--spacing-unit) * 2);
+  }
   border: 1px solid #ddd;
   border-radius: 4px;
 }

@@ -3,21 +3,23 @@
     <h2>
       <%= t '.compendia' %>
     </h2>
+    
+    <div class="section-block__actions">
+      <%= link_to t('.create_new_compendium'), new_compendium_path, class: 'button' %>
+    </div>
   </header>
   
-  <div class="section-block__actions">
-    <%= link_to t('.create_new_compendium'), new_compendium_path, class: 'button' %>
+  <div class="section-block__content">
+    <% if compendia.present? %>
+      <ul>
+        <% compendia.each do |compendium| %>
+          <li>
+            <%= link_to compendium.title, compendium %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p><%= t '.no_compendia_available' %></p>
+    <% end %>
   </div>
-  
-  <% if compendia.present? %>
-    <ul>
-      <% compendia.each do |compendium| %>
-        <li>
-          <%= link_to compendium.title, compendium %>
-        </li>
-      <% end %>
-    </ul>
-  <% else %>
-    <p><%= t '.no_compendia_available' %></p>
-  <% end %>
 </section>

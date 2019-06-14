@@ -3,26 +3,28 @@
     <h2>
       <%= t '.games' %>
     </h2>
+    
+    <div class="section-block__actions">
+      <%= link_to t('.create_new_game'), new_game_path, class: 'button' %>
+    </div>
   </header>
   
-  <div class="section-block__actions">
-    <%= link_to t('.create_new_game'), new_game_path, class: 'button' %>
+  <div class="section-block__content">
+    <% if players.present? %>
+      <ul>
+        <% players.each do |play| %>
+          <% game = play.game %>
+          <li>
+            <%= link_to game.title, game %>
+            <span class="tag">
+              <%= play.role %>
+            </span>
+            <%= link_to t('.join_session'), play_path(game), class: 'button' %>
+          </li>
+        <% end %>
+      </ul>
+    <% else %>
+      <p><%= t '.no_games_available' %></p>
+    <% end %>
   </div>
-  
-  <% if players.present? %>
-    <ul>
-      <% players.each do |play| %>
-        <% game = play.game %>
-        <li>
-          <%= link_to game.title, game %>
-          <span class="tag">
-            <%= play.role %>
-          </span>
-          <%= link_to t('.join_session'), play_path(game), class: 'button' %>
-        </li>
-      <% end %>
-    </ul>
-  <% else %>
-    <p><%= t '.no_games_available' %></p>
-  <% end %>
 </section>

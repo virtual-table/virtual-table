@@ -5,14 +5,14 @@
         <h2>
           <%= page.title %>
         </h2>
+        
+        <div class="section-block__actions">
+          <%=
+            link_to t('.edit_page'), edit_compendium_page_path(page.compendium, page),
+              class: 'button is-small is-link is-outlined'
+          %> 
+        </div>
       </header>
-      
-      <div class="section-block__actions">
-        <%=
-          link_to t('.edit_page'), edit_compendium_page_path(page.compendium, page),
-            class: 'button is-small is-link is-outlined'
-        %> 
-      </div>
       
       <%= render page.contents %>
     </section>

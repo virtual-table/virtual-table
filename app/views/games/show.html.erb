@@ -6,25 +6,27 @@
           <%= @game.title %>
         </h2>
         
-        <%= @game.description_html %>
+        <div class="section-block__actions">
+          <%=
+            link_to t('.join_session'), play_path(@game),
+              class: 'button is-link is-outlined'
+          %>
+          
+          <% if current_user == @game.author %>
+            <%=
+              link_to t('.destroy_game'), game_path,
+                class: 'button is-danger',
+                data:  {
+                  method:  :delete,
+                  confirm: t('.confirm_game_destruction')
+                }
+            %>
+          <% end %>
+        </div>
       </header>
       
-      <div class="section-block__actions">
-        <%=
-          link_to t('.join_session'), play_path(@game),
-            class: 'button is-link is-outlined'
-        %>
-        
-        <% if current_user == @game.author %>
-          <%=
-            link_to t('.destroy_game'), game_path,
-              class: 'button is-danger',
-              data:  {
-                method:  :delete,
-                confirm: t('.confirm_game_destruction')
-              }
-          %>
-        <% end %>
+      <div class="section-block__content">
+        <%= @game.description_html %>
       </div>
     </div>
     
@@ -35,15 +37,17 @@
         </h2>
       </header>
       
-      <% if @maps.present? %>
-        <ul>
-          <% @maps.each do |map| %>
-            <li><%= link_to map.title, map %></li>
-          <% end %>
-        </ul>
-      <% else %>
-        <p><%= t '.no_maps_available' %></p>
-      <% end %>
+      <div class="section-block__content">
+        <% if @maps.present? %>
+          <ul>
+            <% @maps.each do |map| %>
+              <li><%= link_to map.title, map %></li>
+            <% end %>
+          </ul>
+        <% else %>
+          <p><%= t '.no_maps_available' %></p>
+        <% end %>
+      </div>
     </div>
   </div>
 </main>
