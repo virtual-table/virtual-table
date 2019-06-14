@@ -1,3 +1,7 @@
 .wrapper {
   @include wrapper(100%, var(--wrapper-max-width));
 }
+
+.wrapper--fullscreen {
+  
+}

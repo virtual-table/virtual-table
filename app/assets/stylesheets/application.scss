@@ -22,13 +22,14 @@
 
 // Components: Compendium
 // =====================================
-// @import 'components/compendium/...';
+@import 'components/compendium/pages/edit-page';
 
 // Components: Shared
 // =====================================
 @import 'components/shared/modals';
 @import 'components/shared/flash-messages';
-@import 'components/shared/section-block';
+@import 'components/shared/blocks';
+@import 'components/shared/panels';
 
 // Vendor: Quill
 // =====================================

@@ -1,3 +1,6 @@
 main.content {
-  padding: 48px 0;
+  padding: {
+    top: calc(var(--spacing-unit) * 6);
+    border: calc(var(--spacing-unit) * 6);
+  }
 }

@@ -1,13 +1,15 @@
 <main class="content" role="main">
   <div class="wrapper">
-    <section class="section-block section-block--edit-compendium">
-      <header class="section-block__header">
+    <section class="block block--edit-compendium">
+      <header class="block__header">
         <h2>
           <%= t '.edit_compedium' %>
         </h2>
       </header>
       
-      <%= render 'form', compendium: @compendium %>
+      <div class="block__content">
+        <%= render 'form', compendium: @compendium %>
+      </div>
     </section>
   </div>
 </main>

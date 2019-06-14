@@ -1,0 +1,16 @@
+main.content--edit-page {
+  padding-top: 0;
+  
+  .wrapper--fullscreen {
+    @include flexbox();
+  }
+  
+  .block {
+    width: calc(100% - 300px);
+    padding: {
+      top: calc(var(--spacing-unit) * 6);
+      right: calc(var(--spacing-unit) * 8);
+      left: calc(var(--spacing-unit) * 8);
+    }
+  }
+}

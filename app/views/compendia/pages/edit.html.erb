@@ -1,13 +1,23 @@
-<main class="content" role="main">
-  <div class="wrapper">
-    <section class="section-block section-block--edit-page">
-      <header class="section-block__header">
+<main class="content content--edit-page" role="main">
+  <div class="wrapper--fullscreen">
+    <div class="panel">
+      Tree structure
+    </div>
+      
+    <section class="block block--edit-page">
+      <header class="block__header">
         <h2>
           <%= t '.edit_page' %>
         </h2>
+        
+        <div class="block__actions">
+          Test
+        </div>
       </header>
       
-      <%= render 'form', compendium: @compendium, page: @page %>
+      <div class="block__content">
+        <%= render 'form', compendium: @compendium, page: @page %>
+      </div>
     </section>
   </div>
 </main>
