@@ -1,0 +1,11 @@
+<%
+  page = toc_page
+%>
+<li>
+  <%= link_to page.title, compendium_page_path(page.compendium, page) %>
+  <% if page.children.size > 0 %>
+    <ul>
+      <%= render partial: 'toc_page', collection: page.children %>
+    </ul>
+  <% end %>
+</li>

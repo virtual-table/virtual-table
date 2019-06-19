@@ -1,77 +1,7 @@
 <main class="content content--edit-page" role="main">
   <div class="wrapper">
     <section class="edit-page">
-      <section class="edit-page__toc">
-        <header class="toc__header">
-          <h2>
-            Compendium title
-          </h2>
-        </header>
-        
-        <div class="toc__maps">
-          <header>
-            <a href="#">Maps</a>
-            
-            <div class="maps__actions">
-              <ul>
-                <li>
-                  <a href="#">New</a>
-                </li>
-              </ul>
-            </div>
-          </header>
-          
-          <nav class="maps__contents">
-            <ul>
-              <li>Item</li>
-            </ul>
-          </nav>
-        </div>
-          
-        <div class="toc__pages">
-          <header>
-            <a href="#">Pages</a>
-            
-            <div class="pages__actions">
-              <ul>
-                <li>
-                  <a href="#">New</a>
-                </li>
-              </ul>
-            </div>
-          </header>
-          
-          <nav class="pages__contents">
-            <ul>
-              <li>
-                <a href="#">Gods</a>
-                <ul>
-                  <li>
-                    <a href="#">Alwin</a>
-                    <ul>
-                      <li>
-                        <a href="#">Alwin - Perfect Form</a>
-                      </li>
-                    </ul>
-                  </li>
-                  <li>
-                    <a href="#">Asmodeus</a>
-                  </li>
-                  <li>
-                    <a href="#">Abadaar</a>
-                  </li>
-                  <li>
-                    <a href="#">Nethys</a>
-                  </li>
-                </ul>
-              </li>
-              <li>
-                <a href="#">Cities</a>
-              </li>
-            </ul>
-          </nav>
-        </div>
-      </section>
+      <%= render 'table_of_contents', compendium: @compendium, page: @page %>
       
       <div class="edit-page__form">
         <%= render 'form', compendium: @compendium, page: @page %>

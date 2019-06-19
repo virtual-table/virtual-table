@@ -1,0 +1,49 @@
+<section class="edit-page__toc">
+  <header class="toc__header">
+    <h2>
+      <%= compendium.title %>
+    </h2>
+  </header>
+  
+  <div class="toc__maps">
+    <header>
+      <strong>Maps</strong>
+      
+      <div class="maps__actions">
+        <ul>
+          <li>
+            <%= link_to t('.new_map'), new_compendium_map_path(compendium) %>
+          </li>
+        </ul>
+      </div>
+    </header>
+    
+    <nav class="maps__contents">
+      <ul>
+        <% compendium.maps.each do |map| %>
+          <li><%= link_to map.title, map_path(map) %></li>
+        <% end %>
+      </ul>
+    </nav>
+  </div>
+    
+  <div class="toc__pages">
+    <header>
+      <strong>Pages</strong>
+      
+      <div class="pages__actions">
+        <ul>
+          <li>
+            <%= link_to t('.new_page'), new_compendium_page_path(compendium) %>
+          </li>
+        </ul>
+      </div>
+    </header>
+    
+    <nav class="pages__contents">
+      <ul>
+        <%= render partial: 'toc_page', collection: @compendium.pages.without_parent %>
+      </ul>
+    </nav>
+  </div>
+</section>
