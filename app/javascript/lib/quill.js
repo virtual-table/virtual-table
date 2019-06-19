@@ -22,18 +22,29 @@ BrokenPicker.prototype.buildLabel = function() {
 }
 
 import Toolbar from 'quill/modules/toolbar'
-import Snow    from 'quill/themes/snow'
+import Bubble  from 'quill/themes/bubble'
 
-import Bold   from 'quill/formats/bold'
-import Italic from 'quill/formats/italic'
-import Header from 'quill/formats/header'
+import Blockquote         from 'quill/formats/blockquote'
+import Bold               from 'quill/formats/bold'
+import Code               from 'quill/formats/code'
+import Header             from 'quill/formats/header'
+import Link               from 'quill/formats/link'
+import List, { ListItem } from 'quill/formats/list'
+import Italic             from 'quill/formats/italic'
+import Underline          from 'quill/formats/underline'
 
 Quill.register({
-  'modules/toolbar': Toolbar,
-  'themes/snow':     Snow,
-  'formats/bold':    Bold,
-  'formats/italic':  Italic,
-  'formats/header':  Header
+  'modules/toolbar':    Toolbar,
+  'themes/bubble':      Bubble,
+  'formats/blockquote': Blockquote,
+  'formats/bold':       Bold,
+  'formats/code':       Code,
+  'formats/italic':     Italic,
+  'formats/link':       Link,
+  'formats/list':       List,
+  'formats/list-item':  ListItem,
+  'formats/header':     Header,
+  'formats/underline':  Underline
 })
 
 export default Quill

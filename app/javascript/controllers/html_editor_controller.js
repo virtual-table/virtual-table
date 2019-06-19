@@ -13,7 +13,7 @@ export default class extends ApplicationController {
     this.editorTarget.innerHTML = this.inputTarget.value
     
     this.quill = new Quill(this.editorTarget, {
-      theme:   'snow',
+      theme:   'bubble',
       modules: {
         toolbar: [
           [{ header: [1, 2, 3, 4, 5, 6, false] }],
