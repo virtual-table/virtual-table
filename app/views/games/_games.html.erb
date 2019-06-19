@@ -1,15 +1,15 @@
-<section class="block block--games">
-  <header class="block__header">
+<section class="games-overview">
+  <header class="games-overview__header">
     <h2>
       <%= t '.games' %>
     </h2>
     
-    <div class="block__actions">
+    <div class="games-overview__actions">
       <%= link_to t('.create_new_game'), new_game_path, class: 'button' %>
     </div>
   </header>
   
-  <div class="block__content">
+  <div class="games-overview__content">
     <% if players.present? %>
       <ul>
         <% players.each do |play| %>

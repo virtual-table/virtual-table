@@ -1,15 +1,15 @@
-<section class="block block--compendia">
-  <header class="block__header">
+<section class="compendia-overview">
+  <header class="compendia-overview__header">
     <h2>
       <%= t '.compendia' %>
     </h2>
     
-    <div class="block__actions">
+    <div class="compendia-overview__actions">
       <%= link_to t('.create_new_compendium'), new_compendium_path, class: 'button' %>
     </div>
   </header>
   
-  <div class="block__content">
+  <div class="compendia-overview__content">
     <% if compendia.present? %>
       <ul>
         <% compendia.each do |compendium| %>

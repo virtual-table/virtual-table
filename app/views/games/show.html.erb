@@ -1,12 +1,12 @@
-<main class="content" role="main">
+<main class="content content--single-game" role="main">
   <div class="wrapper">
-    <div class="block block--game">
-      <header class="block__header">
+    <section class="game-description">
+      <header class="game-description__header">
         <h2>
           <%= @game.title %>
         </h2>
         
-        <div class="block__actions">
+        <div class="game-description__actions">
           <%=
             link_to t('.join_session'), play_path(@game),
               class: 'button is-link is-outlined'
@@ -25,19 +25,19 @@
         </div>
       </header>
       
-      <div class="block__content">
+      <div class="game-description__content">
         <%= @game.description_html %>
       </div>
-    </div>
+    </section>
     
-    <div class="block block--maps">
-      <header class="block__header">
+    <section class="game-maps">
+      <header class="game-maps__header">
         <h2>
           <%= t '.maps' %>
         </h2>
       </header>
       
-      <div class="block__content">
+      <div class="game-maps__content">
         <% if @maps.present? %>
           <ul>
             <% @maps.each do |map| %>
@@ -48,6 +48,6 @@
           <p><%= t '.no_maps_available' %></p>
         <% end %>
       </div>
-    </div>
+    </section>
   </div>
 </main>

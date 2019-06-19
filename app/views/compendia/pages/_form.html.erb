@@ -3,21 +3,27 @@ new_page_content_position = -1
 root_pages = compendium.pages.where(parent: nil)
 %>
 <%= bulma_form_for [compendium, page.becomes(Page)] do |f| %>
-  <%= f.field :title do %>
-    <%= f.label      :title %>
-    <%= f.text_field :title %>
-    <%= f.errors     :title %>
-  <% end %>
-  
-  <%= f.field :parent_id do %>
-    <%= f.label  :parent_id %>
-    <%= f.select :parent_id, page_select_options(root_pages), include_blank: true %>
-    <%= f.errors :parent_id %>
-  <% end %>
+  <div class="form__header">
+    <%= f.field :title do %>
+      <%= f.label      :title %>
+      <%= f.text_field :title %>
+      <%= f.errors     :title %>
+    <% end %>
+    
+    <%= f.field :parent_id do %>
+      <%= f.label  :parent_id %>
+      <%= f.select :parent_id, page_select_options(root_pages), include_blank: true %>
+      <%= f.errors :parent_id %>
+    <% end %>
+  </div>
   
   <% unless page.new_record? %>
     <div data-controller="compendium--editor">
       <%= f.fields_for :contents do |content_fields| %>
+        <%=
+          render 'compendia/page_contents/form_fields',
+            fields: content_fields
+        %>
         <%=
           new_page_content_position += 1
           render 'compendia/page_contents/new_page_content',
@@ -25,11 +31,8 @@ root_pages = compendium.pages.where(parent: nil)
             page:       page,
             position:   new_page_content_position
         %>
-        <%=
-          render 'compendia/page_contents/form_fields',
-            fields: content_fields
-        %>
       <% end %>
+      
       <%=
         new_page_content_position += 1
         render 'compendia/page_contents/new_page_content',

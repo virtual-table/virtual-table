@@ -1,4 +1,4 @@
-// Utilities: Mixins
+// Mixins
 // =====================================
 @import 'utilities/mixins/respond-to';
 @import 'utilities/mixins/wrappers';
@@ -10,33 +10,39 @@
 @import 'base/reset';
 @import 'base/outline';
 
-// Components: Layout
+// Layout
 // =====================================
 @import 'components/layout/main-navigation';
 @import 'components/layout/main-content';
 
-// Components: Map
+// Compendium
 // =====================================
-@import 'components/map/map-editor';
-@import 'components/map/map-canvas';
-
-// Components: Compendium
-// =====================================
+@import 'components/compendium/compendia-overview';
+@import 'components/compendium/compendium-description';
+@import 'components/compendium/pages/compendium-pages';
+@import 'components/compendium/pages/single-page';
 @import 'components/compendium/pages/edit-page';
+@import 'components/compendium/maps/compendium-maps';
+@import 'components/compendium/maps/map-editor';
+@import 'components/compendium/maps/map-canvas';
 
-// Components: Shared
+// Games
+// =====================================
+@import 'components/games/games-overview';
+@import 'components/games/game-description';
+@import 'components/games/game-maps';
+
+// Shared
 // =====================================
 @import 'components/shared/modals';
 @import 'components/shared/flash-messages';
-@import 'components/shared/blocks';
-@import 'components/shared/panels';
 
 // Vendor: Quill
 // =====================================
 @import 'vendor/quill/core';
 @import 'vendor/quill/snow';
 
-// Utilities: Helpers
+// Helpers
 // =====================================
 @import 'utilities/helpers/wrappers';
 @import 'utilities/helpers/buttons';

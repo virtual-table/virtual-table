@@ -1,12 +1,12 @@
-<main class="content content--page" role="main">
+<main class="content content--single-page" role="main">
   <div class="wrapper">
-    <section class="block block--page">
-      <header class="block__header">
+    <section class="single-page">
+      <header class="single-page__header">
         <h2>
           <%= page.title %>
         </h2>
         
-        <div class="block__actions">
+        <div class="single-page__actions">
           <%=
             link_to t('.edit_page'), edit_compendium_page_path(page.compendium, page),
               class: 'button is-small is-link is-outlined'
@@ -14,7 +14,7 @@
         </div>
       </header>
       
-      <div class="block__content">
+      <div class="single-page__content">
         <%= render page.contents %>
       </div>
     </section>

@@ -5,6 +5,12 @@
 @mixin wrapper($wrapper-width, $wrapper-max-width) {
   width: $wrapper-width;
   max-width: $wrapper-max-width;
-  margin-right: auto;
-  margin-left: auto;
+  padding: {
+    right: calc(var(--spacing-unit) * 4);
+    left: calc(var(--spacing-unit) * 4);
+  }
+  margin: {
+    right: auto;
+    left: auto;
+  }
 }

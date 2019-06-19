@@ -1,17 +1,15 @@
 .main-navigation {
   @include flexbox(flex, row, wrap, flex-start, center);
-  background: #aaa;
   padding: {
     right: calc(var(--spacing-unit) * 4);
     left: calc(var(--spacing-unit) * 4);
   }
-  background-image: linear-gradient(#3B3B3B 1%, #363636 100%);
 }
 
 .main-navigation__branding {
   
   a {
-    color: #fff;
+    color: #222;
     font-weight: 600;
     text-decoration: none;
   }
@@ -27,7 +25,7 @@
   
   a {
     display: block;
-    color: #fff;
+    color: #222;
     text-decoration: none;
     padding: {
       top: calc(var(--spacing-unit) * 2);
@@ -39,6 +37,7 @@
   
   &:hover,
   a:hover {
+    color: #fff;
     background: #222;
   }
 }
@@ -58,6 +57,7 @@
   .main-navigation__item {
 
     a {
+      color: #fff;
       padding: {
         top: calc(var(--spacing-unit) * 2);
         right: calc(var(--spacing-unit) * 3);
@@ -73,6 +73,7 @@
     
     &:hover,
     a:hover {
+      color: #fff;
       background: #FF0000;
     }
   }

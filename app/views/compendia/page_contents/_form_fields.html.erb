@@ -4,19 +4,31 @@ containable = f.object
 content     = containable.content
 %>
 <%= field_set_tag nil, data: { controller: 'compendium--content' } do %>
-  <p>
-    <%= link_to t('.move_up'),   '#', data: { action: 'click->compendium--content#moveUp'   } %>
-    <%= link_to t('.move_down'), '#', data: { action: 'click->compendium--content#moveDown' } %>
-    <%= link_to t('.delete'),    '#', data: { action: 'click->compendium--content#delete'   } %>
-  </p>
-  
-  <%= f.hidden_field :id           %>
-  <%= f.hidden_field :position, data: { target: 'compendium--content.positionField' } %>
-  <%= f.hidden_field :_destroy, data: { target: 'compendium--content.deleteField'   } %>
-  <%= f.hidden_field :content_type %>
-  <%= f.hidden_field :content_id   %>
-  
-  <%= f.fields_for :content do |content_fields| %>
-    <%= render "compendia/#{content.to_partial_path}_fields", fields: content_fields %>
-  <% end %>
+  <div class="form__group">
+    <div class="group__fields">
+      <%= f.hidden_field :id           %>
+      <%= f.hidden_field :position, data: { target: 'compendium--content.positionField' } %>
+      <%= f.hidden_field :_destroy, data: { target: 'compendium--content.deleteField'   } %>
+      <%= f.hidden_field :content_type %>
+      <%= f.hidden_field :content_id   %>
+      
+      <%= f.fields_for :content do |content_fields| %>
+        <%= render "compendia/#{content.to_partial_path}_fields", fields: content_fields %>
+      <% end %>
+    </div>
+    
+    <div class="group__actions">
+      <ul>
+        <li>
+          <%= link_to t('.move_up'),   '#', data: { action: 'click->compendium--content#moveUp'   } %>
+        </li>
+        <li>
+          <%= link_to t('.move_down'), '#', data: { action: 'click->compendium--content#moveDown' } %>
+        </li>
+        <li>
+          <%= link_to t('.delete'),    '#', data: { action: 'click->compendium--content#delete'   } %>
+        </li>
+      </ul>
+    </div>
+  </div>
 <% end %>

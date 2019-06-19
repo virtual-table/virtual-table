@@ -1,12 +1,12 @@
 <main class="content content--compendium" role="main">
   <div class="wrapper">
-    <section class="block block--compendium">
-      <header class="block__header">
+    <section class="compendium-description">
+      <header class="compendium-description__header">
         <h2>
           <%= @compendium.title %>
         </h2>
 
-        <div class="block__actions">
+        <div class="compendium-description__actions">
           <% if current_user == @compendium.author %>
             <%=
               link_to t('.edit_compendium'), [:edit, @compendium],
@@ -27,18 +27,18 @@
         </div>
       </header>
       
-      <div class="block__content">
+      <div class="compendium-description__content">
         <%= @compendium.description_html %>
       </div>
     </section>
     
-    <section class="block block--maps">
-      <header class="block__header">
+    <section class="compendium-maps">
+      <header class="compendium-maps__header">
         <h2>
           <%= t '.maps' %>
         </h2>
         
-        <div class="block__actions">
+        <div class="compendium-maps__actions">
           <% if current_user == @compendium.author %>
             <%=
               link_to t('.new_map'), new_compendium_map_path(@compendium),
@@ -48,7 +48,7 @@
         </div>
       </header>
       
-      <div class="block__content">
+      <div class="compendium-maps__content">
         <% if @maps.present? %>
           <ul>
             <%= render partial: 'map', collection: @maps %>
@@ -59,13 +59,13 @@
       </div>
     </section>
     
-    <section class="block block--pages">
-      <header class="block__header">
+    <section class="compendium-pages">
+      <header class="compendium-pages__header">
         <h2>
           <%= t '.pages' %>
         </h2>
         
-        <div class="block__actions">
+        <div class="compendium-pages__actions">
           <% if current_user == @compendium.author %>
             <%=
               link_to t('.new_page'), new_compendium_page_path(@compendium),
@@ -75,7 +75,7 @@
         </div>
       </header>
       
-      <div class="block__content">
+      <div class="compendium-pages__content">
         <% if @pages.present? %>
           <ul>
             <%= render partial: 'page', collection: @pages %>
