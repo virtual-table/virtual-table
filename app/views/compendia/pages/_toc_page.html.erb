@@ -4,8 +4,8 @@
 <li>
   <%= link_to page.title, compendium_page_path(page.compendium, page) %>
   <% if page.children.size > 0 %>
-    <ul>
+    <ol>
       <%= render partial: 'toc_page', collection: page.children %>
-    </ul>
+    </ol>
   <% end %>
 </li>

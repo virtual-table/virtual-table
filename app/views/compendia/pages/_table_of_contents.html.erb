@@ -19,11 +19,11 @@
     </header>
     
     <nav class="maps__contents">
-      <ul>
+      <ol>
         <% compendium.maps.each do |map| %>
           <li><%= link_to map.title, map_path(map) %></li>
         <% end %>
-      </ul>
+      </ol>
     </nav>
   </div>
     
@@ -41,9 +41,9 @@
     </header>
     
     <nav class="pages__contents">
-      <ul>
+      <ol>
         <%= render partial: 'toc_page', collection: @compendium.pages.without_parent %>
-      </ul>
+      </ol>
     </nav>
   </div>
 </section>
