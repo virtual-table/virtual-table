@@ -8,6 +8,8 @@
     "@rails/webpacker": "^4.0.2",
     "cannon": "^0.6.2",
     "hotkeys-js": "^3.6.3",
+    "inspire-tree": "^5.0.2",
+    "inspire-tree-dom": "^4.0.6",
     "orbit-controls-es6": "^2.0.0",
     "pixi-viewport": "^3.21.2",
     "pixi.js": "^4.8.6",
