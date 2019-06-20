@@ -40,8 +40,9 @@
       </div>
     </header>
     
-    <nav class="pages__contents">
-      <ol>
+    <nav class="pages__contents" data-controller="tree">
+      <div data-target="tree.output"></div>
+      <ol data-target="tree.input">
         <%= render partial: 'toc_page', collection: @compendium.pages.without_parent %>
       </ol>
     </nav>

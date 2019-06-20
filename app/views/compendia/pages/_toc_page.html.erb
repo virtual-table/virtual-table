@@ -1,8 +1,8 @@
 <%
   page = toc_page
 %>
-<li>
-  <%= link_to page.title, compendium_page_path(page.compendium, page) %>
+<li data-tree-id="<%= page.id %>">
+  <%= link_to page.title, compendium_page_path(page.compendium, page), data: { target: 'tree.node' } %>
   <% if page.children.size > 0 %>
     <ol>
       <%= render partial: 'toc_page', collection: page.children %>
