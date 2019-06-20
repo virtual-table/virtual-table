@@ -3,12 +3,6 @@ f = fields
 %>
 <%= f.hidden_field :id %>
 
-<%= f.field :title do %>
-  <%= f.label      :title %>
-  <%= f.text_field :title %>
-  <%= f.errors     :title %>
-<% end %>
-
 <%= f.field :description, control: { data: { controller: 'html-editor' } } do %>
   <%= f.label     :description %>
   <%= content_tag :div, '',     data: { target: 'html-editor.editor' } %>

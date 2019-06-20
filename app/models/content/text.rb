@@ -6,7 +6,7 @@ module Content
       foreign_type: :content_type
     
     def self.accessible_attributes
-      %i[ title description ]
+      %i[ description ]
     end
     
     def description_html
