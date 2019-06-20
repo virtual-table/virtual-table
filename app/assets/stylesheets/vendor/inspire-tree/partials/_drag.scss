@@ -1,0 +1,20 @@
+.inspire-tree.drag-and-drop li:not(.drop-target) {
+    opacity: .5;
+}
+
+.drag-targeting {
+    &.drag-targeting-insert {
+        &.inspire-tree,
+        > .title-wrap > .title {
+            border: 1px solid #2dadc5;
+        }
+    }
+
+    &.drag-targeting-above > .title-wrap > .title {
+        border-top: 3px solid #2dadc5;
+    }
+
+    &.drag-targeting-below > .title-wrap > .title {
+        border-bottom: 3px solid #2dadc5;
+    }
+}
