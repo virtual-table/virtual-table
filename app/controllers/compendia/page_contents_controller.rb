@@ -14,7 +14,8 @@ module Compendia
     private
     
     def load_page
-      @page = @compendium.pages.find params[:page_id]
+      @page = @compendium.pages.find_by(id: params[:page_id]) ||
+              @compendium.pages.new
     end
     
     def build_content

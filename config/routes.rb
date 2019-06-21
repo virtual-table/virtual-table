@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       resources :pages do
         resources :contents, controller: 'page_contents'
       end
+      get 'page_contents/new' => 'page_contents#new', as: :new_page_content
     end
   end
   

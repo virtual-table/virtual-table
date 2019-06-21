@@ -10,7 +10,9 @@ module Compendia
     end
     
     def create
-      @page = @compendium.pages.build page_params
+      @page = @compendium.pages.build
+      @page.attributes = page_params
+      
       if @page.save
         redirect_to [@compendium, @page.becomes(Page)], notice: t('.page_created')
       else
