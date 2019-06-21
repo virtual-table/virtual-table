@@ -18,6 +18,14 @@ root_pages = compendium.pages.where(parent: nil)
   </div>
   
   <div data-controller="compendium--editor">
+    <%=
+      new_page_content_position += 1
+      render 'compendia/page_contents/new_page_content',
+        compendium: compendium,
+        page:       page,
+        position:   new_page_content_position
+    %>
+    
     <%= f.fields_for :contents do |content_fields| %>
       <%=
         render 'compendia/page_contents/form_fields',
@@ -31,14 +39,6 @@ root_pages = compendium.pages.where(parent: nil)
           position:   new_page_content_position
       %>
     <% end %>
-    
-    <%=
-      new_page_content_position += 1
-      render 'compendia/page_contents/new_page_content',
-        compendium: compendium,
-        page:       page,
-        position:   new_page_content_position
-    %>
   </div>
   
   <%= f.submit_or_reset %>

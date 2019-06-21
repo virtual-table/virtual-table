@@ -73,15 +73,9 @@
         border-radius: 50%;
       }
     }
-    
-    .form__new-group,
+
     .form__new-group + .form__new-group {
       display: none;
-    }
-    
-    .form__new-group:first-child:last-child,
-    .form__group + .form__new-group {
-      display: block;
     }
   }
 }
