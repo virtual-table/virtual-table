@@ -1,10 +1,10 @@
-.table-of-contents {
+.compendium-toc {
   width: 300px;
   color: #222;
   background: #FBF5EA;
   border: 1px solid rgba(61,51,41,0.10);
   
-  .table-of-contents__header { 
+  .toc__header { 
     font-weight: 600;
     padding: {
       top: calc(var(--spacing-unit) * 2);
@@ -15,8 +15,8 @@
     border-bottom: 1px solid rgba(61,51,41,0.10);
   }
   
-  .table-of-contents__maps,
-  .table-of-contents__pages {
+  .toc__maps,
+  .toc__pages {
     padding: {
       top: calc(var(--spacing-unit) * 2);
       right: calc(var(--spacing-unit) * 3);
@@ -29,7 +29,7 @@
     }
   }
   
-  .table-of-contents__maps {
+  .toc__maps {
     border-bottom: 1px solid rgba(61,51,41,0.10);
   }
   

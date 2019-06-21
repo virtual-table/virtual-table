@@ -1,6 +1,6 @@
-<main class="content content--edit-page" role="main">
+<main class="content content--show-page" role="main">
   <div class="wrapper">
-    <div class="edit-page">
+    <div class="compendium-page">
       <%=
         render 'table_of_contents',
           compendium: @compendium,
@@ -8,7 +8,7 @@
           mode:       'edit'
       %>
       
-      <div class="edit-page__form">
+      <div class="compendium-page__form">
         <%= render 'form', compendium: @compendium, page: @page %>
       </div>
     </div>

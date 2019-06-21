@@ -1,6 +1,6 @@
 <main class="content content--show-page" role="main">
   <div class="wrapper">
-    <div class="show-page">
+    <div class="compendium-page">
       <%=
         render 'table_of_contents',
           compendium: @compendium,
@@ -8,7 +8,7 @@
           mode:       'show'
       %>
       
-      <div class="show-page__content">
+      <div class="compendium-page__content">
         <%= render @page %>
     </div>
   </div>

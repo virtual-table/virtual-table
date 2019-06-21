@@ -1,8 +1,12 @@
-.edit-page {
+.compendium-page {
   @include flexbox(flex, row, wrap, space-between);
   
-  .edit-page__form {
+  .compendium-page__content,
+  .compendium-page__form {
     width: calc(100% - (300px + var(--spacing-unit) * 5));
+  }
+  
+  .compendium-page__form {
     
     .form__header {
       @include flexbox(flex, row, wrap, space-between, center);
@@ -15,7 +19,6 @@
       @include flexbox(flex, row, wrap, space-between, center);
       max-width: calc(var(--spacing-unit) * 97);
       
-    
       .group__fields {
         width: calc(100% - (calc(var(--spacing-unit) * 11)));
         border: 1px solid #000;
