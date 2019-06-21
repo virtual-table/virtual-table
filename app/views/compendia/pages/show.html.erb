@@ -1,1 +1,16 @@
-<%= render @page %>
+<main class="content content--edit-page" role="main">
+  <div class="wrapper">
+    <section class="edit-page">
+      <%=
+        render 'table_of_contents',
+          compendium: @compendium,
+          page:       @page,
+          mode:       'show'
+      %>
+      
+      <div class="edit-page__form">
+        <%= render @page %>
+      </div>
+    </section>
+  </div>
+</main>
