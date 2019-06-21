@@ -19,9 +19,12 @@
 // =====================================
 @import 'components/compendium/compendia-overview';
 @import 'components/compendium/compendium-description';
-@import 'components/compendium/pages/compendium-pages';
-@import 'components/compendium/pages/single-page';
+@import 'components/compendium/compendium-pages';
+@import 'components/compendium/table-of-contents';
+
+@import 'components/compendium/pages/show-page';
 @import 'components/compendium/pages/edit-page';
+
 @import 'components/compendium/maps/compendium-maps';
 @import 'components/compendium/maps/map-editor';
 @import 'components/compendium/maps/map-canvas';

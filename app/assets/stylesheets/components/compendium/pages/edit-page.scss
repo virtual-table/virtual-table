@@ -1,68 +1,6 @@
 .edit-page {
   @include flexbox(flex, row, wrap, space-between);
   
-  // Table of Contents
-  .edit-page__toc {
-    width: 300px;
-    color: #222;
-    background: #FBF5EA;
-    border: 1px solid rgba(61,51,41,0.10);
-    
-    .toc__header { 
-      font-weight: 600;
-      padding: {
-        top: calc(var(--spacing-unit) * 2);
-        right: calc(var(--spacing-unit) * 3);
-        bottom: calc(var(--spacing-unit) * 2);
-        left: calc(var(--spacing-unit) * 3);
-      }
-      border-bottom: 1px solid rgba(61,51,41,0.10);
-    }
-    
-    .toc__maps,
-    .toc__pages {
-      padding: {
-        top: calc(var(--spacing-unit) * 2);
-        right: calc(var(--spacing-unit) * 3);
-        bottom: calc(var(--spacing-unit) * 2);
-        left: calc(var(--spacing-unit) * 3);
-      }
-            
-      header {
-        @include flexbox();
-      }
-    }
-    
-    .toc__maps {
-      border-bottom: 1px solid rgba(61,51,41,0.10);
-    }
-    
-    .maps__actions,
-    .pages__actions {
-      margin-left: auto;
-    }
-    
-    .maps__contents,
-    .pages__contents {
-      margin-top: var(--spacing-unit);
-    }
-    
-    .pages__contents {
-      
-      ol > li {
-        font-weight: 600;
-      }
-      
-      ol ol {
-        margin-left: calc(var(--spacing-unit) * 2);
-      }
-      
-      ol ol li {
-        font-weight: 400;
-      }
-    }
-  }
-  
   .edit-page__form {
     width: calc(100% - (300px + var(--spacing-unit) * 5));
     

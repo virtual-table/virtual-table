@@ -1,22 +1,18 @@
-<main class="content content--single-page" role="main">
-  <div class="wrapper">
-    <section class="single-page">
-      <header class="single-page__header">
-        <h2>
-          <%= page.title %>
-        </h2>
-        
-        <div class="single-page__actions">
-          <%=
-            link_to t('.edit_page'), edit_compendium_page_path(page.compendium, page),
-              class: 'button is-small is-link is-outlined'
-          %> 
-        </div>
-      </header>
-      
-      <div class="single-page__content">
-        <%= render page.contents %>
-      </div>
-    </section>
+<section class="page">
+  <header class="page__header">
+    <h2>
+      <%= page.title %>
+    </h2>
+    
+    <div class="page__actions">
+      <%=
+        link_to t('.edit_page'), edit_compendium_page_path(page.compendium, page),
+          class: 'button is-small is-link is-outlined'
+      %> 
+    </div>
+  </header>
+
+  <div class="page__content">
+    <%= render page.contents %>
   </div>
-</main>
+</section>

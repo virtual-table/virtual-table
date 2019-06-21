@@ -1,0 +1,7 @@
+.show-page {
+  @include flexbox(flex, row, wrap, space-between);
+    
+  .show-page__content {
+    width: calc(100% - (300px + var(--spacing-unit) * 5));
+  }
+}

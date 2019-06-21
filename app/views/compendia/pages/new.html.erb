@@ -1,13 +1,15 @@
 <main class="content content--new-page" role="main">
   <div class="wrapper">
-    <section class="block block--new-page">
-      <header class="block__header">
+    <section class="new-page">
+      <header class="new-page__header">
         <h2>
           <%= t '.create_a_new_page' %>
         </h2>
       </header>
       
-      <%= render 'form', compendium: @compendium, page: @page %>
+      <div class="new-page__form">
+        <%= render 'form', compendium: @compendium, page: @page %>
+      </div>
     </section>
   </div>
 </main>
