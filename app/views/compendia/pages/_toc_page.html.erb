@@ -1,11 +1,22 @@
 <%
   page = toc_page
 %>
-<li data-tree-id="<%= page.id %>">
-  <%= link_to page.title, compendium_page_path(page.compendium, page), data: { target: 'tree.node' } %>
+<li>
+  <%=
+    link_to page.title,
+      compendium_page_path(page.compendium, page),
+      class: ('selected' if page == local_assigns[:current_page]),
+      data: {
+        target:  'tree.node',
+        tree_id: page.id
+      }
+  %>
   <% if page.children.size > 0 %>
     <ol>
-      <%= render partial: 'toc_page', collection: page.children %>
+      <%=
+        render partial:    'toc_page',
+               collection: page.children,
+               locals:     { current_page: local_assigns[:current_page] } %>
     </ol>
   <% end %>
 </li>

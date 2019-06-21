@@ -20,8 +20,6 @@ export default class extends ApplicationController {
       data: this.list
     })
     
-    alert(this.mode)
-    
     this.renderer = new InspireTreeDOM(this.tree, {
       target:      this.outputTarget,
       dragAndDrop: this.mode == 'edit'
@@ -43,10 +41,21 @@ export default class extends ApplicationController {
     const node = item.querySelector('[data-target="tree.node"]')
     const kids = item.querySelector(':scope > ol, :scope ul')
     
+    const selected = node.classList.contains('selected') 
+    const expanded = item.querySelectorAll('.selected[data-target="tree.node"]').length >= 1
+    
     return {
       text:     node.innerText,
+      id:       node.dataset.id,
       element:  node,
-      children: kids ? this.parseList(kids) : []
+      classList: node.classList,
+      itree:    {
+        state: { 
+          selected:  selected,
+          collapsed: !(selected || expanded)
+        },
+      },
+      children: kids ? this.parseList(kids) : [],
     }
   }
   

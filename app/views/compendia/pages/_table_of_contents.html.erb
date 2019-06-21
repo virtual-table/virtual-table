@@ -43,7 +43,11 @@
     <nav class="pages__contents" data-controller="tree" data-tree-mode="<%= local_assigns[:mode] %>">
       <div data-target="tree.output"></div>
       <ol data-target="tree.input">
-        <%= render partial: 'toc_page', collection: @compendium.pages.without_parent %>
+        <%=
+          render partial:      'toc_page',
+                 collection:   @compendium.pages.without_parent,
+                 locals:       { current_page: page }
+        %>
       </ol>
     </nav>
   </div>
