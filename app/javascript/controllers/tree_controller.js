@@ -6,6 +6,8 @@ export default class extends ApplicationController {
   
   static targets = ['input', 'output']
   
+  get mode () { return this.data.get('mode') }
+  
   // LIFECYCLE:
   
   connect () {
@@ -18,9 +20,11 @@ export default class extends ApplicationController {
       data: this.list
     })
     
+    alert(this.mode)
+    
     this.renderer = new InspireTreeDOM(this.tree, {
       target:      this.outputTarget,
-      dragAndDrop: true
+      dragAndDrop: this.mode == 'edit'
     })
     
     this.inputTarget.style.display = 'none'
