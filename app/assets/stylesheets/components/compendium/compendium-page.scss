@@ -15,7 +15,7 @@
       border-bottom: 1px solid #222;
     }
     
-    .form__group {
+    .form__flex {
       @include flexbox(flex, row, wrap, space-between, center);
       max-width: calc(var(--spacing-unit) * 97);
       
@@ -74,8 +74,14 @@
       }
     }
     
+    .form__new-group,
     .form__new-group + .form__new-group {
       display: none;
+    }
+    
+    .form__new-group:first-child:last-child,
+    .form__group + .form__new-group {
+      display: block;
     }
   }
 }

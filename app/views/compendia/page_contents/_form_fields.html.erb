@@ -3,8 +3,8 @@ f = fields
 containable = f.object
 content     = containable.content
 %>
-<%= field_set_tag nil, data: { controller: 'compendium--content' } do %>
-  <div class="form__group">
+<%= field_set_tag nil, data: { controller: 'compendium--content' }, class: 'form__group' do %>
+  <div class="form__flex">
     <div class="group__fields">
       <%= f.hidden_field :id           %>
       <%= f.hidden_field :position, data: { target: 'compendium--content.positionField' } %>
