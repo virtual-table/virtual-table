@@ -9,7 +9,7 @@ class ApplicationController < ActionController::Base
   helper_method :current_game
   
   def current_player
-    @current_player ||= logged_in? && current_game&.players&.find { |player| player.user_id == current_user.id }
+    @current_player ||= current_game&.players&.find { |player| player.user_id == current_user.id } if logged_in?
   end
   helper_method :current_player
 end
