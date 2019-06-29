@@ -14,6 +14,7 @@ Rails.application.routes.draw do
       resources :pages do
         resources :contents, controller: 'page_contents'
       end
+      put 'pages' => 'pages#update_all', as: :update_pages
       get 'page_contents/new' => 'page_contents#new', as: :new_page_content
     end
   end

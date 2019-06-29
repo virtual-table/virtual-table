@@ -39,6 +39,18 @@ module Compendia
       end
     end
     
+    def update_all
+      @pages = Hash[
+        @compendium.pages.all.map { |p| [p.id, p] }
+      ]
+      
+      (params[:pages] || []).each.with_index do |page_params, index|
+        update_page page_params, position: index + 1
+      end
+      
+      head :ok
+    end
+    
     def destroy
       @page = @compendium.pages.find params[:id]
       @page.destroy
@@ -59,6 +71,19 @@ module Compendia
           content_attributes: whitelisted_content_attributes
         ]
       )
+    end
+    
+    def update_page(page_params, position: nil, parent: nil)
+      page = @pages[page_params[:id]&.to_i]
+      return unless page.present?
+      
+      page.position = position if position.present?
+      page.parent   = parent
+      page.save
+      
+      page_params[:children].each.with_index do |subpage_params, index|
+        update_page subpage_params, position: index + 1, parent: page
+      end
     end
     
     def whitelisted_content_attributes

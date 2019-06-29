@@ -40,7 +40,7 @@
       </div>
     </header>
     
-    <nav class="pages__contents" data-controller="tree" data-tree-mode="<%= local_assigns[:mode] %>">
+    <nav class="pages__contents" data-controller="tree" data-tree-mode="<%= local_assigns[:mode] %>" data-tree-update-url="<%= compendium_pages_path %>" data-tree-update-method="PUT">
       <div data-target="tree.output"></div>
       <ol data-target="tree.input">
         <%=
