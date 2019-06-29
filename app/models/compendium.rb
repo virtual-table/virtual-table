@@ -3,7 +3,8 @@ class Compendium < ApplicationRecord
   belongs_to :author,
     class_name: 'User'
   
-  has_many :pages
+  has_many :pages,
+    -> { order(position: :asc) }
   
   has_many :maps
   

@@ -7,6 +7,7 @@ class Page < ApplicationRecord
     optional: true
   
   has_many :children,
+    -> { order(position: :asc) },
     class_name:  'Page',
     foreign_key: 'parent_id',
     dependent:   :destroy
@@ -23,6 +24,8 @@ class Page < ApplicationRecord
   
   scope :without_parent, -> { where parent: nil }
   
+  before_create :set_default_position
+  
   def depth
     if parent
       parent.depth + 1
@@ -33,6 +36,10 @@ class Page < ApplicationRecord
   
   def available_content_types
     PageContent.available_content_types
+  end
+  
+  def set_default_position
+    self.position ||= (parent&.children || compendium&.pages || []).size + 1
   end
   
 end
