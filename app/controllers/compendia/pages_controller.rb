@@ -67,7 +67,7 @@ module Compendia
         parent_id
       ],
         contents_attributes: [
-          %i[ id position visible _destroy content_type content_id ],
+          %i[ id position visible content_type content_id _destroy ],
           content_attributes: whitelisted_content_attributes
         ]
       )

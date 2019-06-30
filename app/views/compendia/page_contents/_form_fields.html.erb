@@ -3,11 +3,16 @@ f = fields
 containable = f.object
 content     = containable.content
 %>
-<%= field_set_tag nil, data: { controller: 'compendium--content' }, class: 'form__group' do %>
+<%=
+  field_set_tag nil,
+    class: 'form__group',
+    data: { controller: 'compendium--content' } do
+%>
   <div class="form__flex">
     <div class="group__fields">
       <%= f.hidden_field :id           %>
       <%= f.hidden_field :position, data: { target: 'compendium--content.positionField' } %>
+      <%= f.hidden_field :visible,  data: { target: 'compendium--content.visibleField'  } %>
       <%= f.hidden_field :_destroy, data: { target: 'compendium--content.deleteField'   } %>
       <%= f.hidden_field :content_type %>
       <%= f.hidden_field :content_id   %>
@@ -19,11 +24,17 @@ content     = containable.content
     
     <div class="group__actions">
       <ul>
-        <li>
+        <li data-target="compendium--content.moveUpButton">
           <%= link_to t('.move_up'),   '#', data: { action: 'click->compendium--content#moveUp'   } %>
         </li>
-        <li>
+        <li data-target="compendium--content.moveDownButton">
           <%= link_to t('.move_down'), '#', data: { action: 'click->compendium--content#moveDown' } %>
+        </li>
+        <li data-target="compendium--content.showButton">
+          <%= link_to t('.show'), '#', data: { action: 'click->compendium--content#show' } %>
+        </li>
+        <li data-target="compendium--content.hideButton">
+          <%= link_to t('.hide'), '#', data: { action: 'click->compendium--content#hide' } %>
         </li>
         <li>
           <%= link_to t('.delete'),    '#', data: { action: 'click->compendium--content#delete'   } %>

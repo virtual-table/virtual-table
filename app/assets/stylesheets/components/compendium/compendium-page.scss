@@ -46,6 +46,10 @@
           }
         }
         
+        li.disabled {
+          display: none;
+        }
+        
         li a {
           display: inline-block;
           width: calc(var(--spacing-unit) * 3);
