@@ -2,7 +2,7 @@
 new_page_content_position = -1
 root_pages = compendium.pages.where(parent: nil)
 %>
-<%= bulma_form_for [compendium, page.becomes(Page)] do |f| %>
+<%= bulma_form_for [compendium, page.becomes(Page)], html: { multipart: true } do |f| %>
   <div class="form__header">
     <%= f.field :title do %>
       <%= f.label      :title %>
