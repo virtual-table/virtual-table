@@ -1,5 +1,7 @@
 class User < ApplicationRecord
   
+  ROLES = %w[ admin ]
+  
   has_secure_password
   
   has_many :compendia,
@@ -16,5 +18,18 @@ class User < ApplicationRecord
   validates :email,
     presence:   true,
     uniqueness: true
+  
+  validate :validate_roles
+  
+  private
+  
+  def validate_roles
+    self.roles = roles.map(&:presence).compact
+    
+    unless roles.all? { |role| ROLES.include?(role) }
+      errors.add :roles, :invalid
+      return false
+    end
+  end
   
 end
