@@ -1,0 +1,6 @@
+<figure>
+  <%= image_tag url_for(image.file), alt: image.alt_text, title: image.alt_text %>
+  <% if image.caption? %>
+    <figcaption><%= image.caption_html %></figcaption>
+  <% end %>
+</figure>

@@ -1,29 +1,31 @@
 <ul class="form__new-group" data-target="compendium--editor.addContentList">
   <% page.available_content_types.each do |content_type| %>
     <li>
-      <% if page.new_record? %>
-        <%=
-          link_to t(".new_#{content_type.to_s.underscore}"),
+      <%
+        add_content_url = \
+          if page.new_record?
             compendium_new_page_content_path(compendium,
               content_type: content_type.to_s,
               position:     '__POSITION_PLACEHOLDER__'
-            ),
-            data: {
-              action: 'click->compendium--editor#addContent'
-            }
-        %>
-      <% else %>
-        <%=
-          link_to t(".new_#{content_type.to_s.underscore}"),
+            )
+          else
             new_compendium_page_content_path(compendium, page,
               content_type: content_type.to_s,
               position:     '__POSITION_PLACEHOLDER__'
-            ),
-            data: {
-              action: 'click->compendium--editor#addContent'
-            }
-        %>
-      <% end %>
+            )
+          end
+        
+        identifier = content_type.to_s.underscore
+        html_class = "new-#{identifier.dasherize}".gsub('/', '--')
+      %>
+      <%=
+        link_to t(".new_#{identifier}"),
+          add_content_url,
+          class: html_class,
+          data: {
+            action: 'click->compendium--editor#addContent'
+          }
+      %>
     </li>
   <% end %>
 </ul>

@@ -1,0 +1,23 @@
+<%
+f = fields
+%>
+<%= f.hidden_field :id %>
+
+<%= f.field :file do %>
+  <%= f.label      :file %>
+  <%= f.file_field :file %>
+  <%= f.errors     :file %>
+<% end %>
+
+<%= f.field :alt_text do %>
+  <%= f.label      :alt_text %>
+  <%= f.text_field :alt_text %>
+  <%= f.errors     :alt_text %>
+<% end %>
+
+<%= f.field :caption, control: { data: { controller: 'html-editor' } } do %>
+  <%= f.label     :caption %>
+  <%= content_tag :div, '',     data: { target: 'html-editor.editor' } %>
+  <%= f.text_area :caption, data: { target: 'html-editor.input'  } %>
+  <%= f.errors    :caption %>
+<% end %>

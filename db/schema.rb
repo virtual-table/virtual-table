@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_03_121117) do
+ActiveRecord::Schema.define(version: 2019_07_03_131249) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -58,6 +58,13 @@ ActiveRecord::Schema.define(version: 2019_07_03_121117) do
     t.datetime "updated_at", precision: 6, null: false
     t.text "description"
     t.index ["author_id"], name: "index_compendia_on_author_id"
+  end
+
+  create_table "content_images", force: :cascade do |t|
+    t.string "alt_text"
+    t.text "caption"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
   end
 
   create_table "content_texts", force: :cascade do |t|
