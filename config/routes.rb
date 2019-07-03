@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  ActiveAdmin.routes(self)
   root to: 'dashboard#show'
   
   get    'login'  => 'sessions#new',     as: :login

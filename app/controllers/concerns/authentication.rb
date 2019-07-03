@@ -14,12 +14,25 @@ module Authentication
     !!current_user
   end
   
+  # TODO: Replace with check for actual admin status:
+  def require_admin
+    return false unless require_user
+    
+    unless current_user.roles.include?('admin')
+      flash[:alert] = t('.admin_required')
+      redirect_to login_url
+      return false
+    end
+  end
+  
   def require_user
     if !logged_in?
       flash[:alert] = t('.user_required')
       redirect_to login_url
       return false
     end
+    
+    true
   end
   
   def require_player
@@ -28,6 +41,8 @@ module Authentication
       redirect_to games_url
       return false
     end
+    
+    true
   end
   
 end
