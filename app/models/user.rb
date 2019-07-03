@@ -24,7 +24,7 @@ class User < ApplicationRecord
   private
   
   def validate_roles
-    self.roles = roles.map(&:presence).compact
+    self.roles = Array(roles).map(&:presence).compact
     
     unless roles.all? { |role| ROLES.include?(role) }
       errors.add :roles, :invalid
