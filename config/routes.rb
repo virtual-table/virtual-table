@@ -10,6 +10,9 @@ Rails.application.routes.draw do
   get  'forgot_password' => 'password_resets#new', as: :forgot_password
   post 'forgot_password' => 'password_resets#create'
   
+  get   'reset_password/:token' => 'password_resets#edit', as: :reset_password
+  patch 'reset_password/:token' => 'password_resets#update'
+  
   resources :users
   resources :games
   

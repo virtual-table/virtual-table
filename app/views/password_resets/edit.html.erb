@@ -1,0 +1,20 @@
+<section class="section">
+  <div class="container">
+    <h1 class="title"><%= t '.reset_password' %></h1>
+     <%= bulma_form_for @user, url: reset_password_url(@user.reset_token) do |f| %>
+      <%= f.field :password do %>
+        <%= f.label          :password %>
+        <%= f.password_field :password %>
+        <%= f.errors         :password %>
+      <% end %>
+      
+      <%= f.field :password_confirmation do %>
+        <%= f.label          :password_confirmation %>
+        <%= f.password_field :password_confirmation %>
+        <%= f.errors         :password_confirmation %>
+      <% end %>
+      
+      <%= f.submit_or_reset %>
+    <% end %>
+  </div>
+</section>
