@@ -21,6 +21,9 @@ gem 'bcrypt'
 gem 'aws-sdk-s3', require: false
 gem 'image_processing'
 
+# I18n:
+gem 'localeapp'
+
 # Frontend:
 gem 'webpacker'
 gem 'sass-rails'
