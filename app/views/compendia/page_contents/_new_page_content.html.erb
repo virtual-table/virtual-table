@@ -1,31 +1,39 @@
-<ul class="form__new-group" data-target="compendium--editor.addContentList">
-  <% page.available_content_types.each do |content_type| %>
-    <li>
-      <%
-        add_content_url = \
-          if page.new_record?
-            compendium_new_page_content_path(compendium,
-              content_type: content_type.to_s,
-              position:     '__POSITION_PLACEHOLDER__'
-            )
-          else
-            new_compendium_page_content_path(compendium, page,
-              content_type: content_type.to_s,
-              position:     '__POSITION_PLACEHOLDER__'
-            )
-          end
-        
-        identifier = content_type.to_s.underscore
-        html_class = "new-#{identifier.dasherize}".gsub('/', '--')
-      %>
-      <%=
-        link_to t(".new_#{identifier}"),
-          add_content_url,
-          class: html_class,
-          data: {
-            action: 'click->compendium--editor#addContent'
-          }
-      %>
-    </li>
-  <% end %>
-</ul>
+<div class="form__new-group" data-target="compendium--editor.addContentList" data-controller="compendium--content-list">
+  <a class="new-group__toggle" href="#" data-action="compendium--content-list#showContentList">New</a>
+  
+  <div class="new-group__types">
+    <ul>
+      <% page.available_content_types.each do |content_type| %>
+        <li>
+          <%
+            add_content_url = \
+              if page.new_record?
+                compendium_new_page_content_path(compendium,
+                  content_type: content_type.to_s,
+                  position:     '__POSITION_PLACEHOLDER__'
+                )
+              else
+                new_compendium_page_content_path(compendium, page,
+                  content_type: content_type.to_s,
+                  position:     '__POSITION_PLACEHOLDER__'
+                )
+              end
+            
+            identifier = content_type.to_s.underscore
+            html_class = "new-#{identifier.dasherize}".gsub('/', '--')
+          %>
+          <%=
+            link_to t(".new_#{identifier}"),
+              add_content_url,
+              class: html_class,
+              data: {
+                action: 'click->compendium--editor#addContent'
+              }
+          %>
+        </li>
+      <% end %>
+    </ul>
+    
+    <a class="new-group__close" href="#" data-action="compendium--content-list#hideContentList">Close</a>
+  </div>
+</div>

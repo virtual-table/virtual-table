@@ -2,7 +2,7 @@
 // Body
 // =====================================
 body {
-  color: #222;
+  color: var(--color-copy);
   font-size: var(--default-font-size);
   line-height: var(--default-line-height);
   font-family: var(--default-font-stack);
@@ -13,7 +13,7 @@ body {
 // =====================================
 input, textarea, select,
 button {
-  color: #222;
+  color: var(--color-copy);
   font-size: var(--default-font-size);
   line-height: var(--default-line-height);
   font-family: var(--default-font-stack);
@@ -21,4 +21,13 @@ button {
 
 button, input[type="submit"] {
   cursor: pointer;
+}
+
+a {
+  color: var(--color-copy);
+  text-decoration: underline;
+  
+  &:hover {
+    text-decoration: none;
+  }
 }

@@ -10,11 +10,15 @@ root_pages = compendium.pages.where(parent: nil)
       <%= f.errors     :title %>
     <% end %>
     
-    <%= f.field :parent_id do %>
-      <%= f.label  :parent_id %>
-      <%= f.select :parent_id, page_select_options(root_pages), include_blank: true %>
-      <%= f.errors :parent_id %>
-    <% end %>
+    <div class="header__actions">
+      <%= f.field :parent_id do %>
+        <%= f.label  :parent_id %>
+        <%= f.select :parent_id, page_select_options(root_pages), include_blank: true %>
+        <%= f.errors :parent_id %>
+      <% end %>
+      
+      <%= f.submit_or_reset %>
+    </div>
   </div>
   
   <div data-controller="compendium--editor">
@@ -40,6 +44,4 @@ root_pages = compendium.pages.where(parent: nil)
       %>
     <% end %>
   </div>
-  
-  <%= f.submit_or_reset %>
 <% end %>

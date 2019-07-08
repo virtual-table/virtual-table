@@ -1,8 +1,8 @@
 .compendium-toc {
   width: 300px;
-  color: #222;
   background: #FBF5EA;
-  border: 1px solid rgba(61,51,41,0.10);
+  box-shadow: 0 0 15px 0 rgba(218,193,169,0.13);
+  border-radius: 4px;
   
   .toc__header { 
     font-weight: 600;
@@ -26,6 +26,11 @@
           
     header {
       @include flexbox();
+      
+      strong {
+        font-size: 20px;
+        line-height: 27px;
+      }
     }
   }
   
@@ -43,18 +48,7 @@
     margin-top: var(--spacing-unit);
   }
   
-  .pages__contents {
-    
-    ol > li {
-      font-weight: 600;
-    }
-    
-    ol ol {
-      margin-left: calc(var(--spacing-unit) * 2);
-    }
-    
-    ol ol li {
-      font-weight: 400;
-    }
+  .maps__contents {
+    font-weight: 600;
   }
 }
