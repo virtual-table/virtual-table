@@ -21,6 +21,19 @@ class User < ApplicationRecord
   
   validate :validate_roles
   
+  def self.secure_token
+    SecureRandom.urlsafe_base64
+  end
+  
+  def create_reset_token
+    update_attributes!(
+      reset_token:   User.secure_token,
+      reset_send_at: Time.now.utc
+    )
+    
+    self.reset_token
+  end
+  
   private
   
   def validate_roles
