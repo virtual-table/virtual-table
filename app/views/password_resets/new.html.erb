@@ -1,0 +1,13 @@
+<section class="section">
+  <div class="container">
+    <h1 class="title"><%= t '.forgot_password' %></h1>
+    <%= bulma_form_with url: forgot_password_path, data: { remote: false } do |f| %>
+      <%= f.field :email do %>
+        <%= f.label      :email %>
+        <%= f.text_field :email %>
+      <% end %>
+  
+      <%= f.submit_or_reset %>
+    <% end %>
+  </div>
+</section>
