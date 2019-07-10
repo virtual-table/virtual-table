@@ -14,5 +14,10 @@
     }
   }
   
-  .game-maps__content { }
+  .game-maps__content { 
+    background: #FBF5EA;
+    padding: calc(var(--spacing-unit) * 3);
+    box-shadow: 0 0 15px 0 rgba(218,193,169,0.13);
+    border-radius: 4px;
+  }
 }

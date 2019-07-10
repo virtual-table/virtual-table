@@ -14,5 +14,21 @@
     }
   }
   
-  .compendium-maps__content { }
+  .compendium-maps__content { 
+    background: #FBF5EA;
+    padding: calc(var(--spacing-unit) * 3);
+    box-shadow: 0 0 15px 0 rgba(218,193,169,0.13);
+    border-radius: 4px;
+    
+    ul { }
+    
+    li {
+      font-weight: 600;
+      margin-bottom: var(--spacing-unit);
+    }
+    
+    li:last-child {
+      margin-bottom: 0;
+    }
+  }
 }
