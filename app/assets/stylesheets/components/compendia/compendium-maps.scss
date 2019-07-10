@@ -1,7 +1,7 @@
-.game-description {
+.compendium-maps {
   margin-bottom: calc(var(--spacing-unit) * 6);
   
-  .game-description__header {
+  .compendium-maps__header {
     @include flexbox(flex, row, wrap, space-between, center);
     padding-bottom: calc(var(--spacing-unit) * 2);
     margin-bottom: calc(var(--spacing-unit) * 3);
@@ -12,18 +12,7 @@
       line-height: 32px;
       font-weight: 600;
     }
-    
-    .game-description__actions {
-      
-      ul {
-        @include flexbox();
-      }
-      
-      li {
-        margin-left: var(--spacing-unit);
-      }
-    }
   }
   
-  .game-description__content { }
+  .compendium-maps__content { }
 }

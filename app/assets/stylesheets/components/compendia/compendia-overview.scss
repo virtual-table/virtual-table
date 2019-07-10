@@ -1,7 +1,7 @@
-.game-description {
+.compendia-overview {
   margin-bottom: calc(var(--spacing-unit) * 6);
   
-  .game-description__header {
+  .compendia-overview__header {
     @include flexbox(flex, row, wrap, space-between, center);
     padding-bottom: calc(var(--spacing-unit) * 2);
     margin-bottom: calc(var(--spacing-unit) * 3);
@@ -12,18 +12,19 @@
       line-height: 32px;
       font-weight: 600;
     }
-    
-    .game-description__actions {
-      
-      ul {
-        @include flexbox();
-      }
-      
-      li {
-        margin-left: var(--spacing-unit);
-      }
-    }
   }
   
-  .game-description__content { }
+  .compendia-overview__content { 
+    
+    ul { }
+    
+    li {
+      font-weight: 600;
+      margin-bottom: var(--spacing-unit);
+    }
+    
+    li:last-child {
+      margin-bottom: 0;
+    }
+  }
 }

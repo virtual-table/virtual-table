@@ -7,21 +7,27 @@
         </h2>
         
         <div class="game-description__actions">
-          <%=
-            link_to t('.join_session'), play_path(@game),
-              class: 'button is-link is-outlined'
-          %>
-          
-          <% if current_user == @game.author %>
-            <%=
-              link_to t('.destroy_game'), game_path,
-                class: 'button is-danger',
-                data:  {
-                  method:  :delete,
-                  confirm: t('.confirm_game_destruction')
-                }
-            %>
-          <% end %>
+          <ul>
+            <li>
+              <%=
+                link_to t('.join_session'), play_path(@game),
+                  class: 'button is-link is-outlined'
+              %>
+            </li>
+            
+            <% if current_user == @game.author %>
+              <li>
+                <%=
+                  link_to t('.destroy_game'), game_path,
+                    class: 'button is-danger',
+                    data:  {
+                      method:  :delete,
+                      confirm: t('.confirm_game_destruction')
+                    }
+                %>
+              </li>
+            <% end %>
+          <ul>
         </div>
       </header>
       

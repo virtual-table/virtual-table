@@ -1,6 +1,11 @@
-<section class="section">
-  <div class="container">
-    <h1 class="title"><%= t '.signup' %></h1>
-    <%= render 'form', user: @user %>
+<main class="content content--user-auth" role="main">
+  <div class="wrapper">
+    <section class="user-auth">
+      <header class="user-auth__header">
+        <h1 class="title"><%= t '.signup' %></h1>
+      </header>
+    
+      <%= render 'form', user: @user %>
+    </section>
   </div>
-</section>
+</main>

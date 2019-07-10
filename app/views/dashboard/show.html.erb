@@ -1,6 +1,8 @@
 <main class="content content--dashboard" role="main">
   <div class="wrapper">
-    <%= render 'games/games',         players: @players     %>
-    <%= render 'compendia/compendia', compendia: @compendia %>
+    <div class="user-dashboard">
+      <%= render 'games/games',         players: @players     %>
+      <%= render 'compendia/compendia', compendia: @compendia %>
+    </div>
   </div>
 </main>

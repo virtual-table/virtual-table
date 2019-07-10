@@ -1,0 +1,59 @@
+.user-auth {
+  width: 370px;
+  background: #FBF5EA;
+  padding: calc(var(--spacing-unit) * 3);
+  margin: 0 auto;
+  margin-top: calc(var(--spacing-unit) * 4);
+  box-shadow: 0 0 15px 0 rgba(218,193,169,0.13);
+  border-radius: 4px;
+  
+  .user-auth__header {
+    margin-bottom: calc(var(--spacing-unit) * 3);
+    
+    h1 {
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: 600;
+    }
+  }
+  
+  form {
+    
+    .field {
+      margin-bottom: calc(var(--spacing-unit) * 3);
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    
+    .field.is-grouped {
+      @include flexbox(flex, row, wrap);
+      
+      .control {
+        margin-right: var(--spacing-unit); 
+      }
+    }
+    
+    label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: var(--spacing-unit);
+    }
+    
+    input[type="text"],
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;  
+      background: #FFFCF5;
+      padding: {
+        top: var(--spacing-unit);
+        right: calc(var(--spacing-unit) * 2);
+        bottom: var(--spacing-unit);
+        left: calc(var(--spacing-unit) * 2);
+      }
+      border: 1px solid rgba(61,51,41,0.20);
+      border-radius: 5px;
+    }
+  }
+}

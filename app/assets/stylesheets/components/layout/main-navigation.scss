@@ -26,6 +26,7 @@
   a {
     display: block;
     color: #222;
+    font-weight: 600;
     text-decoration: none;
     padding: {
       top: calc(var(--spacing-unit) * 2);
@@ -37,8 +38,8 @@
   
   &:hover,
   a:hover {
-    color: #fff;
-    background: #222;
+    background: #FBF5EA;
+    box-shadow: 0 0 15px 0 rgba(218,193,169,0.13);
   }
 }
 
@@ -50,21 +51,20 @@
     right: 0;
     display: block;
     width: 232px;
-    background: #222;
-    box-shadow: rgba(0,0,0,.3) 0 1px 2px;
+    background: #FBF5EA;
+    box-shadow: 0 0 15px 0 rgba(218,193,169,0.13);
   }
   
   .main-navigation__item {
 
     a {
-      color: #fff;
       padding: {
         top: calc(var(--spacing-unit) * 2);
         right: calc(var(--spacing-unit) * 3);
         bottom: calc(var(--spacing-unit) * 2);
         left: calc(var(--spacing-unit) * 3);
       }
-      border-bottom: 1px solid #444;
+      border-bottom: 1px solid rgba(61,51,41,0.10);
     }
     
     &:last-child a {
@@ -73,8 +73,8 @@
     
     &:hover,
     a:hover {
-      color: #fff;
-      background: #FF0000;
+      text-decoration: underline;
+      box-shadow: none;
     }
   }
 }

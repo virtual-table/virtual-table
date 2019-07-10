@@ -5,7 +5,11 @@
     </h2>
     
     <div class="games-overview__actions">
-      <%= link_to t('.create_new_game'), new_game_path, class: 'button' %>
+      <ul>
+        <li>
+          <%= link_to t('.create_new_game'), new_game_path, class: 'button' %>          
+        </li>
+      </ul>
     </div>
   </header>
   
@@ -15,9 +19,11 @@
         <% players.each do |play| %>
           <% game = play.game %>
           <li>
-            <%= link_to game.title, game %>
-            <span class="tag">
-              <%= play.role %>
+            <span class="info">
+              <%= link_to game.title, game, class: 'title' %>
+              <span class="role">
+                <%= play.role %>
+              </span>
             </span>
             <%= link_to t('.join_session'), play_path(game), class: 'button' %>
           </li>

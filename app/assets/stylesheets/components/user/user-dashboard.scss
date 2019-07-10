@@ -1,0 +1,17 @@
+.user-dashboard {
+  @include flexbox(flex, row, wrap, space-between, stretch);
+  background: #FBF5EA;
+  box-shadow: 0 0 15px 0 rgba(218,193,169,0.13);
+  border-radius: 4px;
+  
+  .games-overview,
+  .compendia-overview {
+    width: 50%;
+    padding: calc(var(--spacing-unit) * 3);
+    margin-bottom: 0;
+  }
+  
+  .compendia-overview {
+    border-left: 1px solid rgba(61,51,41,0.10);
+  }
+}

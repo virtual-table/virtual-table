@@ -17,21 +17,28 @@
 
 // Compendium
 // =====================================
-@import 'components/compendium/compendia-overview';
-@import 'components/compendium/compendium-description';
-@import 'components/compendium/compendium-pages';
-@import 'components/compendium/compendium-page';
-@import 'components/compendium/compendium-toc';
+@import 'components/compendia/compendia-overview';
+@import 'components/compendia/compendium-description';
+@import 'components/compendia/compendium-maps';
+@import 'components/compendia/compendium-pages';
+@import 'components/compendia/compendium-page';
+@import 'components/compendia/compendium-toc';
 
-@import 'components/compendium/maps/compendium-maps';
-@import 'components/compendium/maps/map-editor';
-@import 'components/compendium/maps/map-canvas';
+// Maps
+// =====================================
+@import 'components/maps/map-editor';
+@import 'components/maps/map-canvas';
 
 // Games
 // =====================================
 @import 'components/games/games-overview';
 @import 'components/games/game-description';
 @import 'components/games/game-maps';
+
+// User
+// =====================================
+@import 'components/user/user-auth';
+@import 'components/user/user-dashboard';
 
 // Shared
 // =====================================

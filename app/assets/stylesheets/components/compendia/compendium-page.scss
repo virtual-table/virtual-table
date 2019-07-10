@@ -51,7 +51,7 @@
         line-height: 27px;
       }
       
-      ol, ul, p, blockquote {
+      ol, ul, p, blockquote, div {
         color: var(--color-copy);
         font-size: var(--default-font-size);
         line-height: var(--default-line-height);
@@ -88,9 +88,9 @@
       input[type="text"] {
         background: #FFFCF5;
         padding: {
-          top: calc(var(--spacing-unit)/2);
+          top: var(--spacing-unit);
           right: calc(var(--spacing-unit) * 2);
-          bottom: calc(var(--spacing-unit)/2);
+          bottom: var(--spacing-unit);
           left: calc(var(--spacing-unit) * 2);
         }
         border: 1px solid rgba(61,51,41,0.20);
@@ -271,7 +271,7 @@
         line-height: 27px;
       }
       
-      ol, ul, p, blockquote {
+      ol, ul, p, blockquote, div {
         color: var(--color-copy);
         font-size: var(--default-font-size);
         line-height: var(--default-line-height);

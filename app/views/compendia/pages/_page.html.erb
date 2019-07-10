@@ -5,10 +5,14 @@
     </h2>
     
     <div class="page__actions">
-      <%=
-        link_to t('.edit_page'), edit_compendium_page_path(page.compendium, page),
-          class: 'button is-small is-link is-outlined'
-      %> 
+      <ul>
+        <li>
+          <%=
+            link_to t('.edit_page'), edit_compendium_page_path(page.compendium, page),
+              class: 'button is-small is-link is-outlined'
+          %> 
+        </li>
+      </ul>
     </div>
   </header>
 

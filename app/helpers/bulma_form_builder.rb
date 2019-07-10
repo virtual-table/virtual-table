@@ -63,7 +63,7 @@ class BulmaFormBuilder < ActionView::Helpers::FormBuilder
       :div,
       content_tag(
         :div,
-        button(t('.submit'), type: 'submit', class: 'button'),
+        button(t('.submit'), type: 'submit', class: 'button button--orange'),
         class: 'control'
       ) <<
       content_tag(
