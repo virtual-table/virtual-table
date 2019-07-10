@@ -16,12 +16,11 @@
           <%= f.password_field :password, input_html: { autofocus: true } %>
         <% end %>
         
-        <%= f.submit_or_reset %>
+        <div class="actions">
+          <%= f.submit_or_reset %>
+          <%= link_to t('.forgot_password'), forgot_password_path, class: 'forgot-password' %>
+        </div>
       <% end %>
-      
-      <p>
-        <%= link_to t('.forgot_password'), forgot_password_path %>
-      </p>
     </section>
   </div>
 </main>

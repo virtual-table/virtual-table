@@ -22,7 +22,7 @@
     .field {
       margin-bottom: calc(var(--spacing-unit) * 3);
       
-      &:last-child {
+      &:last-of-type {
         margin-bottom: 0;
       }
     }
@@ -54,6 +54,15 @@
       }
       border: 1px solid rgba(61,51,41,0.20);
       border-radius: 5px;
+    }
+    
+    .actions {
+      @include flexbox(flex, row, wrap, flex-start, center);
+      
+      .forgot-password {
+        color: #7B6E60;
+        margin-left: auto;
+      }
     }
   }
 }
