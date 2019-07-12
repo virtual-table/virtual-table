@@ -24,6 +24,8 @@ class Page < ApplicationRecord
   
   scope :without_parent, -> { where parent: nil }
   
+  validates :title, presence: true
+  
   before_create :set_default_position
   
   def depth
