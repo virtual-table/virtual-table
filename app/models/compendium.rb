@@ -15,6 +15,9 @@ class Compendium < ApplicationRecord
   has_many :games,
     through: :game_compendiums
   
+  validates :title,
+    presence: true
+  
   def description_html
     description&.html_safe
   end
