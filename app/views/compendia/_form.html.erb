@@ -22,6 +22,10 @@
         <div data-target="image-upload.progress"></div>
       </div>
       
+      <% if compendium.invalid? && compendium.cover.attached? %>
+        <%= f.hidden_field :cover, value: compendium.cover.signed_id %>
+      <% end %>
+      
       <%= f.file_field :cover, data: { target: 'image-upload.input', action: 'change->image-upload#upload' },
                                direct_upload: true,
                                accept: 'image/*' %>
