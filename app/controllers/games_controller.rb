@@ -56,6 +56,8 @@ class GamesController < ApplicationController
     params.require(:game).permit(%i[
       title
       description
-    ])
+    ],
+      compendium_ids: []
+    )
   end
 end

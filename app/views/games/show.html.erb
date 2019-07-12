@@ -10,7 +10,7 @@
           <ul>
             <li>
               <%=
-                link_to t('.join_session'), play_path(@game),
+                link_to t('.edit_game'), edit_game_path(@game),
                   class: 'button is-link is-outlined'
               %>
             </li>
@@ -18,7 +18,7 @@
             <% if current_user == @game.author %>
               <li>
                 <%=
-                  link_to t('.destroy_game'), game_path,
+                  link_to t('.destroy_game'), game_path(@game),
                     class: 'button is-danger',
                     data:  {
                       method:  :delete,
@@ -33,6 +33,12 @@
       
       <div class="game-description__content">
         <%= @game.description_html %>
+        <p>
+          <%=
+            link_to t('.join_session'), play_path(@game),
+              class: 'button is-link is-outlined'
+          %>
+        </p>
       </div>
     </section>
     

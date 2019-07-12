@@ -1,4 +1,10 @@
- <%= bulma_form_for game do |f| %>
+<%
+compendium_options = options_for_select(
+  current_user.compendia.map { |c| [c.title, c.id] },
+  game.compendium_ids
+)
+%>
+<%= bulma_form_for game do |f| %>
   <%= f.field :title do %>
     <%= f.label      :title %>
     <%= f.text_field :title %>
@@ -10,6 +16,12 @@
     <%= content_tag :div, '',     data: { target: 'html-editor.editor' } %>
     <%= f.text_area :description, data: { target: 'html-editor.input'  } %>
     <%= f.errors    :description %>
+  <% end %>
+  
+  <%= f.field :compendium_ids do %>
+    <%= f.label  :compendium_ids %>
+    <%= f.select :compendium_ids, compendium_options, { include_blank: false }, multiple: true %>
+    </ul>
   <% end %>
   
   <%= f.submit_or_reset %>
