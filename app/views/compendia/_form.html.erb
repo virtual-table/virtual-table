@@ -1,4 +1,4 @@
-<%= bulma_form_for compendium do |f| %>
+<%= bulma_form_for compendium, html: { multipart: true } do |f| %>
   <%= f.field :title do %>
     <%= f.label      :title %>
     <%= f.text_field :title %>
@@ -21,11 +21,10 @@
       <div data-target="image-upload.progressBar">
         <div data-target="image-upload.progress"></div>
       </div>
-    
-      <%= f.file_field   :cover, data: { target: 'image-upload.input', action: 'change->image-upload#upload' },
-                                 direct_upload: true,
-                                 accept: 'image/*' %>
-      <%= f.hidden_field :cover, data: { target: 'image-upload.output' } %>
+      
+      <%= f.file_field :cover, data: { target: 'image-upload.input', action: 'change->image-upload#upload' },
+                               direct_upload: true,
+                               accept: 'image/*' %>
     </label>
     <%= f.errors       :cover %>
   <% end %>

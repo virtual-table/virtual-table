@@ -5,15 +5,28 @@ export default class extends ApplicationController {
   
   static targets = ['input', 'output', 'progress', 'progressBar', 'preview']
   
+  connect () {
+    this.inputTarget.insertAdjacentHTML('afterend', `<input type="hidden" data-target="image-upload.output">`)
+  }
+  
   upload () {
-    this.outputTarget.value = null
+    if (this.outputTarget.name) {
+      this.inputTarget.name  = this.outputTarget.name
+      this.outputTarget.name = null
+    }
+    
     this.inputTarget.disabled = true
     
-    const files = Array.from(this.inputTarget.files)
-    files.forEach(file => {
+    Array.from(this.inputTarget.files).forEach(file => {
       this.previewFile(file)
       this.directUploadFile(file)
     })
+  }
+  
+  unPreview () {
+    if (this.hasPreviewTarget) {
+      this.previewTarget.innerHTML = ''
+    }
   }
   
   previewFile (file) {
@@ -53,15 +66,21 @@ export default class extends ApplicationController {
   
   directUploadError (upload, error) {
     console.log('upload error', upload, error)
+    
+    this.unPreview()
+    this.inputTarget.disabled = false
   }
   
   directUploadSuccess (upload, blob) {
     console.log('upload success', upload, blob)
     
-    this.inputTarget.value    = null
-    this.inputTarget.disabled = false
+    if (this.inputTarget.name) {
+      this.outputTarget.name = this.inputTarget.name
+      this.inputTarget.name  = null
+    }
     
-    this.outputTarget.value = blob.signed_id
+    this.outputTarget.value   = blob.signed_id
+    this.inputTarget.disabled = false
     
     if (this.hasProgressBarTarget) {
       this.progressBarTarget.classList.remove('enabled')
