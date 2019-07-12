@@ -9,6 +9,11 @@ module Content
     
     def self.accessible_attributes
       %i[ file alt_text caption ]
+    
+    def caption_html
+      caption.html_safe
+    end
+    
     end
     
   end
