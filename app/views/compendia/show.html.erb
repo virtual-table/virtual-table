@@ -32,6 +32,10 @@
       </header>
       
       <div class="compendium-description__content">
+        <% if @compendium.cover.attached? %>
+          <%= image_tag url_for(@compendium.cover) %>
+        <% end %>
+        
         <%= @compendium.description_html %>
       </div>
     </section>

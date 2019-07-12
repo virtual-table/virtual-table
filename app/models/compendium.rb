@@ -1,5 +1,7 @@
 class Compendium < ApplicationRecord
   
+  has_one_attached :cover
+  
   belongs_to :author,
     class_name: 'User'
   

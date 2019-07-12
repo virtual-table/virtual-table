@@ -54,6 +54,7 @@ class CompendiaController < ApplicationController
     params.require(:compendium).permit(%i[
       title
       description
+      cover
       public
     ])
   end

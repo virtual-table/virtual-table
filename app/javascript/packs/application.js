@@ -18,6 +18,9 @@ import consumer from '../channels/consumer'
     subscription.application = application
   }
   
+  this.VTT.activeStorage = require('@rails/activestorage')
+  this.VTT.activeStorage.start()
+  
   this.VTT.turboLinks = require('turbolinks')
   this.VTT.turboLinks.start()
   

@@ -18,7 +18,14 @@
       <ul>
         <% compendia.each do |compendium| %>
           <li>
-            <%= link_to compendium.title, compendium %>
+            <%= link_to compendium do %>
+              <% if compendium.cover.attached? %>
+                <%= image_tag compendium.cover.variant(resize_to_fit: [200, 200]) %>
+                <strong><%= compendium.title %></strong>
+              <% else %>
+                <%= compendium.title %>
+              <% end %>
+            <% end %>
           </li>
         <% end %>
       </ul>
