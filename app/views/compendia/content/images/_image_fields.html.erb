@@ -1,12 +1,30 @@
 <%
-f = fields
+f       = fields
+image   = f.object
 %>
 <%= f.hidden_field :id %>
 
-<%= f.field :file do %>
-  <%= f.label      :file %>
-  <%= f.file_field :file %>
-  <%= f.errors     :file %>
+<%= f.field :file, control: { data: { controller: 'image-upload' } } do %>
+  <label style="display: block;" data-target="image-upload.dropzone">
+    <%= content_tag :div, data: { target: 'image-upload.preview' } do %>
+      <%= image_tag image.file.variant(resize_to_fit: [200, 200]) if image.file.attached? %>
+    <% end %>
+  
+    <div data-target="image-upload.progressBar">
+      <div data-target="image-upload.progress"></div>
+    </div>
+    
+    <%= f.hidden_field :random_number %>
+    
+    <% if (image.invalid? || image&.page&.invalid?) && image.file.attached? %>
+      <%= f.hidden_field :file, value: image.file.signed_id %>
+    <% end %>
+    
+    <%= f.file_field :file, data: { target: 'image-upload.input', action: 'change->image-upload#upload' },
+                             direct_upload: true,
+                             accept: 'image/*' %>
+  </label>
+  <%= f.errors       :file %>
 <% end %>
 
 <%= f.field :alt_text do %>
@@ -17,7 +35,7 @@ f = fields
 
 <%= f.field :caption, control: { data: { controller: 'html-editor' } } do %>
   <%= f.label     :caption %>
-  <%= content_tag :div, '',     data: { target: 'html-editor.editor' } %>
+  <%= content_tag :div, '', data: { target: 'html-editor.editor' } %>
   <%= f.text_area :caption, data: { target: 'html-editor.input'  } %>
   <%= f.errors    :caption %>
 <% end %>
