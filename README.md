@@ -2,9 +2,8 @@
 
 ## What's VirtualTable?
 
-[VirtualTable](https://www.virtualtable.app/) is a web application for playing tabletop
-role-playing games (RPGs). It can be used to aid playing in person, or enable playing
-remotely online.
+[VirtualTable](https://www.virtualtable.app/) is a web application for playing tabletop role-playing games (RPGs). It can be
+used to aid playing in person, or enable playing remotely online.
 
 ## Development
 
@@ -14,30 +13,27 @@ The source for VirtualTable is hosted on GitHub. To download it, run:
 
 ### Ruby Version
 
-VirtualTable is developed for Ruby 2.6.1. It's recommended to use [rbenv](https://github.com/rbenv/rbenv)
-in order to install it. After rbenv is installed and configured, run the following
-command to install the desired ruby version:
+VirtualTable is developed for Ruby 2.6.1. It's recommended to use [rbenv](https://github.com/rbenv/rbenv) in order to install 
+it. After rbenv is installed and configured, run the following command to install the desired ruby version:
 
     rbenv install 2.6.1
 
-A `.ruby-version` file is included that will automatically switch to the correct ruby
-version when entering the project directory.
+A `.ruby-version` file is included that will automatically switch to the correct ruby version when entering the project 
+directory.
 
 ### External Dependencies
 
 #### Bundler
 
-After installing the correct Ruby version we can use [Bundler](https://bundler.io/) to
-manager our external Ruby libraries.
+After installing the correct Ruby version we can use [Bundler](https://bundler.io/) to manager our external Ruby libraries.
 
     gem install bundler
     bundle install
 
 #### Yarn
 
-We use [yarn](https://yarnpkg.com/) in combination with the [webpacker](https://github.com/rails/webpacker)
-gem to manage our javascript dependencies. Make sure yarn is installed and update or
-install the dependenies by running:
+We use [yarn](https://yarnpkg.com/) in combination with the [webpacker](https://github.com/rails/webpacker) gem to manage our 
+javascript dependencies. Make sure yarn is installed and update or install the dependenies by running:
 
     yarn install
 
@@ -47,8 +43,7 @@ See `config/database.yml.example` for database configuration. Only PostgreSQL is
 
 ## License
 
-VirtualTable is released under the [GNU General Public License version 3](https://opensource.org/licenses/GPL-3.0)
-license.
+VirtualTable is released under the [GNU General Public License version 3](https://opensource.org/licenses/GPL-3.0).
 
 ## Sources
 
