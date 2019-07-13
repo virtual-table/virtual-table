@@ -195,6 +195,8 @@ GEM
     erubi (1.8.0)
     eventmachine (1.0.9.1)
     execjs (2.7.0)
+    factory_bot (5.0.2)
+      activesupport (>= 4.2.0)
     ffi (1.11.1)
     formtastic (3.1.5)
       actionpack (>= 3.2.13)
@@ -433,6 +435,7 @@ DEPENDENCIES
   delayed_job_active_record
   dicebag
   dotenv
+  factory_bot
   image_processing
   listen (>= 3.0.5, < 3.2)
   localeapp
