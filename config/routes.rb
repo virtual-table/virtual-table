@@ -14,7 +14,12 @@ Rails.application.routes.draw do
   patch 'reset_password/:token' => 'password_resets#update'
   
   resources :users
-  resources :games
+  
+  resources :games do
+    member do
+      get 'join/:code' => 'games#join', as: :join
+    end
+  end
   
   resources :compendia do
     scope module: 'compendia' do

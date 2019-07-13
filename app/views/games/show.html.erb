@@ -33,6 +33,12 @@
       
       <div class="game-description__content">
         <%= @game.description_html %>
+        
+        <p>
+          <%= t '.invite_link' %>
+          <code><%= link_to join_game_url(@game, @game.invite_code), join_game_path(@game, @game.invite_code) %></code>
+        </p>
+        
         <p>
           <%=
             link_to t('.join_session'), play_path(@game),

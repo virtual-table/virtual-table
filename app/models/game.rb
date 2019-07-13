@@ -16,7 +16,13 @@ class Game < ApplicationRecord
   has_many :maps,
     through: :compendia
   
+  before_save :generate_invite_code, unless: :invite_code?
+  
   after_create :add_author_as_player
+  
+  def generate_invite_code
+    self.invite_code = SecureRandom.urlsafe_base64
+  end
   
   def add_author_as_player
     unless users.include?(author)

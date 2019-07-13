@@ -25,6 +25,12 @@ class User < ApplicationRecord
     SecureRandom.urlsafe_base64
   end
   
+  def join!(game)
+    unless game.users.include?(self)
+      game.players.create user: self, role: 'player'
+    end
+  end
+  
   def create_reset_token
     update_attributes!(
       reset_token:   User.secure_token,
