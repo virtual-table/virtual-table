@@ -62,10 +62,12 @@ GIT
 GEM
   remote: https://rubygems.org/
   specs:
-    actioncable (6.0.0.rc2)
-      actionpack (= 6.0.0.rc2)
+    action-cable-testing (0.5.0)
+      actioncable (>= 5.0)
       nio4r (~> 2.0)
       websocket-driver (>= 0.6.1)
+    actioncable (6.0.0.rc2)
+      actionpack (= 6.0.0.rc2)
     actionmailbox (6.0.0.rc2)
       actionpack (= 6.0.0.rc2)
       activejob (= 6.0.0.rc2)
@@ -418,6 +420,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  action-cable-testing
   activeadmin
   appsignal
   aws-sdk-s3

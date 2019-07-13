@@ -60,6 +60,7 @@ group :development, :test do
   ].each do |lib|
     gem lib, git: "https://github.com/rspec/#{lib}.git", branch: 'master'
   end
+  gem 'action-cable-testing'
 end
 
 group :development do
