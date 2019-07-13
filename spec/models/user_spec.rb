@@ -4,11 +4,7 @@ RSpec.describe User, type: :model do
   subject(:user) { build :user }
   
   it { is_expected.to be_valid }
-  
-  it 'can be saved' do
-    user.save!
-    expect(user.persisted?).to be true
-  end
+  it { is_expected.to be_persistable }
   
   describe 'callbacks' do
     context 'on create' do
