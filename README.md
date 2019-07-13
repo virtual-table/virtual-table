@@ -56,6 +56,10 @@ DOCKER_DB_PORT=32773
 
 You can stop the database container by with `docker-compose stop`
 
+### Testing [![Build Status](https://travis-ci.org/virtual-table/virtual-table.svg)](https://travis-ci.org/virtual-table/virtual-table)
+
+We use [RSpec](https://rspec.info/) for testing our application.
+
 ## License
 
 VirtualTable is released under the [GNU General Public License version 3](https://opensource.org/licenses/GPL-3.0).
@@ -67,4 +71,9 @@ VirtualTable is released under the [GNU General Public License version 3](https:
  * [bundler](https://bundler.io/) -- A Ruby gem dependency manager
  * [yarn](https://yarnpkg.com/) -- Dependency managment for JavaScript
  * [webpacker](https://github.com/rails/webpacker) -- Use webpack to manage app-like JavaScript modules in Rails
+<<<<<<< HEAD
  * [GPL 3.0](https://opensource.org/licenses/GPL-3.0) -- a free, copyleft license for software and other kinds of works
+=======
+ * [RSpec](https://rspec.info/) -- Behaviour Driven Development for Ruby
+ * [GPL 3.0](https://opensource.org/licenses/GPL-3.0) -- a free, copyleft license for software and other kinds of works
+>>>>>>> Add information about testing to README and include Travis CI badge
