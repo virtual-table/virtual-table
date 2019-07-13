@@ -1,5 +1,5 @@
 FactoryBot.define do
-  factory :game do
+  factory :compendium do
     title { FFaker::Book.title }
     association :author, factory: :user
   end
