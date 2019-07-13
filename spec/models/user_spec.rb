@@ -10,6 +10,15 @@ RSpec.describe User, type: :model do
     expect(user.persisted?).to be true
   end
   
+  describe 'callbacks' do
+    context 'on create' do
+      it 'generates a reset_token' do
+        user.save
+        expect(user.reset_token).to be_present
+      end
+    end
+  end
+  
   describe '#join!' do
     subject(:user) { create :user }
     let(:game)     { create :game }
@@ -43,6 +52,27 @@ RSpec.describe User, type: :model do
       it "doesn't create a new player" do
         expect { user.join! game }.to_not change { Player.count }
       end
+    end
+  end
+  
+  describe '#create_reset_token' do
+    it 'generates a new reset_token' do
+      user.reset_token = 'abcdefghijklmn'
+      
+      user.create_reset_token
+      
+      expect(user.reset_token).to be_present
+      expect(user.reset_token).to_not eql 'abcdefghijklmn'
+    end
+    
+    it 'updates reset_send_at to the current time' do
+      user.create_reset_token
+      expect(user.reset_send_at).to be_within(1.second).of Time.now
+    end
+    
+    it 'returns the token' do
+      token = user.create_reset_token
+      expect(token).to eql user.reset_token
     end
   end
 end
