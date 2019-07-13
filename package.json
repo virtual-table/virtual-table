@@ -10,6 +10,7 @@
     "hotkeys-js": "^3.6.3",
     "inspire-tree": "^5.0.2",
     "inspire-tree-dom": "^4.0.6",
+    "lodash": "^4.17.14",
     "orbit-controls-es6": "^2.0.0",
     "pixi-viewport": "^3.21.2",
     "pixi.js": "^4.8.6",
@@ -19,8 +20,7 @@
     "stimulus": "^1.1.1",
     "three-js": "^79.0.0",
     "threejs-dice": "^1.1.0",
-    "turbolinks": "^5.2.0",
-    "underscore": "^1.9.1"
+    "turbolinks": "^5.2.0"
   },
   "version": "0.1.0",
   "devDependencies": {

@@ -3,7 +3,7 @@ import PIXI from 'lib/pixi'
 import Draggable from 'lib/map/draggable'
 import Caster from 'lib/map/visibility/caster'
 import playerChannel from 'channels/player_channel'
-import _ from 'underscore'
+import _ from 'lodash'
 
 export default class extends Draggable(ObjectController) {
   

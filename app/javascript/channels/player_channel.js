@@ -1,6 +1,6 @@
 import consumer from './consumer'
 import Peer from 'simple-peer'
-import _ from 'underscore'
+import _ from 'lodash'
 
 const playerChannel = consumer.subscriptions.create('PlayerChannel', {
   

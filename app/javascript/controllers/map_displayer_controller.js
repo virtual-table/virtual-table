@@ -1,4 +1,4 @@
-import _ from 'underscore'
+import _ from 'lodash'
 import ApplicationController from 'controllers/application_controller'
 import playerChannel from 'channels/player_channel'
 

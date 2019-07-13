@@ -1,4 +1,4 @@
-import _ from 'underscore'
+import _ from 'lodash'
 import { Room, Block, Segment, Point } from './types'
 import { loadMap } from './loadMap'
 import { calculateVisibility } from './visibility'

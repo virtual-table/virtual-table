@@ -1,5 +1,5 @@
 import ApplicationController from 'controllers/application_controller'
-import _ from 'underscore'
+import _ from 'lodash'
 import PIXI from 'lib/pixi'
 import HorizontalHexGrid from 'lib/map/grid/horizontal_hexagon'
 import IsometricGrid from 'lib/map/grid/isometric'

@@ -1,6 +1,6 @@
 import ObjectController from 'controllers/map/object_controller'
 import PIXI from 'lib/pixi'
-import _ from 'underscore'
+import _ from 'lodash'
 
 export default class extends ObjectController {
   

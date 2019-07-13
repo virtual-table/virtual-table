@@ -1,5 +1,5 @@
 import { Controller } from 'stimulus'
-import _ from 'underscore'
+import _ from 'lodash'
 
 export default class extends Controller {
   findParentController (identifier) {

@@ -1,5 +1,5 @@
 import ApplicationController from 'controllers/application_controller'
-import _ from 'underscore'
+import _ from 'lodash'
 import PIXI from 'lib/pixi'
 
 export default class extends ApplicationController {

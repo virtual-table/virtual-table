@@ -1,6 +1,6 @@
 import ApplicationController from 'controllers/application_controller'
 import playerChannel from 'channels/player_channel'
-import _ from 'underscore'
+import _ from 'lodash'
 
 const DEFAULT_MEDIA_CONSTRAINTS = {
   audio: true,

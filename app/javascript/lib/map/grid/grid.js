@@ -1,4 +1,4 @@
-import _ from 'underscore'
+import _ from 'lodash'
 
 export default class {
   get width  () { return this.tileSize * this.columns }
