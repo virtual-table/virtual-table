@@ -61,6 +61,7 @@ group :development, :test do
     gem lib, git: "https://github.com/rspec/#{lib}.git", branch: 'master'
   end
   gem 'action-cable-testing'
+  gem 'factory_bot_rails'
 end
 
 group :development do
@@ -75,5 +76,5 @@ group :test do
   gem 'capybara', '>= 2.15'
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
-  gem 'factory_bot'
+  gem 'ffaker'
 end
