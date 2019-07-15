@@ -100,8 +100,8 @@ export default class extends ApplicationController {
         
         die.updateBodyFromMesh()
         
-        object.body.velocity.set(25 + result, 40 + yRand, 15 + result)
-        object.body.angularVelocity.set(20 * this.random() -10, 20 * this.random() -10, 20 * this.random() -10)
+        object.body.velocity.set(250 + result, 40 + yRand, 150 + result)
+        object.body.angularVelocity.set(200 * this.random() -10, 20 * this.random() -10, 20 * this.random() -10)
         
         diceValues.push({ dice: die, value: result })
       }
