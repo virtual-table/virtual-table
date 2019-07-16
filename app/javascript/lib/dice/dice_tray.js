@@ -60,16 +60,9 @@ export default class DiceTray {
   }
   
   setupCage () {
-    let material = new THREE.MeshPhongMaterial( { color: 0x00aa00, side: THREE.DoubleSide } )
-    let geometry = new THREE.PlaneGeometry(30, 30, 10, 10)
-    let floor    = new THREE.Mesh(geometry, material)
-    floor.receiveShadow  = true
-    floor.rotation.x = Math.PI / 2 
-    this.scene.add(floor)
-    
-    let floorBody = new CANNON.Body({ mass: 0, shape: new CANNON.Plane(), material: this.materials.floor })
-    floorBody.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2)
-    this.world.add(floorBody)
+    let floor = new CANNON.Body({ mass: 0, shape: new CANNON.Plane(), material: this.materials.floor })
+    floor.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2)
+    this.world.add(floor)
     
     let wall
     wall = new CANNON.Body({ mass: 0, shape: new CANNON.Plane(), material: this.materials.floor })
@@ -81,12 +74,12 @@ export default class DiceTray {
     wall.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), Math.PI )
     wall.position.set(0, 0, 15)
     this.world.add(wall)
-
+    
     wall = new CANNON.Body({ mass: 0, shape: new CANNON.Plane(), material: this.materials.floor })
     wall.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), -Math.PI / 2 )
     wall.position.set(15, 0, 0)
     this.world.add(wall)
-
+    
     wall = new CANNON.Body({ mass: 0, shape: new CANNON.Plane(), material: this.materials.floor })
     wall.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), Math.PI/2)
     wall.position.set(-15, 0, 0)
@@ -137,11 +130,13 @@ export default class DiceTray {
   }
   
   setupRenderer () {
-    let renderer = this.renderer = new THREE.WebGLRenderer( {antialias:true} )
+    let renderer = this.renderer = new THREE.WebGLRenderer({ antialias:true })
     renderer.setSize(this.dimensions.width, this.dimensions.height)
     renderer.setPixelRatio(this.dimensions.pixelRatio)
     renderer.shadowMap.enabled = true
     renderer.shadowMap.type = THREE.PCFSoftShadowMap
+    
+    let cannonDebugger = this.cannonDebugger = new THREE.CannonDebugRenderer(this.scene, this.world)
   }
   
   // RENDERING:
@@ -154,6 +149,7 @@ export default class DiceTray {
   }
   
   render () {
+    this.cannonDebugger.update()
     this.world.step(1.0 / 60.0)
     
     for (let dicePool of this.dicePools) {

@@ -11,4 +11,9 @@ environment.plugins.append(
   new webpack.ProvidePlugin({ THREE: 'three' })
 )
 
+environment.plugins.append(
+  'ProvidePlugin:CANNON',
+  new webpack.ProvidePlugin({ CANNON: 'cannon' })
+)
+
 module.exports = environment
