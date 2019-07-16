@@ -121,7 +121,7 @@ export default class DiceTray {
     const { screen     } = dimensions
     
     let camera = this.camera = new THREE.PerspectiveCamera(20, screen.aspect, 1, dimensions.z * 1.3)
-    camera.position.set(0, dimensions.z / 20, 10)
+    camera.position.set(0, dimensions.z / 20, 0)
     camera.up.set(0, 0, -1)
     camera.lookAt(0, 0, 0)
     
