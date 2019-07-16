@@ -41,9 +41,11 @@ export default class extends ApplicationController {
   
   get dimensions () {
     return {
-      width:      this.canvasTarget.offsetWidth,
-      height:     this.canvasTarget.offsetHeight,
-      pixelRatio: window.devicePixelRatio ? window.devicePixelRatio : 1
+      screen: {
+        width:      this.canvasTarget.offsetWidth,
+        height:     this.canvasTarget.offsetHeight,
+        pixelRatio: window.devicePixelRatio ? window.devicePixelRatio : 1
+      }
     }
   }
   

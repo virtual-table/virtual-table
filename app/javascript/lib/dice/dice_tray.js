@@ -26,8 +26,14 @@ export default class DiceTray {
   
   setupDimensions () {
     let dimensions = this.dimensions
-    dimensions.aspect = dimensions.width / dimensions.height
-    dimensions.scale  = (this.dimensions.width ** 2 + this.dimensions.height ** 2) / 13
+    let screen     = dimensions.screen
+    
+    screen.aspect = screen.width / screen.height
+    
+    dimensions.scale  = (screen.width ** 2 + screen.height ** 2) / 13
+    dimensions.x      = screen.width / screen.pixelRatio
+    dimensions.y      = screen.height / screen.pixelRatio
+    dimensions.z      = dimensions.y / Math.tan(10 * Math.PI / 180)
   }
   
   setupScene () {
@@ -65,25 +71,18 @@ export default class DiceTray {
     this.world.add(floor)
     
     let wall
-    wall = new CANNON.Body({ mass: 0, shape: new CANNON.Plane(), material: this.materials.floor })
-    wall.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 0, 1),Math.PI )
-    wall.position.set(0, 0, -15)
-    this.world.add(wall)
     
-    wall = new CANNON.Body({ mass: 0, shape: new CANNON.Plane(), material: this.materials.floor })
-    wall.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), Math.PI )
-    wall.position.set(0, 0, 15)
-    this.world.add(wall)
-    
-    wall = new CANNON.Body({ mass: 0, shape: new CANNON.Plane(), material: this.materials.floor })
-    wall.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), -Math.PI / 2 )
-    wall.position.set(15, 0, 0)
-    this.world.add(wall)
-    
-    wall = new CANNON.Body({ mass: 0, shape: new CANNON.Plane(), material: this.materials.floor })
-    wall.quaternion.setFromAxisAngle(new CANNON.Vec3(0, 1, 0), Math.PI/2)
-    wall.position.set(-15, 0, 0)
-    this.world.add(wall)
+    [
+      { axis: [0, 0, 1], angle:  Math.PI,      position: [  0, 0, -15] }, // TOP
+      { axis: [0, 1, 0], angle: -Math.PI / 2,  position: [ 15, 0,   0] },
+      { axis: [0, 1, 0], angle:  Math.PI,      position: [  0, 0,  15] },
+      { axis: [0, 1, 0], angle:  Math.PI / 2,  position: [-15, 0,   0] }
+    ].forEach((options) => {
+      let wall = new CANNON.Body({ mass: 0, shape: new CANNON.Plane(), material: this.materials.floor })
+      wall.quaternion.setFromAxisAngle(new CANNON.Vec3(...options.axis), options.angle)
+      wall.position.set(...options.position)
+      this.world.add(wall)
+    })
   }
   
   setupLighting () {
@@ -116,13 +115,11 @@ export default class DiceTray {
   }
   
   setupCamera () {
-    let fov = 40
-    let aspect = this.dimensions.width / this.dimensions.height
-    let near = 1
-    let far = (this.dimensions.height / aspect / Math.tan(10 * Math.PI / 180))
+    const { dimensions } = this
+    const { screen     } = dimensions
     
-    let camera = this.camera = new THREE.PerspectiveCamera(fov, aspect, near, far)
-    camera.position.set(0, far / 20, 10)
+    let camera = this.camera = new THREE.PerspectiveCamera(20, screen.aspect, 1, dimensions.z * 1.3)
+    camera.position.set(0, dimensions.z / 20, 10)
     camera.up.set(0, 0, -1)
     camera.lookAt(0, 0, 0)
     
@@ -130,13 +127,16 @@ export default class DiceTray {
   }
   
   setupRenderer () {
+    const screen = this.dimensions.screen
     let renderer = this.renderer = new THREE.WebGLRenderer({ antialias:true })
-    renderer.setSize(this.dimensions.width, this.dimensions.height)
-    renderer.setPixelRatio(this.dimensions.pixelRatio)
-    renderer.shadowMap.enabled = true
-    renderer.shadowMap.type = THREE.PCFSoftShadowMap
     
-    let cannonDebugger = this.cannonDebugger = new THREE.CannonDebugRenderer(this.scene, this.world)
+    renderer.setSize(screen.width, screen.height)
+    renderer.setPixelRatio(screen.pixelRatio)
+    renderer.shadowMap.enabled = true
+    renderer.shadowMap.type = THREE.PCFSoftMap
+    renderer.setClearColor(0xffffff, 1)
+    
+    this.cannonDebugger = new THREE.CannonDebugRenderer(this.scene, this.world)
   }
   
   // RENDERING:
