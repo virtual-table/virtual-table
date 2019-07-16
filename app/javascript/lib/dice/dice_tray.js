@@ -66,6 +66,8 @@ export default class DiceTray {
   }
   
   setupCage () {
+    let { x, y, z } = this.dimensions
+    
     let floor = new CANNON.Body({ mass: 0, shape: new CANNON.Plane(), material: this.materials.floor })
     floor.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2)
     this.world.add(floor)
@@ -73,10 +75,10 @@ export default class DiceTray {
     let wall
     
     [
-      { axis: [0, 0, 1], angle:  Math.PI,      position: [  0, 0, -15] }, // TOP
-      { axis: [0, 1, 0], angle: -Math.PI / 2,  position: [ 15, 0,   0] },
-      { axis: [0, 1, 0], angle:  Math.PI,      position: [  0, 0,  15] },
-      { axis: [0, 1, 0], angle:  Math.PI / 2,  position: [-15, 0,   0] }
+      { axis: [0, 0, 1], angle:  Math.PI,      position: [0, 0, -(y / 20)] }, // TOP
+      { axis: [0, 1, 0], angle: -Math.PI / 2,  position: [(x / 20), 0, 0]  }, // RIGHT
+      { axis: [0, 1, 0], angle:  Math.PI,      position: [0, 0, (y / 20)]  }, // BOTTOM
+      { axis: [0, 1, 0], angle:  Math.PI / 2,  position: [-(x / 20), 0, 0] }  // LEFT
     ].forEach((options) => {
       let wall = new CANNON.Body({ mass: 0, shape: new CANNON.Plane(), material: this.materials.floor })
       wall.quaternion.setFromAxisAngle(new CANNON.Vec3(...options.axis), options.angle)
