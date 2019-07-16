@@ -1,6 +1,6 @@
 import ApplicationController from 'controllers/application_controller'
-import * as THREE from 'three'
-import * as CANNON from 'cannon'
+import THREE from 'lib/three'
+import CANNON from 'lib/cannon'
 import DiceTray from 'lib/dice/dice_tray'
 import D4 from 'lib/dice/d4'
 import D6 from 'lib/dice/d6'

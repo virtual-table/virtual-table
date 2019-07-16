@@ -1,5 +1,6 @@
-import * as CANNON from 'cannon';
-import * as THREE from 'three';
+import CANNON from 'lib/cannon';
+import THREE from 'lib/three';
+import CannonDebugRenderer from 'lib/three/cannon_debug_renderer'
 
 export default class DiceTray {
   constructor (container, dimensions) {
@@ -138,7 +139,7 @@ export default class DiceTray {
     renderer.shadowMap.type = THREE.PCFSoftMap
     renderer.setClearColor(0xffffff, 0)
     
-    this.cannonDebugger = new THREE.CannonDebugRenderer(this.scene, this.world)
+    this.cannonDebugger = new CannonDebugRenderer(this.scene, this.world)
   }
   
   // RENDERING:
@@ -152,6 +153,7 @@ export default class DiceTray {
   
   render () {
     this.cannonDebugger.update()
+    
     this.world.step(1.0 / 60.0)
     
     for (let dicePool of this.dicePools) {
