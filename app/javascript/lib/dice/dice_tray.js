@@ -128,13 +128,13 @@ export default class DiceTray {
   
   setupRenderer () {
     const screen = this.dimensions.screen
-    let renderer = this.renderer = new THREE.WebGLRenderer({ antialias:true })
+    let renderer = this.renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
     
     renderer.setSize(screen.width, screen.height)
     renderer.setPixelRatio(screen.pixelRatio)
     renderer.shadowMap.enabled = true
     renderer.shadowMap.type = THREE.PCFSoftMap
-    renderer.setClearColor(0xffffff, 1)
+    renderer.setClearColor(0xffffff, 0)
     
     this.cannonDebugger = new THREE.CannonDebugRenderer(this.scene, this.world)
   }
