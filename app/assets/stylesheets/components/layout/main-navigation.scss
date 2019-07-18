@@ -48,6 +48,7 @@
   
   .main-navigation__item:hover & {
     position: absolute;
+    z-index: 990;
     right: 0;
     display: block;
     width: 232px;

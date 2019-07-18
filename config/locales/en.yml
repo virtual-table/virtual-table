@@ -1,20 +1,304 @@
 en:
   games:
     create:
-      game_created: "Game created succesfully!"
-      game_invalid: "Couldn't create game. Please check for errors and try again."
+      game_created: Game created succesfully!
+      game_invalid: Couldn't create game. Please check for errors and try again.
     update:
-      game_updated: "Game updated succesfully!"
-      game_invalid: "Couldn't update game. Please check for errors and try again."
+      game_updated: 
+      game_invalid: Couldn't update game. Please check for errors and try again.
     destroy:
-      game_destroyed: "Game removed succesfully!"
+      game_destroyed: Game removed succesfully!
+    edit:
+      edit_game: 
+    show:
+      edit_game: 
+      invite_link: 
+    games:
+      no_games_available: 
   sessions:
     create:
-      session_created: "Succesfully logged in!"
-      session_invalid: "Incorrect email or password. Please check for errors and try again."
+      session_created: Succesfully logged in!
+      session_invalid: Incorrect email or password. Please check for errors and try again.
     destroy:
-      session_destroyed: "Succesfully logged out!"
+      session_destroyed: Succesfully logged out!
   users:
     create:
-      user_created: "Account created succesfully!"
-      user_invalid: "Couldn't create account. Please check for errors and try again."
+      user_created: Account created succesfully!
+      user_invalid: Couldn't create account. Please check for errors and try again.
+    form:
+      reset: 
+      submit: 
+    new:
+      signup: 
+  activerecord:
+    models:
+      page: Page
+      admin: Admin
+      compendium: Compendium
+      game: Game
+      user: User
+      map/floor: Floor
+      page/floor_page: Floor page
+    attributes:
+      game:
+        author: Author
+        compendia: Compendia
+        compendia_ids: Compendia ids
+        compendium_ids: Compendium ids
+        created_at: Created at
+        game_compendia: Game compendia
+        id: Id
+        invite_code: Invite code
+        players: Players
+        updated_at: Updated at
+        users: Users
+      map/background:
+        height: Height
+        image: Image
+        width: Width
+        x: X
+        y: Y
+        floor_id: Floor
+      map/character:
+        dim_light_radius: Dim light radius
+        height: Height
+        light_color: Light color
+        light_radius: Light radius
+        name: Name
+        width: Width
+        x: X
+        y: Y
+        floor_id: Floor
+        image: Image
+      map/room:
+        bounds_json: Bounds json
+        floor_id: Floor
+        short_code: Short code
+        title: Title
+      map/floor:
+        columns: Columns
+        global_illumination: Global illumination
+        grid: Grid
+        grid_color: Grid color
+        grid_opacity: Grid opacity
+        grid_type: Grid type
+        level: Level
+        rows: Rows
+        title: Title
+        background_color: Background color
+        scale: Scale
+      compendium:
+        author: Author
+      map:
+        title: Title
+      page/floor_page:
+        title: Title
+      user:
+        email: Email
+        name: Name
+        password: Password
+        password_confirmation: Password confirmation
+      content/pdf:
+        title: Title
+  compendia:
+    page_contents:
+      new:
+        reset: 
+        submit: 
+      new_page_content:
+        new_content/pdf: 
+    pages:
+      update:
+        page_invalid: 
+      create:
+        page_invalid: 
+    create:
+      compendium_created: 
+    maps:
+      create:
+        map_created: 
+      form:
+        reset: 
+        submit: 
+      new:
+        create_a_map: 
+    show:
+      no_maps_available: 
+      no_pages_available: 
+    compendia:
+      no_compendia_available: 
+  helpers:
+    label:
+      page_content[content_attributes]:
+        alt_text: 
+        caption: 
+      game:
+        compendia_ids: 
+        compendium_ids: 
+      map_background:
+        height: 
+        image: 
+        width: 
+        x: 
+        y: 
+        floor_id: 
+      map_character:
+        dim_light_radius: 
+        height: 
+        light_color: 
+        light_radius: 
+        name: 
+        width: 
+        x: 
+        y: 
+        floor_id: 
+        image: 
+      map_room:
+        bounds_json: 
+        floor_id: 
+        short_code: 
+        title: 
+      q:
+        index:
+          author: 
+          author_type: 
+          body: 
+          compendia: 
+          created_at: 
+          description: 
+          game_compendia: 
+          invite_code: 
+          namespace: 
+          players: 
+          resource_type: 
+          title: 
+          updated_at: 
+          users: 
+      map_floor:
+        background_color: 
+        columns: 
+        global_illumination: 
+        grid_color: 
+        grid_type: 
+        level: 
+        title: 
+        grid: 
+        grid_opacity: 
+        rows: 
+      map:
+        title: 
+      user:
+        email: 
+        name: 
+        password: 
+        password_confirmation: 
+      page[contents_attributes][__NEW_CONTENT_PLACEHOLDER__][content_attributes]:
+        title: 
+      page:
+        contents[content_attributes]:
+          title: 
+  active_admin:
+    resources:
+      comment:
+        scopes:
+          admin: Admin
+          all: All
+      game:
+        delete: Delete
+        delete_confirmation: Delete Confirmation
+        edit: Edit
+        new_model: New Model
+        view: View
+  formtastic:
+    labels:
+      q:
+        index:
+          author: 
+          author_type: 
+          body: 
+          compendia: 
+          created_at: 
+          description: 
+          game_compendia: 
+          invite_code: 
+          namespace: 
+          players: 
+          resource_type: 
+          title: 
+          updated_at: 
+          users: 
+    placeholders:
+      q:
+        index:
+          body: 
+          description: 
+          invite_code: 
+          namespace: 
+          title: 
+  map:
+    backgrounds:
+      background_panel:
+        edit: 
+        reset: 
+        submit: 
+      backgrounds_tab:
+        new_background: 
+    characters:
+      character_panel:
+        edit: 
+        reset: 
+        submit: 
+      characters_tab:
+        new_character: 
+    floors:
+      floor_panel:
+        backgrounds: 
+        characters: 
+        edit: 
+        rooms: 
+    map_panel:
+      edit: 
+      new_floor: 
+    rooms:
+      room_panel:
+        edit: 
+        reset: 
+        submit: 
+      rooms_tab:
+        new_room: 
+  maps:
+    floors:
+      form:
+        cancel: 
+        new_floor: 
+        submit: 
+      create:
+        floor_created: 
+        floor_invalid: 
+    backgrounds:
+      form:
+        cancel: 
+        new_background: 
+        submit: 
+      create:
+        background_created: 
+      update:
+        background_updated: 
+    characters:
+      create:
+        character_created: 
+      form:
+        cancel: 
+        new_character: 
+        submit: 
+      update:
+        character_updated: 
+    form:
+      cancel: 
+      edit_map: 
+      submit: 
+    update:
+      map_updated: 
+  dice_rolls:
+    new:
+      roll: 

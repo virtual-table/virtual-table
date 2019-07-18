@@ -1,18 +1,12 @@
-<div class="map-canvas"
+<div class="map-editor__canvas"
      data-controller="map--canvas"
      data-action="resize@window->map--canvas#resize"
      data-map--canvas-width="<%= map.width %>"
      data-map--canvas-height="<%= map.height %>">
   
-  <div class="map-canvas-zoom">
-    <div class="level is-mobile">
-      <span class="level-left">
-        <a data-action="click->map--canvas#zoomOut" class="button">-</a>
-      </span>
-      <span class="level-right">
-        <a data-action="click->map--canvas#zoomIn" class="button">+</a>
-      </span>
-    </div>
+  <div class="canvas__zoom">
+    <a data-action="click->map--canvas#zoomIn">+</a>
+    <a data-action="click->map--canvas#zoomOut">-</a>
   </div>
   
   <div data-target="map--canvas.canvas">
