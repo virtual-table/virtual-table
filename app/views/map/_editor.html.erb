@@ -1,12 +1,12 @@
 <%
-active_floor = local_assigns[:active_floor]
+active_floor = local_assigns[:active_floor].presence
 %>
 <div class="map-editor"
      data-controller="map-editor"
      data-map-editor-player-id="<%= current_player&.id %>"
      data-map-editor-active-floor="<%= dom_id(active_floor) if active_floor %>">
   
-  <%= render 'map/editor_toolbox', map: map %>
-  <%= render 'map/editor_canvas',  map: map %>
-  <%= render 'map/editor_sidebar', map: map %>
+  <%= render 'map/editor_toolbox', map: map, active_floor: active_floor %>
+  <%= render 'map/editor_canvas',  map: map, active_floor: active_floor %>
+  <%= render 'map/editor_sidebar', map: map, active_floor: active_floor %>
 </div>

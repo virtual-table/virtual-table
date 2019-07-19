@@ -6,13 +6,6 @@ tabs  ||= %w[backgrounds rooms characters]
   <div class="panel-heading">
     <div class="level is-mobile">
       <h1 class="level-left">
-        <%=
-          link_to '<', "##{dom_id(floor.map, :panel)}",
-            class: 'button is-small is-link is-outlined',
-            data: {
-              action: 'click->map--panel#openPanel'
-            }
-        %>
         <%= floor.title %>
       </h1>
       <p class="level-right">
