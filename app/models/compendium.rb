@@ -6,11 +6,14 @@ class Compendium < ApplicationRecord
     class_name: 'User'
   
   has_many :pages,
-    -> { order(position: :asc) }
+    -> { order(position: :asc) },
+    dependent: :destroy
   
-  has_many :maps
+  has_many :maps,
+    dependent: :destroy
   
-  has_many :game_compendiums
+  has_many :game_compendiums,
+    dependent: :destroy
   
   has_many :games,
     through: :game_compendiums
