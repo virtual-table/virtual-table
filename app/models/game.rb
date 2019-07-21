@@ -3,12 +3,14 @@ class Game < ApplicationRecord
   belongs_to :author,
     class_name: 'User'
   
-  has_many :players
+  has_many :players,
+    dependent: :destroy
   
   has_many :users, 
     through: :players
   
-  has_many :game_compendia
+  has_many :game_compendia,
+    dependent: :destroy
   
   has_many :compendia,
     through: :game_compendia
