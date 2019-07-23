@@ -127,6 +127,7 @@ GEM
       parslet (~> 1.4, >= 1.4.0)
     domain_name (0.5.20190701)
       unf (>= 0.0.5, < 1.0.0)
+    dotenv (2.5.0)
     erubi (1.8.0)
     eventmachine (1.0.9.1)
     execjs (2.7.0)
@@ -371,6 +372,7 @@ DEPENDENCIES
   daemons
   delayed_job_active_record
   dicebag
+  dotenv
   image_processing
   listen (>= 3.0.5, < 3.2)
   localeapp

@@ -1,6 +1,8 @@
 development: &shared
   adapter: postgresql
   database: virtualtable
+  host: <%= ENV['DOCKER_DB_HOST'] %>
+  port: <%= ENV['DOCKER_DB_PORT'] %>
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".
