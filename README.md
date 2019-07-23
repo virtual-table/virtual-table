@@ -41,6 +41,21 @@ javascript dependencies. Make sure yarn is installed and update or install the d
 
 See `config/database.yml.example` for database configuration. Only PostgreSQL is supported.
 
+#### Dockerized database
+
+The included `docker-compose.yml` file allows you to run your PostgreSQL database in a docker container. Create, or start, your database container as a daemon by running
+
+    docker-compose up -d
+
+Then, fill in the port the database is running on in your .env file:
+
+```
+DOCKER_DB_HOST=127.0.0.1
+DOCKER_DB_PORT=32773
+```
+
+You can stop the database container by with `docker-compose stop`
+
 ## License
 
 VirtualTable is released under the [GNU General Public License version 3](https://opensource.org/licenses/GPL-3.0).
