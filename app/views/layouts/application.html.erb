@@ -14,12 +14,21 @@
       <span class="main-navigation__branding">
         <%= link_to 'Virtual Table', root_path %>
       </span>
-      
+
       <ul class="main-navigation__items">
         <% if logged_in? %>
           <li class="main-navigation__item">
+            <%= link_to t('.compendia'), compendia_path %>
+            <ul class="main-navigation__dropdown">
+              <% current_user.compendia.each do |compendium| %>
+                <li class="main-navigation__item">
+                  <%= link_to compendium.title, compendium %>
+                </li>
+              <% end %>
+            </ul>
+          </li>
+          <li class="main-navigation__item">
             <%= link_to t('.games'), games_path %>
-            
             <ul class="main-navigation__dropdown">
               <% current_user.games.each do |game| %>
                 <li class="main-navigation__item">
@@ -44,10 +53,10 @@
         <% end %>
       </ul>
     </nav>
-    
+
     <%= render 'shared/notice', message: notice if notice %>
     <%= render 'shared/alert',  message: alert  if alert  %>
-    
+
     <%= yield %>
   </body>
 </html>
