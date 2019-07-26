@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_26_085349) do
+ActiveRecord::Schema.define(version: 2019_07_26_122731) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -107,19 +107,26 @@ ActiveRecord::Schema.define(version: 2019_07_26_085349) do
     t.index ["author_id"], name: "index_games_on_author_id"
   end
 
+  create_table "map_area_pages", force: :cascade do |t|
+    t.bigint "area_id"
+    t.bigint "page_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["area_id"], name: "index_map_area_pages_on_area_id"
+    t.index ["page_id"], name: "index_map_area_pages_on_page_id"
+  end
+
   create_table "map_areas", force: :cascade do |t|
     t.bigint "floor_id"
     t.string "short_code"
     t.string "title"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.bigint "page_id"
     t.json "bounds"
     t.integer "x", default: 0, null: false
     t.integer "y", default: 0, null: false
     t.integer "z", default: 0, null: false
     t.index ["floor_id"], name: "index_map_areas_on_floor_id"
-    t.index ["page_id"], name: "index_map_areas_on_page_id"
   end
 
   create_table "map_backgrounds", force: :cascade do |t|
@@ -255,8 +262,8 @@ ActiveRecord::Schema.define(version: 2019_07_26_085349) do
   add_foreign_key "game_compendia", "compendia"
   add_foreign_key "game_compendia", "games"
   add_foreign_key "games", "users", column: "author_id"
+  add_foreign_key "map_area_pages", "map_areas", column: "area_id"
   add_foreign_key "map_areas", "map_floors", column: "floor_id"
-  add_foreign_key "map_areas", "pages"
   add_foreign_key "map_backgrounds", "map_floors", column: "floor_id"
   add_foreign_key "map_characters", "map_floors", column: "floor_id"
   add_foreign_key "map_doors", "map_floors", column: "floor_id"
