@@ -2,17 +2,22 @@
 map = floor.map
 %>
 <div id="<%= dom_id(floor, :characters_tab) %>" data-target="map--panel.tab">
-  <% floor.characters.each do |character| %>
-    <div class="panel-block">
-      <%=
-        link_to character.name, "##{dom_id(character, :panel)}",
-          data: {
-            action: 'click->map--panel#openPanel'
-          }
-      %>
-    </div>
-  <% end %>
-  <div class="panel-block">
+  <div class="panel__content">
+    <ul>
+      <% floor.characters.each do |character| %>
+        <li>
+          <%=
+            link_to character.name, "##{dom_id(character, :panel)}",
+              data: {
+                action: 'click->map--panel#openPanel'
+              }
+          %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  
+  <div class="panel__actions">
     <%=
       link_to t('.new_character'), new_map_character_path(map, map_character: { floor_id: floor.id }),
         class: 'button is-small is-link is-outlined is-fullwidth',

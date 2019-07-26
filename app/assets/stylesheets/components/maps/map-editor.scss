@@ -3,17 +3,6 @@
   position: relative;
   height: calc(100vh - 55px);
   
-  &:before {
-    position: relative;
-    z-index: 980;
-    display: block;
-    width: 100vw;
-    height: 1px;
-    content: '';
-    background: #ff0000;
-    box-shadow: rgba(0,0,0,.4) 0 1px 3px;
-  }
-  
   .map-editor__toolbox {
     position: absolute;
     z-index: 999;
@@ -107,6 +96,50 @@
   
   .map-editor__panels {
     width: 300px;
+    
+    .panel { }
+    
+    .panel__heading,
+    .panel__tabs,
+    .panel__content,
+    .panel__actions {
+      padding: {
+        top: calc(var(--spacing-unit) * 2);
+        right: calc(var(--spacing-unit) * 3);
+        bottom: calc(var(--spacing-unit) * 2);
+        left: calc(var(--spacing-unit) * 3);
+      }
+      border-bottom: 1px solid rgba(61,51,41,0.10);
+    }
+    
+    .panel__heading {
+      @include flexbox(flex, row, wrap, flex-start, center);
+      font-weight: 600;
+      
+      .panel__back {
+        @include flexbox(flex, row, wrap, flex-start, center);
+        
+        &:before {
+          display: inline-block;
+          content: '';
+          width: calc(var(--spacing-unit) * 3);
+          height: calc(var(--spacing-unit) * 3);
+          background: #FF0000;
+          border-radius: 50%;
+          margin-right: var(--spacing-unit);
+        }
+      }
+      
+      h1 {
+        margin-right: auto;
+      }
+    }
+    
+    .panel__tabs { }
+    
+    .panel__content {  }
+    
+    .panel__actions { }
   }
 }
 

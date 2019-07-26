@@ -1,23 +1,21 @@
 <nav class="panel" id="<%= dom_id(map, :panel) %>" data-controller="map--panel" data-map--panel-active="true">
-  <div class="panel-heading">
-    <div class="level is-mobile">
-      <h1 class="level-left">
-        <%= map.title %>
-      </h1>
-      <p class="level-right">
-        <%=
-          link_to t('.edit'),
-            edit_map_path(map),
-            class: 'button is-small',
-            data: { remote: true }
-        %>
-      </p>
-    </div>
+  <div class="panel__heading">
+    <h1 class="level-left">
+      <%= map.title %>
+    </h1>
+    <p class="level-right">
+      <%=
+        link_to t('.edit'),
+          edit_map_path(map),
+          class: 'button is-small',
+          data: { remote: true }
+      %>
+    </p>
   </div>
   <% map.floors.each do |floor| %>
     <%=
       link_to floor.title, "##{dom_id(floor)}",
-        class: 'panel-block',
+        class: 'panel__block',
         data: {
           action: 'click->map--panel#openPanel click->map-editor#changeFloor',
           panel:  dom_id(floor, :panel),

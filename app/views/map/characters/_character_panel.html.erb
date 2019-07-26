@@ -15,87 +15,84 @@ form_data = {
 }
 %>
 <nav class="panel" id="<%= dom_id(character, :panel) %>" data-controller="map--panel">
-  <div class="panel-heading">
+  <div class="panel__heading">
     <%=
-      link_to '<', "##{dom_id(character.floor, :panel)}",
-        class: 'button is-small is-link is-outlined',
+      link_to 'TEMP: Floor title', "##{dom_id(character.floor, :panel)}",
+        class: 'panel__back is-small is-link is-outlined',
         data: {
           action: 'click->map--panel#openPanel'
         }
     %>
-    <%= character.name %>
-    <%=
-      link_to t('.edit'),
-        edit_map_character_path(character.map, character),
-        class: 'button is-small',
-        data: { remote: true }
-    %>
   </div>
-  <%= bulma_form_for character, url: form_url, html: { class: 'panel-block', data: form_data } do |f| %>
-    <%= f.field :name do %>
-      <%= f.label      :name %>
-      <%= f.text_field :name, data: { target: 'form--map-character.name' } %>
-      <%= f.errors     :name %>
+  
+  <div class="panel__content">
+    <%= character.name %>
+    
+    <%= bulma_form_for character, url: form_url, html: { data: form_data } do |f| %>
+      <%= f.field :name do %>
+        <%= f.label      :name %>
+        <%= f.text_field :name, data: { target: 'form--map-character.name' } %>
+        <%= f.errors     :name %>
+      <% end %>
+      
+      <div class="level">
+        <div class="level-item">
+          <%= f.field :width do %>
+            <%= f.label        :width %>
+            <%= f.number_field :width, data: { target: 'form--map-character.width' } %>
+            <%= f.errors       :width %>
+          <% end %>
+        </div>
+        <div class="level-item">
+          <%= f.field :height do %>
+            <%= f.label        :height %>
+            <%= f.number_field :height, data: { target: 'form--map-character.height' } %>
+            <%= f.errors       :height %>
+          <% end %>
+        </div>
+      </div>
+      
+      <div class="level">
+        <div class="level-item">
+          <%= f.field :x do %>
+            <%= f.label        :x %>
+            <%= f.number_field :x, data: { target: 'form--map-character.x' } %>
+            <%= f.errors       :x %>
+          <% end %>
+        </div>
+        <div class="level-item">
+          <%= f.field :y do %>
+            <%= f.label        :y %>
+            <%= f.number_field :y, data: { target: 'form--map-character.y' } %>
+            <%= f.errors       :y %>
+          <% end %>
+        </div>
+      </div>
+      
+      <%= f.field :light_color do %>
+        <%= f.label       :light_color %>
+        <%= f.color_field :light_color %>
+        <%= f.errors      :light_color %>
+      <% end %>
+      
+      <div class="level">
+        <div class="level-item">
+          <%= f.field :dim_light_radius do %>
+            <%= f.label        :dim_light_radius %>
+            <%= f.number_field :dim_light_radius, data: { target: 'form--map-character.dimLightRadius' } %>
+            <%= f.errors       :dim_light_radius %>
+          <% end %>
+        </div>
+        <div class="level-item">
+          <%= f.field :light_radius do %>
+            <%= f.label        :light_radius %>
+            <%= f.number_field :light_radius, data: { target: 'form--map-character.lightRadius' } %>
+            <%= f.errors       :light_radius %>
+          <% end %>
+        </div>
+      </div>
+      
+      <%= f.submit_or_reset %>
     <% end %>
-    
-    <div class="level">
-      <div class="level-item">
-        <%= f.field :width do %>
-          <%= f.label        :width %>
-          <%= f.number_field :width, data: { target: 'form--map-character.width' } %>
-          <%= f.errors       :width %>
-        <% end %>
-      </div>
-      <div class="level-item">
-        <%= f.field :height do %>
-          <%= f.label        :height %>
-          <%= f.number_field :height, data: { target: 'form--map-character.height' } %>
-          <%= f.errors       :height %>
-        <% end %>
-      </div>
-    </div>
-    
-    <div class="level">
-      <div class="level-item">
-        <%= f.field :x do %>
-          <%= f.label        :x %>
-          <%= f.number_field :x, data: { target: 'form--map-character.x' } %>
-          <%= f.errors       :x %>
-        <% end %>
-      </div>
-      <div class="level-item">
-        <%= f.field :y do %>
-          <%= f.label        :y %>
-          <%= f.number_field :y, data: { target: 'form--map-character.y' } %>
-          <%= f.errors       :y %>
-        <% end %>
-      </div>
-    </div>
-    
-    
-    <%= f.field :light_color do %>
-      <%= f.label       :light_color %>
-      <%= f.color_field :light_color %>
-      <%= f.errors      :light_color %>
-    <% end %>
-    
-    <div class="level">
-      <div class="level-item">
-        <%= f.field :dim_light_radius do %>
-          <%= f.label        :dim_light_radius %>
-          <%= f.number_field :dim_light_radius, data: { target: 'form--map-character.dimLightRadius' } %>
-          <%= f.errors       :dim_light_radius %>
-        <% end %>
-      </div>
-      <div class="level-item">
-        <%= f.field :light_radius do %>
-          <%= f.label        :light_radius %>
-          <%= f.number_field :light_radius, data: { target: 'form--map-character.lightRadius' } %>
-          <%= f.errors       :light_radius %>
-        <% end %>
-      </div>
-    </div>
-    
-    <%= f.submit_or_reset %>
-  <% end %>
+  </div>
 </nav>

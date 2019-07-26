@@ -3,22 +3,18 @@ floor ||= local_assigns[:floor_panel]
 tabs  ||= %w[backgrounds rooms characters]
 %>
 <nav class="panel" id="<%= dom_id(floor, :panel) %>" data-controller="map--panel">
-  <div class="panel-heading">
-    <div class="level is-mobile">
-      <h1 class="level-left">
-        <%= floor.title %>
-      </h1>
-      <p class="level-right">
-        <%=
-          link_to t('.edit'),
-            edit_map_floor_path(floor.map, floor),
-            class: 'button is-small',
-            data: { remote: true }
-        %>
-      </p>
-    </div>
+  <div class="panel__heading">
+    <h1 class="level-left">
+      <%= floor.title %>
+    </h1>
+    <%=
+      link_to t('.edit'),
+        edit_map_floor_path(floor.map, floor),
+        class: 'button is-small',
+        data: { remote: true }
+    %>
   </div>
-  <p class="panel-tabs">
+  <p class="panel__tabs">
     <% tabs.each do |tab| %>
       <%=
         link_to t(".#{tab}"), "##{dom_id(floor, "#{tab}_tab")}",
