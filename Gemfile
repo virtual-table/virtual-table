@@ -77,4 +77,5 @@ group :test do
   gem 'selenium-webdriver'
   gem 'chromedriver-helper'
   gem 'ffaker'
+  gem 'shoulda-matchers'
 end
