@@ -22,10 +22,10 @@ class Map < ApplicationRecord
     through: :floors
   
   has_many :walls,
-    through: :areas
+    through: :floors
   
   has_many :doors,
-    through: :areas
+    through: :floors
   
   before_validation :build_page,  on: :create
   before_validation :update_page, on: :update
