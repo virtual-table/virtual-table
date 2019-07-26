@@ -14,8 +14,10 @@ class CreateMapAreaPages < ActiveRecord::Migration[6.0]
         puts "Linking page #{page_id} to area #{area_id}"
         Map::AreaPage.insert_all([
           {
-            page_id: page_id,
-            area_id: area_id
+            page_id:    page_id,
+            area_id:    area_id,
+            created_at: Time.now.utc,
+            updated_at: Time.now.utc
           }
         ])
       end
