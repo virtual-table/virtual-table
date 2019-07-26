@@ -12,10 +12,12 @@ class CreateMapAreaPages < ActiveRecord::Migration[6.0]
       
       if Page.where(id: page_id).exists?
         puts "Linking page #{page_id} to area #{area_id}"
-        Map::AreaPage.create(
-          page_id: page_id,
-          area_id: area_id
-        )
+        Map::AreaPage.insert_all([
+          {
+            page_id: page_id,
+            area_id: area_id
+          }
+        ])
       end
     end
     
