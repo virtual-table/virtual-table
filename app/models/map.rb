@@ -18,14 +18,14 @@ class Map < ApplicationRecord
   has_many :characters,
     through: :floors
   
-  has_many :rooms,
+  has_many :areas,
     through: :floors
   
   has_many :walls,
-    through: :rooms
+    through: :areas
   
   has_many :doors,
-    through: :rooms
+    through: :areas
   
   before_validation :build_page,  on: :create
   before_validation :update_page, on: :update

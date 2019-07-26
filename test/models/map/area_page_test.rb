@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class Page::RoomPageTest < ActiveSupport::TestCase
+class Map::AreaPageTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

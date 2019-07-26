@@ -34,11 +34,11 @@ Rails.application.routes.draw do
   
   resources :maps, except: %i[new create] do
     scope module: 'maps' do
+      resources :areas
       resources :backgrounds
       resources :characters
       resources :floors
       resources :doors
-      resources :rooms
     end
   end
   

@@ -26,7 +26,7 @@ export default class {
   
   get obstacles ()  { return this._obstacles }
   set obstacles (v) {
-    this.room = this.pointsToRoom(v.shift().points)
+    this.area = this.pointsToRoom(v.shift().points)
     this._obstacles = v
     this.preprocess()
   }
@@ -94,12 +94,12 @@ export default class {
   
   castLight () {
     const walls = this.walls.concat(this.lightWalls)
-    const endpoints = loadMap(this.room, [], makeSegments(walls), this.origin)
+    const endpoints = loadMap(this.area, [], makeSegments(walls), this.origin)
     return calculateVisibility(this.origin, endpoints)
   }
   
   castVision() {
-    const endpoints = loadMap(this.room, [], makeSegments(this.walls), this.origin)
+    const endpoints = loadMap(this.area, [], makeSegments(this.walls), this.origin)
     return calculateVisibility(this.origin, endpoints)
   }
   

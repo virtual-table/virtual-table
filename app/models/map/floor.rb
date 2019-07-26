@@ -10,7 +10,7 @@ class Map::Floor < ApplicationRecord
   has_many :backgrounds,
     dependent: :destroy
   
-  has_many :rooms,
+  has_many :areas,
     dependent: :destroy
   
   has_many :walls,

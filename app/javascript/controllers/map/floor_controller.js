@@ -36,8 +36,8 @@ export default class extends ApplicationController {
     return this.findChildControllers('map--character')
   }
   
-  get rooms () {
-    return this.findChildControllers('map--room')
+  get areas () {
+    return this.findChildControllers('map--area')
   }
   
   get backgroundColor () { return parseInt((this.data.get('backgroundColor') || '#ffffff').replace('#', '0x')) }

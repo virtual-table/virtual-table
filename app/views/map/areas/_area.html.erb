@@ -1,0 +1,18 @@
+<%=
+  content_tag(
+    :div,
+    class: 'map-area',
+    id:    dom_id(area),
+    data: {
+      target:               'map-editor.area',
+      controller:           'map--area',
+      map__area_short_code: area.short_code,
+      map__area_title:      area.title,
+      map__area_bounds:     area.bounds.to_json,
+      map__area_x:          area.x,
+      map__area_y:          area.y,
+      map__area_z:          area.z
+    }
+  ) do
+%>
+<% end %>

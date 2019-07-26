@@ -18,7 +18,6 @@ module Maps
     
     def door_params
       params.require(:map_door).permit(%i[
-        room_id
         origin_x      origin_y
         destination_x destination_y
         closed

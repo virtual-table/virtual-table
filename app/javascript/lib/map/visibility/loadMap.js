@@ -57,9 +57,9 @@ const processSegments = (lightSource, segments) => {
 const getSegmentEndPoints =
   (segment) => [segment.p1, segment.p2];
 
-export const loadMap = (room, blocks, walls, lightSource) => {
+export const loadMap = (area, blocks, walls, lightSource) => {
   const segments = processSegments(lightSource, [
-    ...rectangleToSegments(room),
+    ...rectangleToSegments(area),
     ...flatMap(rectangleToSegments, blocks),
     ...walls
   ]);
