@@ -47,7 +47,13 @@ RSpec.describe Page, type: :model do
   end
 
   describe '.without_parent' do
-    it 'returns those pages without a parent'
+    let!(:page_with_children) { create :page_with_children }
+    let!(:page_without_children) { create :page }
+    subject { Page.without_parent }
+
+    it 'returns those pages without a parent' do
+      expect(subject).to contain_exactly(page_with_children, page_without_children)
+    end
   end
 
   describe '#depth' do
