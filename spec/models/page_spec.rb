@@ -3,11 +3,11 @@
 require 'rails_helper'
 
 RSpec.describe Page, type: :model do
-  context 'validations' do
+  describe 'validations' do
     it { is_expected.to validate_presence_of(:title) }
   end
 
-  context 'relations' do
+  describe 'relations' do
     it { is_expected.to belong_to(:compendium) }
     it { is_expected.to belong_to(:parent).class_name('Page').optional }
     it do
@@ -46,11 +46,11 @@ RSpec.describe Page, type: :model do
     end
   end
 
-  context '.without_parent' do
+  describe '.without_parent' do
     it 'returns those pages without a parent'
   end
 
-  context '#depth' do
+  describe '#depth' do
     context 'with a parent' do
       it 'returns the depth of the parent + 1'
     end

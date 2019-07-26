@@ -8,8 +8,8 @@ FactoryBot.define do
         children_count { 4 }
       end
 
-      after(:build) do |page, evaluator|
-        page.children = build_list :page, evaluator.children_count
+      after(:build) do |parent_page, evaluator|
+        parent_page.children = build_list :page, evaluator.children_count, parent: parent_page
       end
     end
   end
