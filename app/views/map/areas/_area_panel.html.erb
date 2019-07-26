@@ -1,6 +1,7 @@
 <%
-area ||= local_assigns[:area_panel]
-map  ||= area.map
+area  ||= local_assigns[:area_panel]
+floor ||= area.floor
+map   ||= area.map
 
 if area.persisted?
   form_url = map_area_path(map, area)
@@ -11,7 +12,7 @@ end
 <nav class="panel" id="<%= dom_id(area, :panel) %>" data-controller="map--panel">
   <div class="panel__heading">
     <%=
-      link_to 'TEMP: Floor title', "##{dom_id(area.floor, :panel)}",
+      link_to floor.title, "##{dom_id(area.floor, :panel)}",
         class: 'panel__back',
         data: {
           action: 'click->map--panel#openPanel'
