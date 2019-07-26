@@ -1,16 +1,14 @@
 <nav class="panel" id="<%= dom_id(map, :panel) %>" data-controller="map--panel" data-map--panel-active="true">
   <div class="panel__heading">
-    <h1 class="level-left">
+    <h1>
       <%= map.title %>
     </h1>
-    <p class="level-right">
-      <%=
-        link_to t('.edit'),
-          edit_map_path(map),
-          class: 'button is-small',
-          data: { remote: true }
-      %>
-    </p>
+    <%=
+      link_to t('.edit'),
+        edit_map_path(map),
+        class: 'button is-small',
+        data: { remote: true }
+    %>
   </div>
   <% map.floors.each do |floor| %>
     <%=

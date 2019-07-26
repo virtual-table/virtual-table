@@ -18,7 +18,7 @@ form_data = {
   <div class="panel__heading">
     <%=
       link_to 'TEMP: Floor title', "##{dom_id(background.floor, :panel)}",
-        class: 'panel__back is-link is-outlined',
+        class: 'panel__back',
         data: {
           action: 'click->map--panel#openPanel'
         }
@@ -35,39 +35,29 @@ form_data = {
         <%= f.errors     :image %>
       <% end %>
       
-      <div class="level">
-        <div class="level-item">
-          <%= f.field :width do %>
-            <%= f.label        :width %>
-            <%= f.number_field :width, data: { target: 'form--map-background.width' } %>
-            <%= f.errors       :width %>
-          <% end %>
-        </div>
-        <div class="level-item">
-          <%= f.field :height do %>
-            <%= f.label        :height %>
-            <%= f.number_field :height, data: { target: 'form--map-background.height' } %>
-            <%= f.errors       :height %>
-          <% end %>
-        </div>
-      </div>
+      <%= f.field :width do %>
+        <%= f.label        :width %>
+        <%= f.number_field :width, data: { target: 'form--map-background.width' } %>
+        <%= f.errors       :width %>
+      <% end %>
       
-      <div class="level">
-        <div class="level-item">
-          <%= f.field :x do %>
-            <%= f.label        :x %>
-            <%= f.number_field :x, data: { target: 'form--map-background.x' } %>
-            <%= f.errors       :x %>
-          <% end %>
-        </div>
-        <div class="level-item">
-          <%= f.field :y do %>
-            <%= f.label        :y %>
-            <%= f.number_field :y, data: { target: 'form--map-background.y' } %>
-            <%= f.errors       :y %>
-          <% end %>
-        </div>
-      </div>
+      <%= f.field :height do %>
+        <%= f.label        :height %>
+        <%= f.number_field :height, data: { target: 'form--map-background.height' } %>
+        <%= f.errors       :height %>
+      <% end %>
+  
+      <%= f.field :x do %>
+        <%= f.label        :x %>
+        <%= f.number_field :x, data: { target: 'form--map-background.x' } %>
+        <%= f.errors       :x %>
+      <% end %>
+
+      <%= f.field :y do %>
+        <%= f.label        :y %>
+        <%= f.number_field :y, data: { target: 'form--map-background.y' } %>
+        <%= f.errors       :y %>
+      <% end %>
       
       <%= f.submit_or_reset %>
     <% end %>

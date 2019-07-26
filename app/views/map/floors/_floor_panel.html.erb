@@ -4,17 +4,17 @@ tabs  ||= %w[backgrounds rooms characters]
 %>
 <nav class="panel" id="<%= dom_id(floor, :panel) %>" data-controller="map--panel">
   <div class="panel__heading">
-    <h1 class="level-left">
-      <%= floor.title %>
-    </h1>
+    <%= floor.title %>
+    
     <%=
       link_to t('.edit'),
         edit_map_floor_path(floor.map, floor),
-        class: 'button is-small',
+        class: 'button',
         data: { remote: true }
     %>
   </div>
-  <p class="panel__tabs">
+  
+  <div class="panel__tabs">
     <% tabs.each do |tab| %>
       <%=
         link_to t(".#{tab}"), "##{dom_id(floor, "#{tab}_tab")}",
@@ -23,11 +23,13 @@ tabs  ||= %w[backgrounds rooms characters]
           }
       %>
     <% end %>
-  </p>
+  </div>
+  
   <% tabs.each do |tab| %>
     <%= render "map/#{tab}/#{tab}_tab", floor: floor %>
   <% end %>
 </nav>
+
 <%=
   render partial:    'map/backgrounds/background_panel',
          collection: floor.backgrounds
