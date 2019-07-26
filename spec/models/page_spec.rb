@@ -3,6 +3,8 @@
 require 'rails_helper'
 
 RSpec.describe Page, type: :model do
+  let(:page) { build :page }
+
   describe 'validations' do
     it { is_expected.to validate_presence_of(:title) }
   end
@@ -24,7 +26,6 @@ RSpec.describe Page, type: :model do
   end
 
   context 'default position on create' do
-    let(:page) { build :page }
     subject { page.send :set_default_position }
 
     context 'with a parent' do
@@ -57,12 +58,16 @@ RSpec.describe Page, type: :model do
   end
 
   describe '#depth' do
-    context 'with a parent' do
-      it 'returns the depth of the parent + 1'
+    subject { page.depth }
+    context 'without a parent' do
+      it { is_expected.to eq 0 }
     end
 
-    context 'without a parent' do
-      it 'returns 0'
+    context 'with a parent' do
+      let(:parent) { build :page }
+      before { page.parent = parent }
+
+      it { is_expected.to eq 1 }
     end
   end
 end
