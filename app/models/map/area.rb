@@ -1,4 +1,4 @@
-class Map::Room < ApplicationRecord
+class Map::Area < ApplicationRecord
   
   belongs_to :page,
     class_name: 'Page::RoomPage',

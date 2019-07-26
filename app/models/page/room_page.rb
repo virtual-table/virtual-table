@@ -1,16 +1,16 @@
 class Page::RoomPage < ::Page
   
-  has_one :room,
+  has_one :area,
     class_name:  'Map::Room',
     foreign_key: 'page_id',
     dependent:   :destroy
   
-  after_update :update_room
+  after_update :update_area
   
   private
   
-  def update_room
-    room.title = title
-    room.save if room.changed?
+  def update_area
+    area.title = title
+    area.save if area.changed?
   end
 end

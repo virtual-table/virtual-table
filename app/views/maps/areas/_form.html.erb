@@ -1,13 +1,13 @@
 <%
-if room.persisted?
-  form_title = t '.edit_room'
-  form_url   = map_room_path(map, room)
+if area.persisted?
+  form_title = t '.edit_area'
+  form_url   = map_area_path(map, area)
 else
-  form_title = t '.new_room'
-  form_url   = map_rooms_path(map)
+  form_title = t '.new_area'
+  form_url   = map_areas_path(map)
 end
 %>
-<%= bulma_form_for room, url: form_url do |f| %>
+<%= bulma_form_for area, url: form_url do |f| %>
   <div class="modal-card">
     <header class="modal-card-head">
       <p class="modal-card-title"><%= form_title %></p>
@@ -32,6 +32,23 @@ end
         <%= f.select :floor_id, @map.floors.map { |f| [f.title, f.id] } %>
         <%= f.errors :floor_id %>
       <% end %>
+      
+      <div class="columns">
+        <div class="column">
+          <%= f.field :x do %>
+            <%= f.label        :x %>
+            <%= f.number_field :x %>
+            <%= f.errors       :x %>
+          <% end %>
+        </div>
+        <div class="column">
+          <%= f.field :y do %>
+            <%= f.label        :y %>
+            <%= f.number_field :y %>
+            <%= f.errors       :y %>
+          <% end %>
+        </div>
+      </div>
       
       <%= f.field :bounds_json do %>
         <%= f.label     :bounds_json %>

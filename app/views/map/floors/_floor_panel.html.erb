@@ -1,6 +1,6 @@
 <%
 floor ||= local_assigns[:floor_panel]
-tabs  ||= %w[backgrounds rooms characters]
+tabs  ||= %w[backgrounds areas characters]
 %>
 <nav class="panel" id="<%= dom_id(floor, :panel) %>" data-controller="map--panel">
   <div class="panel-heading">
@@ -37,8 +37,8 @@ tabs  ||= %w[backgrounds rooms characters]
          collection: floor.backgrounds
 %>
 <%=
-  render partial:    'map/rooms/room_panel',
-         collection: floor.rooms
+  render partial:    'map/areas/area_panel',
+         collection: floor.areas
 %>
 <%=
   render partial:    'map/characters/character_panel',
