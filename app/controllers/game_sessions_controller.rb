@@ -9,6 +9,7 @@ class GameSessionsController < ApplicationController
   end
   
   def show
+    return redirect_back(fallback_location: root_url) if @game.blank? || @game.maps.blank?
     @map = @game.maps.first
     @active_floor = @map.floors.first
   end
