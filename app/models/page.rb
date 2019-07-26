@@ -29,17 +29,17 @@ class Page < ApplicationRecord
   before_create :set_default_position
 
   def depth
-    if parent
-      parent.depth + 1
-    else
-      0
-    end
+    return 0 if parent.blank?
+
+    parent.depth + 1
   end
 
   def available_content_types
     PageContent.available_content_types
   end
-  
+
+  private
+
   def set_default_position
     self.position ||= (parent&.children || compendium&.pages || []).size + 1
   end
