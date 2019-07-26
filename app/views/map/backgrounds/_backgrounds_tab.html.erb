@@ -2,20 +2,25 @@
 map = floor.map
 %>
 <div id="<%= dom_id(floor, :backgrounds_tab) %>" data-target="map--panel.tab">
-  <% floor.backgrounds.each do |background| %>
-    <div class="panel-block">
-      <%=
-        link_to background.filename, "##{dom_id(background, :panel)}",
-          data: {
-            action: 'click->map--panel#openPanel'
-          }
-      %>
-    </div>
-  <% end %>
-  <div class="panel-block">
+  <div class="panel__content">
+    <ul>
+      <% floor.backgrounds.each do |background| %>
+        <li>
+          <%=
+            link_to background.filename, "##{dom_id(background, :panel)}",
+              data: {
+                action: 'click->map--panel#openPanel'
+              }
+          %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  
+  <div class="panel__actions">
     <%=
-      link_to t('.new_background'), new_map_background_path(map, map_background: { floor_id: floor.id }),
-        class: 'button is-small is-link is-outlined is-fullwidth',
+      link_to t( '.new_background'), new_map_background_path(map, map_background: { floor_id: floor.id }),
+        class: 'button',
         data:  {
           remote: true
         }

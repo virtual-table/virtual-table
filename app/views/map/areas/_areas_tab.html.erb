@@ -2,20 +2,25 @@
 map = floor.map
 %>
 <div id="<%= dom_id(floor, :areas_tab) %>" data-target="map--panel.tab">
-  <% floor.areas.each do |area| %>
-    <div class="panel-block">
-      <%=
-        link_to area.full_title, "##{dom_id(area, :panel)}",
-          data: {
-            action: 'click->map--panel#openPanel'
-          }
-      %>
-    </div>
-  <% end %>
-  <div class="panel-block">
+  <div class="panel__content">
+    <ul>
+      <% floor.areas.each do |area| %>
+        <li>
+          <%=
+            link_to area.full_title, "##{dom_id(area, :panel)}",
+              data: {
+                action: 'click->map--panel#openPanel'
+              }
+          %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+  
+  <div class="panel__actions">
     <%=
       link_to t('.new_area'), new_map_area_path(map, map_area: { floor_id: floor.id }),
-        class: 'button is-small is-link is-outlined is-fullwidth',
+        class: 'button',
         data:  {
           remote: true
         }

@@ -3,17 +3,44 @@
   
   &.is-active {
     @include flexbox(flex, row, wrap, center, center);
+    position: fixed;
+    z-index: 9997;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
   }
-}
-
-.modal__background {
   
-}
-
-.modal__content {
+  .modal__background {
+    position: absolute;
+    z-index: 9998;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0,0,0,.6);
+  }
   
-}
-
-.modal__close {
+  .modal__content {
+    position: relative;
+    z-index: 9999;
+    width: 300px;
+    background: #FBF5EA;
+    box-shadow: 0 0 15px 0 rgba(218,193,169,0.13);
+    border-radius: 4px;
+  }
   
+  .modal__close {
+    position: absolute;
+    z-index: 9999;
+    top: calc(var(--spacing-unit) * 3);
+    right: calc(var(--spacing-unit) * 3);
+    width: calc(var(--spacing-unit) * 3);
+    height: calc(var(--spacing-unit) * 3);
+    background: #FF0000;
+  }
 }
