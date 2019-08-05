@@ -1,0 +1,105 @@
+.game-dashboard {
+  
+  .game-dashboard__header {
+    @include flexbox(flex, row, wrap, space-between, center);
+    margin-bottom: calc(var(--spacing-unit) * 2);
+    
+    h2 {
+      font-size: 24px;
+      line-height: 32px;
+      font-weight: 600;
+    }
+    
+    .game-description__actions {
+      
+      ul {
+        @include flexbox();
+      }
+      
+      li {
+        margin-left: var(--spacing-unit);
+      }
+    }
+  }
+  
+  .game-dashboard__content {
+    background: #FBF5EA;
+    padding: calc(var(--spacing-unit) * 3);
+    box-shadow: 0 0 15px 0 rgba(218,193,169,0.13);
+    border-radius: 4px;
+    
+    header {
+      margin-bottom: var(--spacing-unit);
+    }
+    
+    h2 {
+      font-size: 20px;
+      line-height: 27px;
+      font-weight: 600;
+    }
+  }
+  
+  .game-dashboard__players {
+    margin-bottom: calc(var(--spacing-unit) * 4);
+    
+    ul {
+      margin-bottom: calc(var(--spacing-unit) * 2);
+    }
+    
+    ul li {
+      @include flexbox(flex, row, wrap, flex-start, center);
+      margin-bottom: var(--spacing-unit);
+      
+      .role {
+        font-size: 12px;
+        font-weight: 600;
+        text-transform: uppercase;
+        background: rgba(177,159,119,0.24);
+        padding: {
+          right: 5px;
+          left: 5px;
+        }
+        margin-left: var(--spacing-unit);
+        border-radius: 5px;
+      }
+      
+      &:last-child {
+        margin-bottom: 0;
+      }
+    }
+    
+    .players__invite {
+      
+      strong {
+        display: block;
+        margin-bottom: var(--spacing-unit);
+      }
+      
+      code {
+        font-family: var(--default-font-stack);
+        padding: {
+          top: var(--spacing-unit);
+          right: calc(var(--spacing-unit) * 2);
+          bottom: var(--spacing-unit);
+          left: calc(var(--spacing-unit) * 2);
+        }
+        font-weight: 600;
+        background: rgba(177,159,119,0.24);
+        border-radius: 4px;
+        
+        a {
+          
+          color: #453D39;
+          
+          text-decoration: none;
+        }
+      }
+    }
+  }
+  
+  .game-dashboard__description {
+    margin-bottom: calc(var(--spacing-unit) * 4);
+  }
+  
+  .game-dashboard__maps { }
+}

@@ -3,9 +3,7 @@
   
   .games-overview__header {
     @include flexbox(flex, row, wrap, space-between, center);
-    padding-bottom: calc(var(--spacing-unit) * 2);
-    margin-bottom: calc(var(--spacing-unit) * 3);
-    border-bottom: 1px solid rgba(61,51,41,0.10);
+    margin-bottom: calc(var(--spacing-unit) * 2);
     
     h2 {
       font-size: 24px;

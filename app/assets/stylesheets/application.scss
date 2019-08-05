@@ -31,9 +31,8 @@
 
 // Games
 // =====================================
+@import 'components/games/game-dashboard';
 @import 'components/games/games-overview';
-@import 'components/games/game-description';
-@import 'components/games/game-maps';
 
 // User
 // =====================================
@@ -44,6 +43,7 @@
 // =====================================
 @import 'components/shared/modals';
 @import 'components/shared/flash-messages';
+@import 'components/shared/faux-select';
 
 // Vendor: Inspire Tree
 // =====================================

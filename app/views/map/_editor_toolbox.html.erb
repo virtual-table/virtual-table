@@ -10,21 +10,29 @@
         data: { remote: true }
     %>
     
-    <ul>
-      <% map.floors.each do |floor| %>
-        <li>
-          <%=
-            link_to floor.title, "##{dom_id(floor)}",
-              class: 'panel-block',
-              data: {
-                action: 'click->map--toolbox#openPanel click->map-editor#changeFloor',
-                panel:  dom_id(floor, :panel),
-                floor:  dom_id(floor)
-              }
-          %>
-        </li>
-      <% end %>
-    </ul>
+    <div class="faux-select" data-controller="faux-select">
+      <a class="faux-select__current" href="#" data-action="click->faux-select#toggleOptions click@window->faux-select#hideOptions">
+        <span data-target="faux-select.current">
+          Initial floor title that is awesome
+        </span>
+      </a>
+      
+      <ul class="faux-select__options">
+        <% map.floors.each do |floor| %>
+          <li>
+            <%=
+              link_to floor.title, "##{dom_id(floor)}",
+                class: 'panel-block',
+                data: {
+                  action: 'click->map--toolbox#openPanel click->map-editor#changeFloor click->faux-select#selectOption',
+                  panel:  dom_id(floor, :panel),
+                  floor:  dom_id(floor)
+                }
+            %>
+          </li>
+        <% end %>
+      </ul>
+    </div>
     
     <%=
       link_to t('.new_floor'), new_map_floor_path(map),

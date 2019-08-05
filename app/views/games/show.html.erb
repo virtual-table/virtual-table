@@ -1,7 +1,7 @@
 <main class="content content--single-game" role="main">
   <div class="wrapper">
-    <section class="game-description">
-      <header class="game-description__header">
+    <div class="game-dashboard">
+      <header class="game-dashboard__header">
         <h2>
           <%= @game.title %>
         </h2>
@@ -11,7 +11,7 @@
             <li>
               <%=
                 link_to t('.edit_game'), edit_game_path(@game),
-                  class: 'button is-link is-outlined'
+                  class: 'button'
               %>
             </li>
             
@@ -27,45 +27,80 @@
                 %>
               </li>
             <% end %>
+            
+            <li>
+              <%=
+                link_to t('.join_session'), play_path(@game),
+                  class: 'button'
+              %>
+            </li>
           <ul>
         </div>
       </header>
-      
-      <div class="game-description__content">
-        <%= @game.description_html %>
-        
-        <p>
-          <%= t '.invite_link' %>
-          <code><%= link_to join_game_url(@game, @game.invite_code), join_game_path(@game, @game.invite_code) %></code>
-        </p>
-        
-        <p>
-          <%=
-            link_to t('.join_session'), play_path(@game),
-              class: 'button is-link is-outlined'
-          %>
-        </p>
-      </div>
-    </section>
     
-    <section class="game-maps">
-      <header class="game-maps__header">
-        <h2>
-          <%= t '.maps' %>
-        </h2>
-      </header>
-      
-      <div class="game-maps__content">
-        <% if @maps.present? %>
+      <div class="game-dashboard__content">
+        <div class="game-dashboard__players">
+          <header>
+            <h2>
+              <%= t '.players' %>
+            </h2>
+          </header>
+          
           <ul>
-            <% @maps.each do |map| %>
-              <li><%= link_to map.title, map %></li>
-            <% end %>
+            <li>
+              <a href="#">Player name</a>
+              <span class="role">
+                gm
+              </span>
+            </li>
+            <li>
+              <a href="#">Player name</a>
+            </li>
+            <li>
+              <a href="#">Player name</a>
+            </li>
+            <li>
+              <a href="#">Player name</a>
+            </li>
           </ul>
-        <% else %>
-          <p><%= t '.no_maps_available' %></p>
-        <% end %>
+          
+          <div class="players__invite">
+            <strong>
+              <%= t '.invite_link' %>
+            </strong>
+            
+            <code><%= link_to join_game_url(@game, @game.invite_code), join_game_path(@game, @game.invite_code) %></code>
+          </div>
+        </div>
+      
+        <div class="game-dashboard__description">
+          <header>
+            <h2>
+              <%= t '.description' %>
+            </h2>
+          </header>
+          
+          <%= @game.description_html %>
+        </div>
+        
+        <div class="game-dashboard__maps">
+          <header>
+            <h2>
+              <%= t '.maps' %>
+            </h2>
+          </header>
+          
+          <% if @maps.present? %>
+            <ul>
+              <% @maps.each do |map| %>
+                <li><%= link_to map.title, map %></li>
+              <% end %>
+            </ul>
+          <% else %>
+            <p><%= t '.no_maps_available' %></p>
+          <% end %>
+        </div>
       </div>
-    </section>
+    </div>
   </div>
 </main>
