@@ -12,9 +12,7 @@
     
     <div class="faux-select" data-controller="faux-select">
       <a class="faux-select__current" href="#" data-action="click->faux-select#toggleOptions click@window->faux-select#hideOptions">
-        <span data-target="faux-select.current">
-          Initial floor title that is awesome
-        </span>
+        <span data-target="faux-select.current"></span>
       </a>
       
       <ul class="faux-select__options">
@@ -22,8 +20,9 @@
           <li>
             <%=
               link_to floor.title, "##{dom_id(floor)}",
-                class: 'panel-block',
+                class: "panel-block #{'faux-select-active' if floor == active_floor}",
                 data: {
+                  target: 'faux-select.option',
                   action: 'click->map--toolbox#openPanel click->map-editor#changeFloor click->faux-select#selectOption',
                   panel:  dom_id(floor, :panel),
                   floor:  dom_id(floor)
