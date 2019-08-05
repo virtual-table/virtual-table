@@ -7,7 +7,7 @@ ruby '2.6.1'
 gem 'rake'
 
 # Rails:
-gem 'rails',    '~> 6.0.0.rc1'
+gem 'rails',    '~> 6.0.0.rc2'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 # Database:
@@ -42,6 +42,7 @@ gem 'dicebag'
 
 # Admin:
 gem 'activeadmin'
+gem 'ransack', git: 'https://github.com/activerecord-hackery/ransack.git', branch: 'master'
 
 # Error handling:
 gem 'appsignal'
