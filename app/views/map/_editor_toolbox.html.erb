@@ -1,6 +1,9 @@
+<%
+active_floor ||= local_assigns[:active_floor]
+%>
 <div class="map-editor__toolbox"
      data-controller="map--toolbox"
-     data-map--toolbox-initial-panel="<%= dom_id(active_floor, :panel) if local_assigns[:active_floor] %>">
+     data-map--toolbox-initial-panel="<%= dom_id(active_floor, :panel) if active_floor %>">
   <div class="toolbox__floors">
     <strong><%= map.title %></strong>
     <%=
@@ -10,28 +13,30 @@
         data: { remote: true }
     %>
     
-    <div class="faux-select" data-controller="faux-select">
-      <a class="faux-select__current" href="#" data-action="click->faux-select#toggleOptions click@window->faux-select#hideOptions">
-        <span data-target="faux-select.current"></span>
-      </a>
+    <% if map.floors.present? %>
+      <div class="faux-select" data-controller="faux-select">
+        <a class="faux-select__current" href="#" data-action="click->faux-select#toggleOptions click@window->faux-select#hideOptions">
+          <span data-target="faux-select.current"></span>
+        </a>
       
-      <ul class="faux-select__options">
-        <% map.floors.each do |floor| %>
-          <li>
-            <%=
-              link_to floor.title, "##{dom_id(floor)}",
-                class: "panel-block #{'faux-select-active' if floor == active_floor}",
-                data: {
-                  target: 'faux-select.option',
-                  action: 'click->map--toolbox#openPanel click->map-editor#changeFloor click->faux-select#selectOption',
-                  panel:  dom_id(floor, :panel),
-                  floor:  dom_id(floor)
-                }
-            %>
-          </li>
-        <% end %>
-      </ul>
-    </div>
+        <ul class="faux-select__options">
+          <% map.floors.each do |floor| %>
+            <li>
+              <%=
+                link_to floor.title, "##{dom_id(floor)}",
+                  class: "panel-block #{'faux-select-active' if floor == active_floor}",
+                  data: {
+                    target: 'faux-select.option',
+                    action: 'click->map--toolbox#openPanel click->map-editor#changeFloor click->faux-select#selectOption',
+                    panel:  dom_id(floor, :panel),
+                    floor:  dom_id(floor)
+                  }
+              %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    <% end %>
     
     <%=
       link_to t('.new_floor'), new_map_floor_path(map),
@@ -42,13 +47,15 @@
     %>
   </div>
   
-  <div class="toolbox__tools">
-    <ul>
-      <li><a href="#">Select</a></li>
-      <li><a href="#">Wall</a></li>
-      <li><a href="#">Doorway</a></li>
-      <li><a href="#">Character</a></li>
-      <li><a href="#">Area</a></li>
-    </ul>
-  </div>
+  <% if active_floor %>
+    <div class="toolbox__tools">
+      <ul>
+        <li><a href="#">Select</a></li>
+        <li><a href="#">Wall</a></li>
+        <li><a href="#">Doorway</a></li>
+        <li><a href="#">Character</a></li>
+        <li><a href="#">Area</a></li>
+      </ul>
+    </div>
+  <% end %>
 </div>
