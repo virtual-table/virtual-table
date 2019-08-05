@@ -39,39 +39,7 @@
       </header>
     
       <div class="game-dashboard__content">
-        <div class="game-dashboard__players">
-          <header>
-            <h2>
-              <%= t '.players' %>
-            </h2>
-          </header>
-          
-          <ul>
-            <li>
-              <a href="#">Player name</a>
-              <span class="role">
-                gm
-              </span>
-            </li>
-            <li>
-              <a href="#">Player name</a>
-            </li>
-            <li>
-              <a href="#">Player name</a>
-            </li>
-            <li>
-              <a href="#">Player name</a>
-            </li>
-          </ul>
-          
-          <div class="players__invite">
-            <strong>
-              <%= t '.invite_link' %>
-            </strong>
-            
-            <code><%= link_to join_game_url(@game, @game.invite_code), join_game_path(@game, @game.invite_code) %></code>
-          </div>
-        </div>
+        <%= render 'players', players: @game.players %>
       
         <div class="game-dashboard__description">
           <header>

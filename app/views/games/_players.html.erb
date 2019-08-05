@@ -1,0 +1,26 @@
+<div class="game-dashboard__players">
+  <header>
+    <h2>
+      <%= t '.players' %>
+    </h2>
+  </header>
+  
+  <ul>
+    <% players.each do |player| %>
+      <li>
+        <a href="#"><%= player.name %></a>
+        <span class="role">
+          <%= player.role %>
+        </span>
+      </li>
+    <% end %>
+  </ul>
+  
+  <div class="players__invite">
+    <strong>
+      <%= t '.invite_link' %>
+    </strong>
+    
+    <code><%= link_to join_game_url(@game, @game.invite_code), join_game_path(@game, @game.invite_code) %></code>
+  </div>
+</div>

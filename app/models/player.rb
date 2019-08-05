@@ -9,4 +9,6 @@ class Player < ApplicationRecord
   validates :role,
     inclusion: { in: ROLES }
   
+  delegate :name, to: :user
+  
 end
