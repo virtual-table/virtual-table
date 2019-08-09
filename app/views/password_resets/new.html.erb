@@ -1,3 +1,6 @@
+<%
+title t('.page_title')
+%>
 <section class="section">
   <div class="container">
     <h1 class="title"><%= t '.forgot_password' %></h1>
@@ -6,7 +9,7 @@
         <%= f.label      :email %>
         <%= f.text_field :email %>
       <% end %>
-  
+      
       <%= f.submit_or_reset %>
     <% end %>
   </div>

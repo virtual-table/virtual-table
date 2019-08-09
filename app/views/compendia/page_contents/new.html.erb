@@ -1,3 +1,6 @@
+<%
+title t('.page_title', page: @page.title)
+%>
 <% if request.xhr? %>
   <%= bulma_form_contents_for [@compendium, @page.becomes(Page)] do |f| %>
     <%= f.fields_for :contents, @page_content, child_index: '__NEW_CONTENT_PLACEHOLDER__' do |content_fields| %>
