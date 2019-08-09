@@ -1,6 +1,6 @@
 class CompendiaController < ApplicationController
   def index
-    @compendia = Compendium.where(public: true).all
+    @compendia = current_user&.compendia
   end
   
   def show
