@@ -5,6 +5,9 @@ module Content
       foreign_key:  :content_id,
       foreign_type: :content_type
     
+    has_one :page,
+      through: :page_content
+    
     def self.accessible_attributes
       %i[ description ]
     end
