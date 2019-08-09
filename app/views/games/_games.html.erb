@@ -1,13 +1,13 @@
 <section class="games-overview">
   <header class="games-overview__header">
     <h2>
-      <%= t '.games' %>
+      <%= link_to t('.games'), games_path %>
     </h2>
     
     <div class="games-overview__actions">
       <ul>
         <li>
-          <%= link_to t('.create_new_game'), new_game_path, class: 'button' %>          
+          <%= link_to t('.create_new_game'), new_game_path, class: 'button' %>
         </li>
       </ul>
     </div>
