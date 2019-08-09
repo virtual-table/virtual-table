@@ -15,6 +15,10 @@ active_floor ||= local_assigns[:active_floor]
     
     <% if map.floors.present? %>
       <div class="faux-select" data-controller="faux-select">
+        <strong>
+          <%= t '.floors' %>
+        </strong>
+        
         <a class="faux-select__current" href="#" data-action="click->faux-select#toggleOptions click@window->faux-select#hideOptions">
           <span data-target="faux-select.current"></span>
         </a>

@@ -31,7 +31,7 @@
       @include flexbox(flex, row, wrap);
       
       .control {
-        margin-right: var(--spacing-unit); 
+        margin-right: var(--spacing-unit);
       }
     }
     
@@ -44,16 +44,7 @@
     input[type="text"],
     input[type="email"],
     input[type="password"] {
-      width: 100%;  
-      background: #FFFCF5;
-      padding: {
-        top: var(--spacing-unit);
-        right: calc(var(--spacing-unit) * 2);
-        bottom: var(--spacing-unit);
-        left: calc(var(--spacing-unit) * 2);
-      }
-      border: 1px solid rgba(61,51,41,0.20);
-      border-radius: 5px;
+      width: 100%;
     }
     
     .actions {

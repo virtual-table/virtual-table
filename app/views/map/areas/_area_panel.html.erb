@@ -21,7 +21,9 @@ end
   </div>
   
   <div class="panel__content">
-    <%= area.full_title %>
+    <span class="content__name">
+      <%= area.full_title %>
+    </span>
     
     <%= bulma_form_for area, url: form_url do |f| %>
       <%= f.field :title do %>
