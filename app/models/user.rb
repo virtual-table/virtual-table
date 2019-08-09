@@ -21,6 +21,8 @@ class User < ApplicationRecord
   
   validate :validate_roles
   
+  before_create :generate_reset_token
+  
   def self.secure_token
     SecureRandom.urlsafe_base64
   end
@@ -32,7 +34,7 @@ class User < ApplicationRecord
   end
   
   def create_reset_token
-    update_attributes!(
+    update!(
       reset_token:   User.secure_token,
       reset_send_at: Time.now.utc
     )
@@ -41,6 +43,10 @@ class User < ApplicationRecord
   end
   
   private
+  
+  def generate_reset_token
+    self.reset_token = User.secure_token
+  end
   
   def validate_roles
     self.roles = Array(roles).map(&:presence).compact

@@ -18,9 +18,9 @@ class PageContent < ApplicationRecord
     end
   end
   
-  def build_content(params)
+  def build_content(params = {})
     if content_type? && valid_content_type?
-      self.content = content_type.constantize.new(params)
+      self.content = content_type.safe_constantize.new(params)
     end
   end
   

@@ -1,0 +1,13 @@
+language: ruby
+rvm:
+  - 2.6.1
+services:
+  - postgresql
+before_script:
+  - "cp config/database.yml.example config/database.yml"
+  - "bundle exec rake db:setup RAILS_ENV=test"
+  - "bundle exec localeapp pull"
+script:
+  - bundle exec rspec spec/
+addons:
+  postgresql: "9.4"

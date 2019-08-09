@@ -1,2 +1,0 @@
-class RollsController < ApplicationController
-end
