@@ -22,7 +22,7 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-expectations.git
-  revision: 51ba18313b8a3100727bb8628798eeea408628b3
+  revision: 75f5cc9cab09fd0728bcf95e26d2c4b46f73c466
   branch: master
   specs:
     rspec-expectations (3.9.0.pre)
@@ -31,7 +31,7 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-mocks.git
-  revision: af72baa61793b4c2e440d3b23e1c3682f3e61ca7
+  revision: 2aab10d3e7a9c1c500acd1e88a7a408670f8cc48
   branch: master
   specs:
     rspec-mocks (3.9.0.pre)
@@ -40,7 +40,7 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-rails.git
-  revision: fa122dc345fcd2b88e6ca332b80a64df0ba7c290
+  revision: 2d183ced23d2d41ec1ad28f0f5f0582712b01642
   branch: master
   specs:
     rspec-rails (3.9.0.pre)
@@ -54,7 +54,7 @@ GIT
 
 GIT
   remote: https://github.com/rspec/rspec-support.git
-  revision: 6deb13fb055c2638e8dc8a7aaaa7e72b266edcd6
+  revision: c69a231d7369dd165ad7ce4742e1a2e21e3462b5
   branch: master
   specs:
     rspec-support (3.9.0.pre)
@@ -64,10 +64,10 @@ GEM
   specs:
     action-cable-testing (0.5.0)
       actioncable (>= 5.0)
-      nio4r (~> 2.0)
-      websocket-driver (>= 0.6.1)
     actioncable (6.0.0.rc2)
       actionpack (= 6.0.0.rc2)
+      nio4r (~> 2.0)
+      websocket-driver (>= 0.6.1)
     actionmailbox (6.0.0.rc2)
       actionpack (= 6.0.0.rc2)
       activejob (= 6.0.0.rc2)
@@ -140,7 +140,7 @@ GEM
     archive-zip (0.12.0)
       io-like (~> 0.3.0)
     aws-eventstream (1.0.3)
-    aws-partitions (1.196.0)
+    aws-partitions (1.198.0)
     aws-sdk-core (3.62.0)
       aws-eventstream (~> 1.0, >= 1.0.2)
       aws-partitions (~> 1.0)
@@ -208,7 +208,7 @@ GEM
     gli (2.18.1)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    haml (5.1.1)
+    haml (5.1.2)
       temple (>= 0.8.0)
       tilt
     has_scope (0.7.2)
@@ -221,11 +221,11 @@ GEM
     image_processing (1.9.2)
       mini_magick (>= 4.9.5, < 5)
       ruby-vips (>= 2.0.13, < 3)
-    inherited_resources (1.10.0)
-      actionpack (>= 5.0, < 6.0)
+    inherited_resources (1.11.0)
+      actionpack (>= 5.0, < 6.1)
       has_scope (~> 0.6)
-      railties (>= 5.0, < 6.0)
-      responders (~> 2.0)
+      railties (>= 5.0, < 6.1)
+      responders (>= 2, < 4)
     io-like (0.3.0)
     jmespath (1.4.0)
     jquery-rails (4.3.5)
@@ -289,7 +289,7 @@ GEM
     parslet (1.8.2)
     pg (1.1.4)
     public_suffix (3.1.1)
-    puma (4.0.1)
+    puma (4.1.0)
       nio4r (~> 2.0)
     rack (2.0.7)
     rack-protection (2.0.5)
@@ -316,7 +316,7 @@ GEM
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
-    rails-html-sanitizer (1.1.0)
+    rails-html-sanitizer (1.2.0)
       loofah (~> 2.2, >= 2.2.2)
     railties (6.0.0.rc2)
       actionpack (= 6.0.0.rc2)
@@ -330,9 +330,9 @@ GEM
       ffi (~> 1.0)
     redis (4.1.2)
     regexp_parser (1.6.0)
-    responders (2.4.1)
-      actionpack (>= 4.2.0, < 6.0)
-      railties (>= 4.2.0, < 6.0)
+    responders (3.0.0)
+      actionpack (>= 5.0)
+      railties (>= 5.0)
     rest-client (2.0.2)
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 4.0)
@@ -364,7 +364,7 @@ GEM
     selenium-webdriver (3.142.3)
       childprocess (>= 0.5, < 2.0)
       rubyzip (~> 1.2, >= 1.2.2)
-    shoulda-matchers (4.1.1)
+    shoulda-matchers (4.1.2)
       activesupport (>= 4.2.0)
     sinatra (2.0.5)
       mustermann (~> 1.0)
