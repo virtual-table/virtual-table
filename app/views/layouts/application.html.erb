@@ -10,10 +10,67 @@
     <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
   </head>
   <body data-controller="modal" data-target="modal.container">
-    <nav class="main-navigation" role="navigation" aria-label="main navigation">
+    <nav class="main-navigation main-navigation--map" role="navigation" aria-label="main navigation">
       <span class="main-navigation__branding">
         <%= link_to 'Virtual Table', root_path %>
       </span>
+      
+      <!-- mockup -->
+      <div class="main-navigation__map">
+        <span class="map__name">
+          Map name
+        </span>
+        
+        <div class="faux-select" data-controller="faux-select">
+          <a class="faux-select__current" href="#" data-action="click->faux-select#toggleOptions click@window->faux-select#hideOptions">
+            <span data-target="faux-select.current"></span>
+          </a>
+        
+          <div class="faux-select__dropdown">
+            <ul class="dropdown__options">
+              <li>
+                <a href="#" class="options__single" data-target="faux-select.option" data-action="click->faux-select#selectOption">
+                  Floor name
+                </a>
+                <a href="#" class="options__action">
+                  Edit
+                </a>
+              </li>
+              <li>
+                <a href="#" class="options__single" data-target="faux-select.option" data-action="click->faux-select#selectOption">
+                  Floor name
+                </a>
+                <a href="#" class="options__action">
+                  Edit
+                </a>
+              </li>
+              <li>
+                <a href="#" class="options__single" data-target="faux-select.option" data-action="click->faux-select#selectOption">
+                  Floor name
+                </a>
+                <a href="#" class="options__action">
+                  Edit
+                </a>
+              </li>
+              <li>
+                <a href="#" class="options__single" data-target="faux-select.option" data-action="click->faux-select#selectOption">
+                  Floor name
+                </a>
+                <a href="#" class="options__action">
+                  Edit
+                </a>
+              </li>
+            </ul>
+            
+            <ul class="dropdown__actions">
+              <li>
+                <a href="#" class="button button--orange">New floor</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </div>
+      <!-- /mockup -->
       
       <ul class="main-navigation__items">
         <% if logged_in? %>

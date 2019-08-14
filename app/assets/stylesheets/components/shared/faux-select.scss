@@ -8,7 +8,7 @@
   }
   
   .faux-select__current,
-  .faux-select__options {
+  .faux-select__dropdown {
     display: block;
     width: 100%;
   }
@@ -43,25 +43,68 @@
     }
   }
   
-  .faux-select__options {
+  .faux-select__dropdown {
     position: absolute;
+    top: 0;
     display: none;
-    background: #fff;
-    padding: {
-      top: calc(var(--spacing-unit)/2);
-      right: var(--spacing-unit);
-      bottom: calc(var(--spacing-unit)/2);
-      left: var(--spacing-unit);
-    }
-    margin-top: var(--spacing-unit);
-    border: 1px solid rgba(61,51,41,0.10);
-    box-shadow: 0 0 15px 0 rgba(218,193,169,0.13);
+    background: #FBF5EA;
+    box-shadow: 0 0 15px 0 rgba(0,0,0,0.20);
     border-radius: 4px;
+    
+    .dropdown__options,
+    .dropdown__actions {
+      width: 100%;
+    }
+    
+    .dropdown__options {
+      padding: var(--spacing-unit);
+      
+      li {
+        @include flexbox(flex, row, wrap, flex-start, center);
+        padding: {
+          top: calc(var(--spacing-unit)/2);
+          right: var(--spacing-unit);
+          bottom: calc(var(--spacing-unit)/2);
+          left: var(--spacing-unit);
+        }
+      }
+      
+      li:hover {
+        background: #E7E0D1;
+        border-radius: 4px;
+      }
+      
+      .options__single {
+        max-width: 100%;
+        flex-grow: 1;
+        display: block;
+      }
+      
+      .options__action {
+        font-size: 0;
+        line-height: 0;
+        width: calc(var(--spacing-unit) * 2);
+        height: calc(var(--spacing-unit) * 2);
+        background: #FF0000;
+        margin-left: calc(var(--spacing-unit) * 2);
+        border-radius: 50%;
+      }  
+    }
+    
+    .dropdown__actions {
+      padding: {
+        top: var(--spacing-unit);
+        right: calc(var(--spacing-unit) * 2);
+        bottom: var(--spacing-unit);
+        left: calc(var(--spacing-unit) * 2);
+      }
+      border-top: 1px solid rgba(61,51,41,0.20);
+    }
   }
   
   &.is-active {
     
-    .faux-select__options {
+    .faux-select__dropdown {
       display: block;
     }
   }

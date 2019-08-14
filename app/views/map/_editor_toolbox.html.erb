@@ -4,6 +4,7 @@ active_floor ||= local_assigns[:active_floor]
 <div class="map-editor__toolbox"
      data-controller="map--toolbox"
      data-map--toolbox-initial-panel="<%= dom_id(active_floor, :panel) if active_floor %>">
+  <!--
   <div class="toolbox__floors">
     <strong><%= map.title %></strong>
     <%=
@@ -28,7 +29,7 @@ active_floor ||= local_assigns[:active_floor]
             <li>
               <%=
                 link_to floor.title, "##{dom_id(floor)}",
-                  class: "panel-block #{'faux-select-active' if floor == active_floor}",
+                  class: "options__single panel-block #{'faux-select-active' if floor == active_floor}",
                   data: {
                     target: 'faux-select.option',
                     action: 'click->map--toolbox#openPanel click->map-editor#changeFloor click->faux-select#selectOption',
@@ -50,6 +51,7 @@ active_floor ||= local_assigns[:active_floor]
         }
     %>
   </div>
+  -->
   
   <% if active_floor %>
     <div class="toolbox__tools">
