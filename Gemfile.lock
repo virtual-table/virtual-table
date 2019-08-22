@@ -284,7 +284,7 @@ GEM
     mustermann (1.0.3)
     netrc (0.11.0)
     nio4r (2.4.0)
-    nokogiri (1.10.3)
+    nokogiri (1.10.4)
       mini_portile2 (~> 2.4.0)
     parslet (1.8.2)
     pg (1.1.4)
