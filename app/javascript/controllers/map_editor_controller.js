@@ -43,9 +43,11 @@ export default class extends MapDisplayerController {
     this.floorLinks.forEach(
       (link) => {
         if (link['href'].endsWith(`#${this.activeFloor.id}`)) {
-          link.closest('.panel-block').classList.add('is-active')
+          let panel = link.closest('.panel-block')
+          if (panel) panel.classList.add('is-active')
         } else {
-          link.closest('.panel-block').classList.remove('is-active')
+          let panel = link.closest('.panel-block')
+          if (panel) panel.classList.remove('is-active')
         }
       }
     )

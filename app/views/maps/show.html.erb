@@ -2,6 +2,8 @@
 title    @map.title
 subtitle @compendium&.title
 %>
-<%=
-  render 'map/editor', map: @map, active_floor: @active_floor
-%>
+<div class="map-editor">
+  <%= render 'map/editor_toolbox', map: @map, active_floor: @active_floor %>
+  <%= render 'map/editor_canvas',  map: @map, active_floor: @active_floor %>
+  <%= render 'map/editor_sidebar', map: @map, active_floor: @active_floor %>
+</div>

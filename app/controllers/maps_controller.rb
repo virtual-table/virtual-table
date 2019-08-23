@@ -1,5 +1,7 @@
 class MapsController < ApplicationController
   
+  layout 'map_editor', only: :show
+  
   def show
     @map = Map.find params[:id]
     @compendium = @map.compendium

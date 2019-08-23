@@ -1,0 +1,66 @@
+<% content_for :main_navigation do %>
+  <div class="main-navigation__map">
+    <span class="map__name">
+      <%= @map.title %>
+    </span>
+    
+    <div class="faux-select" data-controller="faux-select map--toolbox">
+      <a class="faux-select__current" href="#" data-action="click->faux-select#toggleOptions click@window->faux-select#hideOptions">
+        <span data-target="faux-select.current"></span>
+      </a>
+      
+      <div class="faux-select__dropdown">
+        <ul class="dropdown__options">
+          <% @map.floors.each do |floor| %>
+            <li>
+              <%=
+                link_to floor.title, "##{dom_id(floor)}",
+                  class: "options__single #{'faux-select-active' if floor == @active_floor}",
+                  data: {
+                    target: 'faux-select.option',
+                    action: 'click->map--toolbox#openPanel click->map-editor#changeFloor click->faux-select#selectOption',
+                    panel:  dom_id(floor, :panel),
+                    floor:  dom_id(floor)
+                  }
+              %>
+              <%= link_to t('.edit'), edit_map_floor_path(@map, floor), class: 'options__action', data: { remote: true } %>
+            </li>
+          <% end %>
+        </ul>
+        
+        <ul class="dropdown__actions">
+          <li>
+            <%=
+              link_to t('.new_floor'), new_map_floor_path(@map),
+                class: 'button button--orange',
+                data:  {
+                  remote: true
+                }
+            %>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+<% end %>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title><%= page_title %></title>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+  </head>
+  <body data-controller="modal map-editor"
+        data-target="modal.container"
+        data-map-editor-player-id="<%= current_player&.id %>"
+        data-map-editor-active-floor="<%= dom_id(@active_floor) if @active_floor %>">
+    <%= render 'shared/main_navigation'                   %>
+    <%= render 'shared/notice', message: notice if notice %>
+    <%= render 'shared/alert',  message: alert  if alert  %>
+    <%= yield %>
+  </body>
+</html>

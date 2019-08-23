@@ -1,0 +1,45 @@
+<nav class="main-navigation main-navigation--map" role="navigation" aria-label="main navigation">
+  <span class="main-navigation__branding">
+    <%= link_to 'Virtual Table', root_path %>
+  </span>
+  
+  <%= content_for :main_navigation %>
+  
+  <ul class="main-navigation__items">
+    <% if logged_in? %>
+      <li class="main-navigation__item">
+        <%= link_to t('.compendia'), compendia_path %>
+        <ul class="main-navigation__dropdown">
+          <% current_user.compendia.each do |compendium| %>
+            <li class="main-navigation__item">
+              <%= link_to compendium.title, compendium %>
+            </li>
+          <% end %>
+        </ul>
+      </li>
+      <li class="main-navigation__item">
+        <%= link_to t('.games'), games_path %>
+        <ul class="main-navigation__dropdown">
+          <% current_user.games.each do |game| %>
+            <li class="main-navigation__item">
+              <%= link_to game.title, game %>
+            </li>
+          <% end %>
+          <li class="main-navigation__item">
+            <%= link_to t('.new_game'), new_game_path %>
+          </li>
+        </ul>
+      </li>
+      <li class="main-navigation__item">
+        <%= link_to t('.logout'), logout_path, data: { method: :delete } %>
+      </li>
+    <% else %>
+      <li class="main-navigation__item">
+        <%= link_to t('.signup'), new_user_path %>
+      </li>
+      <li class="main-navigation__item">
+        <%= link_to t('.login'), login_path %>
+      </li>
+    <% end %>
+  </ul>
+</nav>
