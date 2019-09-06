@@ -1,5 +1,6 @@
 <%
 character ||= local_assigns[:character_panel]
+floor     ||= character.floor
 map       ||= character.map
 
 if character.persisted?
@@ -17,7 +18,7 @@ form_data = {
 <nav class="panel" id="<%= dom_id(character, :panel) %>" data-controller="map--panel">
   <div class="panel__heading">
     <%=
-      link_to 'TEMP: Floor title', "##{dom_id(character.floor, :panel)}",
+      link_to floor.title, "##{dom_id(floor, :panel)}",
         class: 'panel__back',
         data: {
           action: 'click->map--panel#openPanel'
@@ -36,7 +37,7 @@ form_data = {
         <%= f.text_field :name, data: { target: 'form--map-character.name' } %>
         <%= f.errors     :name %>
       <% end %>
-  
+      
       <%= f.field :width do %>
         <%= f.label        :width %>
         <%= f.number_field :width, data: { target: 'form--map-character.width' } %>

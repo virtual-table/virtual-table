@@ -1,5 +1,6 @@
 <%
 background ||= local_assigns[:background_panel]
+floor      ||= background.floor
 map        ||= background.map
 
 if background.persisted?
@@ -17,7 +18,7 @@ form_data = {
 <nav class="panel" id="<%= dom_id(background, :panel) %>" data-controller="map--panel">
   <div class="panel__heading">
     <%=
-      link_to 'TEMP: Floor title', "##{dom_id(background.floor, :panel)}",
+      link_to floor.title, "##{dom_id(floor, :panel)}",
         class: 'panel__back',
         data: {
           action: 'click->map--panel#openPanel'
@@ -48,13 +49,13 @@ form_data = {
         <%= f.number_field :height, data: { target: 'form--map-background.height' } %>
         <%= f.errors       :height %>
       <% end %>
-  
+      
       <%= f.field :x do %>
         <%= f.label        :x %>
         <%= f.number_field :x, data: { target: 'form--map-background.x' } %>
         <%= f.errors       :x %>
       <% end %>
-
+      
       <%= f.field :y do %>
         <%= f.label        :y %>
         <%= f.number_field :y, data: { target: 'form--map-background.y' } %>
