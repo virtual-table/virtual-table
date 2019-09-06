@@ -14,7 +14,7 @@ export default class extends Controller {
     
     if (initialPanel) {
       let panel = this.getPanel(initialPanel)
-      if (panel) this.showPanel(panel)
+      if (panel) panel.show()
     }
   }
   
@@ -30,15 +30,8 @@ export default class extends Controller {
             link['href'].split('#').pop()
       )
       
-      if (panel) this.showPanel(panel)
+      if (panel) panel.show()
     }
-  }
-  
-  showPanel (panel) {
-    if (this.activePanel) this.activePanel.hide()
-    this.activePanel = panel
-    
-    panel.show()
   }
   
   // HELPERS:
