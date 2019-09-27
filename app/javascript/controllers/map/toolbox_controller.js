@@ -1,7 +1,9 @@
-import { Controller } from 'stimulus'
+import ApplicationController from 'controllers/application_controller'
 import _ from 'lodash'
 
-export default class extends Controller {
+export default class extends ApplicationController {
+  
+  get editor () { return this.findParentController('map-editor') }
   
   connect () {
     _.defer(this.showInitialPanel.bind(this))
@@ -31,6 +33,17 @@ export default class extends Controller {
       )
       
       if (panel) panel.show()
+    }
+  }
+  
+  switchMode (event) {
+    let target = event.currentTarget
+    let mode   = target.dataset['map-ToolboxMode']
+    let link   = target['href']
+    
+    if (this.editor) {
+      event.preventDefault()
+      this.editor.mode = mode
     }
   }
   
