@@ -43,7 +43,8 @@ export default class extends ApplicationController {
     
     if (this.editor) {
       event.preventDefault()
-      this.editor.mode = mode
+      this.editor.mode     = mode
+      this.editor.modeLink = link
     }
   }
   
