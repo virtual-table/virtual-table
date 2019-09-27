@@ -50,7 +50,9 @@ export default class extends ApplicationController {
     for (let [index, floor] of lowerFloors.entries())
       floor.showAtLevel(index)
     
-    if (this.activeFloor) this.activeFloor.showAtLevel(lowerFloors.length)
+    if (this.activeFloor) {
+      this.activeFloor.showAtLevel(lowerFloors.length, true)
+    }
     
     for (let floor of higherFloors) floor.hide()
   }

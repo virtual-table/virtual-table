@@ -5,6 +5,7 @@ import HorizontalHexGrid from 'lib/map/grid/horizontal_hexagon'
 import IsometricGrid from 'lib/map/grid/isometric'
 import VerticalHexGrid from 'lib/map/grid/vertical_hexagon'
 import SquareGrid from 'lib/map/grid/square'
+import Rails from '@rails/ujs'
 
 require('lib/polyfills/includes')
 
@@ -138,6 +139,8 @@ export default class extends ApplicationController {
     }
     
     _.defer(this.updateFieldOfVision.bind(this))
+    
+    this.container.on('pointerdown', this.onPointerDown.bind(this))
   }
   
   disconnect () {
@@ -147,12 +150,14 @@ export default class extends ApplicationController {
   
   hide () {
     this.parent.removeChild(this.container)
+    this.container.interactive = false
   }
   
-  showAtLevel (level) {
+  showAtLevel (level, interactive = false) {
     this.pixi.renderer.backgroundColor = this.backgroundColor
     this.parent.removeChild(this.container)
     this.parent.addChildAt(this.container, level)
+    this.container.interactive = interactive
   }
   
   addBackgroundLayer () {
@@ -264,5 +269,8 @@ export default class extends ApplicationController {
       
       vision.endFill()
     }
+  }
+  
+  onPointerDown (event) {
   }
 }
