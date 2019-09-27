@@ -2,6 +2,23 @@ import { Controller } from 'stimulus'
 import _ from 'lodash'
 
 export default class extends Controller {
+  findMapController () {
+    let controllers = ['map-displayer', 'map-editor']
+    let cssSelector = controllers.map(
+      (identifier) => `[data-controller*="${identifier}"]`
+    ).join(',')
+    
+    let element = this.element.closest(cssSelector)
+    
+    if (element) {
+      for (let identifier of controllers) {
+        if (element.dataset.controller.includes(identifier)) {
+          return this.controllerFor(element, identifier)
+        }
+      }
+    }
+  }
+  
   findParentController (identifier) {
     return this.controllerFor(this.element.closest(`[data-controller*="${identifier}"]`), identifier)
   } 

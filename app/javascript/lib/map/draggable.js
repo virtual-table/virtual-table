@@ -1,4 +1,24 @@
 export default (superclass) => class extends superclass {
+  
+  get mapController () {
+    if (typeof this._mapController === 'undefined') {
+      this._mapController = this.findMapController()
+    }
+    
+    return this._mapController
+  }
+  
+  get mapModeSupportsDragging () {
+    if (this.mapController) {
+      return ['editor', 'player'].includes(this.mapController.mode)
+    } else {
+      return true
+    }
+  }
+  
+  get draggingEnabled ()      { return this._draggingEnabled && this.mapModeSupportsDragging }
+  set draggingEnabled (value) { this._draggingEnabled = value }
+  
   get offsetLeft () {
     let [ centerLeft, centerTop ] = this.center
     return centerLeft - this.x
