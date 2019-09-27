@@ -50,6 +50,8 @@ export default (superclass) => class extends superclass {
       this.dragging = false
       this.draggable.alpha = 1
       
+      if (event.data) this.draggingData = event.data
+      
       let newPosition = this.draggingData.getLocalPosition(this.draggable.parent)
       this.x = newPosition.x - this.offsetLeft
       this.y = newPosition.y - this.offsetTop
