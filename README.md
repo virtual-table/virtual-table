@@ -13,10 +13,10 @@ The source for VirtualTable is hosted on GitHub. To download it, run:
 
 ### Ruby Version
 
-VirtualTable is developed for Ruby 2.6.1. It's recommended to use [rbenv](https://github.com/rbenv/rbenv) in order to install 
+VirtualTable is developed for Ruby 2.6.5. It's recommended to use [rbenv](https://github.com/rbenv/rbenv) in order to install 
 it. After rbenv is installed and configured, run the following command to install the desired ruby version:
 
-    rbenv install 2.6.1
+    rbenv install 2.6.5
 
 A `.ruby-version` file is included that will automatically switch to the correct ruby version when entering the project 
 directory.
