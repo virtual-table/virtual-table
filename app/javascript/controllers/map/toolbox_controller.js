@@ -49,7 +49,6 @@ export default class extends ApplicationController {
       switch (mode) {
         case 'placePoint':
           this.editor.modeCallback = (x, y) => {
-            console.log('placePoint', x, y)
             if (target.href) {
               let link = document.createElement('a')
               
