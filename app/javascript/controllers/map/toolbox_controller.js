@@ -39,12 +39,40 @@ export default class extends ApplicationController {
   switchMode (event) {
     let target = event.currentTarget
     let mode   = target.dataset['map-ToolboxMode']
-    let link   = target['href']
     
     if (this.editor) {
+      console.log('switchMode', mode)
       event.preventDefault()
-      this.editor.mode     = mode
-      this.editor.modeLink = link
+      event.stopPropagation()
+      this.editor.mode = mode
+      
+      switch (mode) {
+        case 'placePoint':
+          this.editor.modeCallback = (x, y) => {
+            console.log('placePoint', x, y)
+            if (target.href) {
+              let link = document.createElement('a')
+              
+              // Use dynamic values in URL:
+              link.href = target.href.replace('__X__', x).replace('__Y__', y)
+              
+              // Copy Rails UJS data-attributes:
+              if (link.dataset.confirm)  link.dataset.confirm = target.dataset.confirm
+              if (link.dataset.method)   link.dataset.method  = target.dataset.method
+              if (target.dataset.remote) link.dataset.remote  = target.dataset.remote
+              
+              // Click the link:
+              document.body.appendChild(link)
+              link.click()
+              document.body.removeChild(link)
+            }
+          }
+          break
+          
+        default:
+          this.editor.modeCallback = null
+          break
+      }
     }
   }
   

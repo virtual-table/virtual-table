@@ -24,6 +24,7 @@ active_floor ||= local_assigns[:active_floor]
           <%=
             link_to t('.new_character'), new_map_character_path(map, map_character: { floor_id: active_floor&.id, x: '__X__', y: '__Y__' }),
               data: {
+                remote:            true,
                 action:            'map--toolbox#switchMode',
                 map__toolbox_mode: 'placePoint'
               }
@@ -33,6 +34,7 @@ active_floor ||= local_assigns[:active_floor]
           <%=
             link_to t('.new_area'), new_map_area_path(map, map_area: { floor_id: active_floor&.id, x: '__X__', y: '__Y__' }),
               data:  {
+                remote:            true,
                 action:            'map--toolbox#switchMode',
                 map__toolbox_mode: 'placePoint'
               }

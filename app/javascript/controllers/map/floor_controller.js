@@ -272,24 +272,9 @@ export default class extends ApplicationController {
   }
   
   onPointerDown (event) {
-    if (this.displayer && this.displayer.mode) {
-      switch (this.displayer.mode) {
-        case 'placePoint':
-          let position = event.data.getLocalPosition(this.container)
-          if (this.displayer.modeLink) {
-            let urlTemplate = this.displayer.modeLink
-            
-            let link = document.createElement('a')
-            link.dataset.remote = true
-            link.href = urlTemplate.replace('__X__', position.x).replace('__Y__', position.y)
-            
-            document.body.appendChild(link)
-            link.click()
-            document.body.removeChild(link)
-          }
-          
-          break
-      }
+    if (this.displayer && this.displayer.mode && this.displayer.modeCallback) {
+      let position = event.data.getLocalPosition(this.container)
+      this.displayer.modeCallback(position.x, position.y)
     }
   }
 }
