@@ -23,21 +23,43 @@ directory.
 
 ### External Dependencies
 
-#### Bundler
+#### 1. PostgreSQL
+Before running bundler libpq-dev or its equivelent for your OS needs te be installed becaus gem pg 1.1.4 deppends on it.
+
+Using Mac Homebrew:
+    brew install postgresql
+
+Ubuntu/Debian systems:
+    udo apt-get install libpq-dev
+
+
+#### 2. Bundler
 
 After installing the correct Ruby version we can use [Bundler](https://bundler.io/) to manager our external Ruby libraries.
 
     gem install bundler
     bundle install
 
-#### Yarn
+#### 3. Yarn
 
 We use [yarn](https://yarnpkg.com/) in combination with the [webpacker](https://github.com/rails/webpacker) gem to manage our 
-javascript dependencies. Make sure yarn is installed and update or install the dependenies by running:
+javascript dependencies. Make sure yarn is installed:
+
+Using Mac Homebrew, this wil also install Node.je if it is not already installed.
+    brew install yarn
+
+Ubuntu/Debian systems
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | sudo apt-key add -
+echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
+
+then:
+    sudo apt-get update && sudo apt-get install yarn
+
+Update or install the dependencies by running:
 
     yarn install
 
-### Database / PostgreSQL
+### Database / PostgreSQL config
 
 See `config/database.yml.example` for database configuration. Only PostgreSQL is supported.
 
