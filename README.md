@@ -27,9 +27,11 @@ directory.
 Before running bundler libpq-dev or its equivelent for your OS needs te be installed becaus gem pg 1.1.4 deppends on it.
 
 Using Mac Homebrew:
+
     brew install postgresql
 
 Ubuntu/Debian systems:
+
     udo apt-get install libpq-dev
 
 
@@ -46,6 +48,7 @@ We use [yarn](https://yarnpkg.com/) in combination with the [webpacker](https://
 javascript dependencies. Make sure yarn is installed:
 
 Using Mac Homebrew, this wil also install Node.je if it is not already installed.
+
     brew install yarn
 
 Ubuntu/Debian systems
@@ -53,6 +56,7 @@ Ubuntu/Debian systems
 echo "deb https://dl.yarnpkg.com/debian/ stable main" | sudo tee /etc/apt/sources.list.d/yarn.list
 
 then:
+
     sudo apt-get update && sudo apt-get install yarn
 
 Update or install the dependencies by running:
