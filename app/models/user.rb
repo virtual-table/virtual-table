@@ -1,5 +1,7 @@
+
 class User < ApplicationRecord
-  
+  attr_accessor :activation_token
+  #before_save :downcase_email   <<<--- is this needed?
   ROLES = %w[ admin ]
   
   has_secure_password
@@ -21,8 +23,19 @@ class User < ApplicationRecord
   
   validate :validate_roles
   
-  before_create :generate_reset_token
-  
+  before_create :generate_reset_token, :create_activation_digest
+  def User.digest(string)
+    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
+    BCrypt::Engine.cost
+    BCrypt::Password.create(string, cost: cost)
+  end 
+
+  def authenticated?(attribute, token)
+    digest = send("#{attribute}_digest")
+    return false if digest.nil?
+    BCrypt::Password.new(digest).is_password?(token)
+  end 
+
   def self.secure_token
     SecureRandom.urlsafe_base64
   end
@@ -41,7 +54,17 @@ class User < ApplicationRecord
     
     self.reset_token
   end
-  
+   
+  def activate 
+    self.update_attribute(:activated, true)
+    self.update_attribute(:activated_at, Time.zone.now)
+  end
+
+  def send_activation_email
+    AccountMailer.account_activation(self).deliver_now
+  end 
+
+
   private
   
   def generate_reset_token
@@ -56,5 +79,9 @@ class User < ApplicationRecord
       return false
     end
   end
-  
+
+  def create_activation_digest
+    self.activation_token = User.secure_token
+    self.activation_digest = User.digest(activation_token)
+  end 
 end
