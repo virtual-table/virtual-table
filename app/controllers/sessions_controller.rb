@@ -7,8 +7,7 @@ class SessionsController < ApplicationController
     
     if user&.authenticate(login_params[:password])
       if user.activated?
-        #log_in user
-        cookies.encrypted[:user_id] = user.id
+        log_in user
         redirect_to root_url, notice: t('.session_created')
       else
         flash.now.alert = t('.check_activation_email')

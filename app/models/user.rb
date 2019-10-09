@@ -1,8 +1,6 @@
 
 class User < ApplicationRecord
   attr_accessor :activation_token
-  before_save :downcase_email   
-
   ROLES = %w[ admin ]
   
   has_secure_password
@@ -25,6 +23,7 @@ class User < ApplicationRecord
   validate :validate_roles
 
   before_create :generate_reset_token, :create_activation_digest
+  before_save :downcase_email 
 
   
   def self.digest(string)
