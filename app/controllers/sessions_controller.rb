@@ -3,17 +3,16 @@ class SessionsController < ApplicationController
   end
   
   def create
-    user = User.find_by email: login_params[:email]
+    user = User.find_by(email: login_params[:email].downcase)
     
     if user&.authenticate(login_params[:password])
       if user.activated?
+        #log_in user
         cookies.encrypted[:user_id] = user.id
         redirect_to root_url, notice: t('.session_created')
       else
-        message = "Account not activated. "
-        message += "Check your email for the activation link. "
-        flash[:warning] = message
-        redirect_to root_url
+        flash.now.alert = t('.check_activation_email')
+        render :new
       end
     else
       flash.now.alert = t('.session_invalid')

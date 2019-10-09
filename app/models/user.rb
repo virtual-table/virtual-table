@@ -1,7 +1,8 @@
 
 class User < ApplicationRecord
   attr_accessor :activation_token
-  #before_save :downcase_email   <<<--- is this needed?
+  before_save :downcase_email   
+
   ROLES = %w[ admin ]
   
   has_secure_password
@@ -19,12 +20,14 @@ class User < ApplicationRecord
   
   validates :email,
     presence:   true,
-    uniqueness: true
+    uniqueness: { case_sensitive: false }
   
   validate :validate_roles
-  
+
   before_create :generate_reset_token, :create_activation_digest
-  def User.digest(string)
+
+  
+  def self.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
     BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
@@ -83,5 +86,9 @@ class User < ApplicationRecord
   def create_activation_digest
     self.activation_token = User.secure_token
     self.activation_digest = User.digest(activation_token)
+  end 
+
+  def downcase_email
+    self.email = email.downcase
   end 
 end

@@ -1,10 +1,10 @@
-<h1>VirtualTable</h1>
+<h1><%= t'.title' %></h1>
 
-<p>Hi <%= @user.name %>,</p>
+<p><%= t'.welcome_html', user: @user.name %></p>
 
 <p>
 Welcome to VirtualTable! Click on the link below to activate your account:
 </p>
 
-<%= link_to "Activate", edit_account_activation_url(@user.activation_token,
+<%= link_to t('.activate'), edit_account_activation_url(@user.activation_token,
                                                     email: @user.email) %>

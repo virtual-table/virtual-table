@@ -6,7 +6,7 @@ class AccountMailer < ApplicationMailer
 
   def account_activation(user)
     @user = user
-    mail to: @user.email, subject: "Account activation"
+    mail to: @user.email, subject: t('.account_activation.subject')
   end 
   
 end
