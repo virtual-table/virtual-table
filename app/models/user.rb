@@ -65,7 +65,10 @@ class User < ApplicationRecord
   def send_activation_email
     AccountMailer.account_activation(self).deliver_now
   end 
-
+  
+  def activation_expired?
+    activation_send_at < 2.hours.ago
+  end 
 
   private
   
@@ -85,6 +88,7 @@ class User < ApplicationRecord
   def create_activation_digest
     self.activation_token = User.secure_token
     self.activation_digest = User.digest(activation_token)
+    self.activation_send_at = Time.zone.now
   end 
 
   def downcase_email

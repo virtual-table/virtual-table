@@ -46,5 +46,5 @@ Rails.application.routes.draw do
   
   resources :dice_rolls, only: %i[index new create show]
 
-  resources :account_activations, only: [:edit]
+  resources :account_activations, only: [:edit, :create, :show]
 end

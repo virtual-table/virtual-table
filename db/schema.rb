@@ -277,6 +277,7 @@ ActiveRecord::Schema.define(version: 2019_10_08_141644) do
     t.string "activation_digest"
     t.boolean "activated", default: false
     t.datetime "activated_at"
+    t.datetime "activation_send_at"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

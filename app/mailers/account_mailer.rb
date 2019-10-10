@@ -8,5 +8,4 @@ class AccountMailer < ApplicationMailer
     @user = user
     mail to: @user.email, subject: t('.account_activation.subject')
   end 
-  
 end
