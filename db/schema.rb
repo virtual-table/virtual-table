@@ -15,16 +15,6 @@ ActiveRecord::Schema.define(version: 2019_10_08_141644) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "action_text_rich_texts", force: :cascade do |t|
-    t.string "name", null: false
-    t.text "body"
-    t.string "record_type", null: false
-    t.bigint "record_id", null: false
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
-  end
-
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
     t.text "body"
@@ -202,15 +192,6 @@ ActiveRecord::Schema.define(version: 2019_10_08_141644) do
     t.bigint "page_id"
     t.index ["map_id"], name: "index_map_floors_on_map_id"
     t.index ["page_id"], name: "index_map_floors_on_page_id"
-  end
-
-  create_table "map_rooms", force: :cascade do |t|
-    t.bigint "floor_id"
-    t.string "short_code"
-    t.string "title"
-    t.datetime "created_at", precision: 6, null: false
-    t.datetime "updated_at", precision: 6, null: false
-    t.index ["floor_id"], name: "index_map_rooms_on_floor_id"
   end
 
   create_table "map_walls", force: :cascade do |t|
