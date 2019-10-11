@@ -2,6 +2,7 @@ class AccountActivationsController < ApplicationController
 
 before_action :get_user, only: [:edit, :create]
 before_action :check_expiration, only: [:edit]
+
   def show
     render :activate
   end 
@@ -23,8 +24,9 @@ before_action :check_expiration, only: [:edit]
   def create
     user = User.find_by(email: params[:email].downcase)
     if user && !user.activated?
-      user.update_attribute(:activation_token, User.secure_token)
-      user.update_attribute(:activation_digest, User.digest(user.activation_token))
+      user.activation_token = User.secure_token
+      user.activation_digest = User.digest(user.activation_token)
+      user.save
       user.send_activation_email
       flash.now.alert = t('.check_activation_email')
       render :activate
