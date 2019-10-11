@@ -93,4 +93,18 @@ RSpec.describe User, type: :model do
     end
   end
 
+  describe '#activate' do
+    it 'updates activated attribute' do
+      user.activated = false
+      user.activate
+      expect(user.activated).to eql true
+    end
+
+    it 'updates activated_at attribute' do
+      freeze_time do
+        user.activate
+        expect(user.activated_at).to eql Time.now.utc
+      end
+    end
+  end
 end
