@@ -6,6 +6,8 @@ class User < ApplicationRecord
   
   has_secure_password
   
+  ### ASSOCIATIONS:
+  
   has_many :compendia,
     foreign_key: 'author_id'
   
@@ -13,6 +15,8 @@ class User < ApplicationRecord
   
   has_many :games,
     through: :players
+  
+  ### VALIDATIONS:
   
   validates :name,
     presence: true
@@ -23,24 +27,38 @@ class User < ApplicationRecord
   
   validate :validate_roles
   
-  before_create :generate_reset_token, :generate_activation_digest
-  before_save :downcase_email 
+  ### CALLBACKS:
+  
+  before_create :generate_reset_token
+  
+  before_create :generate_activation_digest
+  
+  before_save :downcase_email
+  
+  ### CLASS METHODS:
   
   def self.digest(string)
-    cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST :
-    BCrypt::Engine.cost
+    cost = \
+      if ActiveModel::SecurePassword.min_cost
+        BCrypt::Engine::MIN_COST
+      else
+        BCrypt::Engine.cost
+      end
+    
     BCrypt::Password.create(string, cost: cost)
   end 
+  
+  def self.secure_token
+    SecureRandom.urlsafe_base64
+  end
+  
+  ### INSTANCE METHODS:
   
   def authenticated?(attribute, token)
     digest = send("#{attribute}_digest")
     return false if digest.nil?
     BCrypt::Password.new(digest).is_password?(token)
   end 
-  
-  def self.secure_token
-    SecureRandom.urlsafe_base64
-  end
   
   def join!(game)
     unless game.users.include?(self)
