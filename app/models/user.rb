@@ -65,7 +65,7 @@ class User < ApplicationRecord
   def activate
     update!(
       activated:    true,
-      activated_at: Time.zone.now
+      activated_at: Time.now.utc
     )
   end
   
