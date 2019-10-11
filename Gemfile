@@ -17,6 +17,7 @@ gem 'redis'
 # Utility:
 gem 'bcrypt'
 gem 'dotenv'
+gem 'settingslogic'
 
 # File handling:
 gem 'aws-sdk-s3', require: false

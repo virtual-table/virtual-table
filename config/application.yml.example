@@ -1,0 +1,13 @@
+defaults: &defaults
+  root_url: 'https://www.virtualtable.app/'
+  email: 'info@virtualtable.app'
+
+development:
+  <<: *defaults
+  root_url: 'http://virtualtable.test/'
+
+test:
+  <<: *defaults
+
+production:
+  <<: *defaults

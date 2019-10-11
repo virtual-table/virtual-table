@@ -1,8 +1,8 @@
 class ApplicationMailer < ActionMailer::Base
   
-  default from: 'info@virtualtable.app'
+  default from: Settings.email
   
-  default_url_options.merge! host: 'www.virtualtable.app'
+  default_url_options.merge! host: URI.parse(Settings.root_url).host
   
   layout 'mailer'
   
