@@ -58,9 +58,7 @@ class User < ApplicationRecord
   end
   
   def reset_activation_token
-    self.activation_send_at = Time.now.utc
-    self.activation_token   = User.secure_token
-    self.activation_digest  = User.digest(activation_token)
+    create_activation_digest
     save!
   end
    
@@ -97,7 +95,7 @@ class User < ApplicationRecord
   def create_activation_digest
     self.activation_token   = User.secure_token
     self.activation_digest  = User.digest(activation_token)
-    self.activation_send_at = Time.zone.now
+    self.activation_send_at = Time.now.utc
   end 
   
   def downcase_email
