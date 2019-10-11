@@ -59,7 +59,7 @@ class User < ApplicationRecord
   
   def reset_activation_token
     self.activation_token  = User.secure_token
-    self.activation_digest = User.digest(user.activation_token)
+    self.activation_digest = User.digest(activation_token)
     save!
   end
    
