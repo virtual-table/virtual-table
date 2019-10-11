@@ -71,4 +71,26 @@ RSpec.describe User, type: :model do
       expect(token).to eql user.reset_token
     end
   end
+
+  describe '#reset_activation_token' do 
+    it 'generates new activation token' do
+      user.activation_token = 'abcdefghijklmnopqrstuvwxyzx'
+      
+      user.reset_activation_token
+      expect(user.activation_token).to_not eql 'abcdefghijklmnopqrstuvwxyzx'
+    end
+
+    it 'generates new user activation digest' do
+      user.activation_digest = 'abcdefghijklmnopqrstuvwxyzx'
+      
+      user.reset_activation_token
+      expect(user.activation_digest).to_not eql 'abcdefghijklmnopqrstuvwxyzx'
+    end
+
+    it 'generates correct digest from token' do
+      user.reset_activation_token
+      expect(BCrypt::Password.new(user.activation_digest).is_password?(user.activation_token)).to eql true
+    end
+  end
+
 end

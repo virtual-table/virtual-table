@@ -23,7 +23,7 @@ class User < ApplicationRecord
   
   validate :validate_roles
   
-  before_create :generate_reset_token, :create_activation_digest
+  before_create :generate_reset_token, :generate_activation_digest
   before_save :downcase_email 
   
   def self.digest(string)
@@ -58,7 +58,7 @@ class User < ApplicationRecord
   end
   
   def reset_activation_token
-    create_activation_digest
+    generate_activation_digest
     save!
   end
    
@@ -92,7 +92,7 @@ class User < ApplicationRecord
     end
   end
   
-  def create_activation_digest
+  def generate_activation_digest
     self.activation_token   = User.secure_token
     self.activation_digest  = User.digest(activation_token)
     self.activation_send_at = Time.now.utc
