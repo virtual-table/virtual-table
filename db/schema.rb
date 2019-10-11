@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_07_26_143125) do
+ActiveRecord::Schema.define(version: 2019_10_08_141644) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "action_text_rich_texts", force: :cascade do |t|
+    t.string "name", null: false
+    t.text "body"
+    t.string "record_type", null: false
+    t.bigint "record_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["record_type", "record_id", "name"], name: "index_action_text_rich_texts_uniqueness", unique: true
+  end
 
   create_table "active_admin_comments", force: :cascade do |t|
     t.string "namespace"
@@ -194,6 +204,15 @@ ActiveRecord::Schema.define(version: 2019_07_26_143125) do
     t.index ["page_id"], name: "index_map_floors_on_page_id"
   end
 
+  create_table "map_rooms", force: :cascade do |t|
+    t.bigint "floor_id"
+    t.string "short_code"
+    t.string "title"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["floor_id"], name: "index_map_rooms_on_floor_id"
+  end
+
   create_table "map_walls", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
@@ -255,6 +274,10 @@ ActiveRecord::Schema.define(version: 2019_07_26_143125) do
     t.string "roles", array: true
     t.string "reset_token"
     t.datetime "reset_send_at"
+    t.string "activation_digest"
+    t.boolean "activated", default: false
+    t.datetime "activated_at"
+    t.datetime "activation_send_at"
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"

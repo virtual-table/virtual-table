@@ -1,0 +1,5 @@
+<%=
+  t '.welcome_text',
+    user: @user.name,
+    activation_url: edit_account_activation_url(@user.activation_token, email: @user.email)
+%>

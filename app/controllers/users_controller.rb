@@ -8,8 +8,9 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     
     if @user.save
+      @user.send_activation_email
       session[:user_id] = @user.id
-      flash[:notice] = t('.user_created')
+      flash[:notice] = t('.check_activation_email')
       redirect_to root_url
     else
       flash.now.alert = t('.user_invalid')

@@ -45,4 +45,6 @@ Rails.application.routes.draw do
   resources :play, controller: :game_sessions, only: %i[index show]
   
   resources :dice_rolls, only: %i[index new create show]
+
+  resources :account_activations, only: [:edit, :create, :show]
 end
