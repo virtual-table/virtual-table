@@ -58,8 +58,9 @@ class User < ApplicationRecord
   end
   
   def reset_activation_token
-    self.activation_token  = User.secure_token
-    self.activation_digest = User.digest(activation_token)
+    self.activation_send_at = Time.now.utc
+    self.activation_token   = User.secure_token
+    self.activation_digest  = User.digest(activation_token)
     save!
   end
    
