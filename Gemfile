@@ -56,11 +56,12 @@ group :development, :test do
     rspec-core
     rspec-expectations
     rspec-mocks
-    rspec-rails
     rspec-support
   ].each do |lib|
     gem lib, git: "https://github.com/rspec/#{lib}.git", branch: 'master'
   end
+  gem 'rspec-rails', git: 'https://github.com/rspec/rspec-rails.git', branch: '4-0-dev'
+  gem 'rails-controller-testing'
   gem 'action-cable-testing'
   gem 'factory_bot_rails'
 end
