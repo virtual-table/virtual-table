@@ -1,9 +1,19 @@
-module Authentication
+module Authenticatable
   extend ActiveSupport::Concern
   
   included do
     helper_method :logged_in?
     helper_method :current_user
+  end
+  
+  def log_in(user)
+    @current_user = user
+    cookies.encrypted[:user_id] = user.id
+  end
+  
+  def log_out
+    @current_user = nil
+    cookies.delete(:user_id)
   end
   
   def current_user
@@ -14,7 +24,6 @@ module Authentication
     !!current_user
   end
   
-  # TODO: Replace with check for actual admin status:
   def require_admin
     return false unless require_user
     
@@ -34,20 +43,4 @@ module Authentication
     
     true
   end
-  
-  def require_player
-    if !current_player
-      flash[:alert] = t('.player_required')
-      redirect_to games_url
-      return false
-    end
-    
-    true
-  end
-
-  # Logs in the given user.
-  def log_in(user)
-    #session[:user_id] = user.id
-    cookies.encrypted[:user_id] = user.id
-  end  
 end

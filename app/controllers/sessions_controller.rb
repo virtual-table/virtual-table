@@ -20,7 +20,7 @@ class SessionsController < ApplicationController
   end
   
   def destroy
-    cookies.delete(:user_id)
+    log_out
     redirect_to root_url, notice: t('.session_destroyed')
   end
   
