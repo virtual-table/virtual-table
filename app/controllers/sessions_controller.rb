@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
         redirect_to root_url, notice: t('.session_created')
       else
         flash.now[:alert] = t('.activate_account')
-        redirect_to account_activation_url(user.id)
+        redirect_to account_activation_url(user.id)   
       end
     else
       flash.now[:alert] = t('.credentials_invalid')

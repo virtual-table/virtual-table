@@ -1,6 +1,4 @@
 Rails.application.routes.draw do
-  get 'game_invitations/show'
-  get 'game_invitations/create'
   ActiveAdmin.routes(self)
   
   root to: 'dashboard#show'
@@ -14,7 +12,7 @@ Rails.application.routes.draw do
   
   get   'reset_password/:token' => 'password_resets#edit', as: :reset_password
   patch 'reset_password/:token' => 'password_resets#update'
-  
+
   resources :users
   
   resources :games do
@@ -48,5 +46,8 @@ Rails.application.routes.draw do
   
   resources :dice_rolls, only: %i[index new create show]
 
-  resources :account_activations, only: [:edit, :create, :show]
+  resources :account_activations, only: %i[edit create show]
+
+  resources :game_invitations, only: %i[show create edit]
+
 end

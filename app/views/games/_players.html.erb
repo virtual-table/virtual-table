@@ -21,6 +21,6 @@
       <%= t '.invite_link' %>
     </strong>
     
-    <code><%= link_to join_game_url(@game, @game.invite_code), join_game_path(@game, @game.invite_code) %></code>
+    <code><%= link_to edit_game_invitation_url(@game, @game.invite_code), edit_game_invitation_path(@game, @game.invite_code) %></code>
   </div>
 </div>
