@@ -1,4 +1,6 @@
 Rails.application.routes.draw do
+  get 'game_invitations/show'
+  get 'game_invitations/create'
   ActiveAdmin.routes(self)
   
   root to: 'dashboard#show'
