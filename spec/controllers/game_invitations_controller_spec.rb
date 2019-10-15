@@ -16,7 +16,7 @@ RSpec.describe GameInvitationsController, type: :controller do
     end
   end
 
-  describe "Get edit" do    
+  describe "GET edit" do    
     let!(:user) { create :user }
     let(:game) { create :game }
 
@@ -42,11 +42,11 @@ RSpec.describe GameInvitationsController, type: :controller do
     it "Adds the user as a player to the game" do
       login_as user 
 
-      get :edit, params: { id: game.id }
-      game.reload.players
-
-      expect(game.players).to include user
-      expect(game.author).to_not include user
+      expect {
+        get :edit, params: { id: game.id }
+      }.to change{
+          game.reload.players
+      }
     end
   end 
   

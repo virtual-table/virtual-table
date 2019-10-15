@@ -5,18 +5,14 @@ class GameInvitationsController < ApplicationController
 
   before_action :load_game, only: %i[create show edit]
 
-  before_action :check_user_is_author?, only: %i[create]
+  before_action :check_user_is_gm, only: %i[create]
 
   def show
   end
   
-  #user joins the game
   def edit 
-    @current_user ||= User.find(cookies.encrypted[:user_id]) if cookies.encrypted[:user_id]
-    if !!current_user
-      # Add player to game and redirect to game
-      if self.join(@game.id, @game.invite_code)
-        
+    if logged_in?
+      if join(@game.id, @game.invite_code)        
         redirect_to @game
       else
         redirect_to root_url, alert: t('.invite_code_invalid')
@@ -34,7 +30,6 @@ class GameInvitationsController < ApplicationController
     if @game.invite_code == code
       current_user.join! @game
     
-      # Cleanup cookies here?
       cookies.delete(:game_invite_code)
       cookies.delete(:game_invite_id)
       success = true
@@ -44,10 +39,8 @@ class GameInvitationsController < ApplicationController
     end
   end
 
-  #create a new invitation link
   def create
-    #raise 'hoi'
-    @game.generate_invite_code
+    @game.generate_invite_code!
     redirect_to @game
   end
 
@@ -57,8 +50,13 @@ class GameInvitationsController < ApplicationController
     @game = Game.find params[:id]
   end
 
-  def check_user_is_author?
+  def check_user_is_author
     @game.author == @current_user
+  end
+
+  def check_user_is_gm
+    @game.author == @current_user
+    # change to role check
   end
 
 

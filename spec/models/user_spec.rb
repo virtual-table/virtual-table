@@ -96,13 +96,15 @@ RSpec.describe User, type: :model do
   describe '#activate' do
     it 'updates activated attribute' do
       user.activated = false
-      user.activate
+      user.reset_activation_token!
+      user.activate(user.activation_token)
       expect(user.activated).to eql true
     end
 
     it 'updates activated_at attribute' do
       freeze_time do
-        user.activate
+        user.reset_activation_token!
+        user.activate(user.activation_token)
         expect(user.activated_at).to eql Time.now.utc
       end
     end

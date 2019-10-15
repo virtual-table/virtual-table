@@ -24,6 +24,10 @@ class Game < ApplicationRecord
   
   def generate_invite_code
     self.invite_code = SecureRandom.urlsafe_base64
+  end
+  
+  def generate_invite_code!
+    self.invite_code = SecureRandom.urlsafe_base64
     self.save
   end
   

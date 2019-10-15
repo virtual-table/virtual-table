@@ -9,12 +9,20 @@ class AccountActivationsController < ApplicationController
   end 
   
   def edit
-    user = User.find_by(email: params[:email].downcase)
-    if user && !user.activated? && @user.authenticated?(:activation, activation_token)
-      user.activate
-      
+    @user = User.find_by(email: params[:email].downcase)
+
+    unless @user.pressent?
+      flash[:danger] = t('.user_not_found')
+      redirect_to root_url
+      return false
+    end
+
+    user_activated = @user.activated? || @user.activate(activation_token)
+
+    if user_activated      
       log_in user
-      if !!cookies.encrypted[:game_invite_code]
+
+      if cookies.encrypted[:game_invite_code].present?
         game_id = cookies.encrypted[:game_invite_id]
 
         @game = Game.find(game_id)
@@ -23,6 +31,7 @@ class AccountActivationsController < ApplicationController
         flash[:success] = t('.account_activated')
         redirect_to root_url
       end
+
     else
       flash[:danger] = t('.invalid_activation_link')
       redirect_to root_url
@@ -31,10 +40,10 @@ class AccountActivationsController < ApplicationController
   
   # Create a new activation link
   def create
-    user = User.find_by(email: params[:email].downcase)
-    if user && !user.activated?
-      user.reset_activation_token
-      user.send_activation_email
+    @user = User.find_by(email: params[:email].downcase)
+    if @user && !@user.activated?
+      @user.reset_activation_token!
+      @user.send_activation_email
       
       flash.now[:alert] = t('.check_activation_email')
       render :activate
