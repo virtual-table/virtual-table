@@ -18,6 +18,7 @@ module Playable
     end
   end
   
+
   def require_player
     if !current_player
       flash[:alert] = t('.player_required')
@@ -26,5 +27,14 @@ module Playable
     end
     
     true
+  end
+
+  def require_gm
+    return false unless require_user
+    unless current_player.role.include?('gm') || @game.author.include?(current_user)
+      flash[:alert] = t('.gm_reqiured')
+      redirect_to login_url
+      return false
+    end
   end
 end

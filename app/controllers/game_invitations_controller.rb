@@ -5,7 +5,7 @@ class GameInvitationsController < ApplicationController
 
   before_action :load_game, only: %i[create show edit]
 
-  before_action :check_user_is_gm, only: %i[create]
+  before_action :require_gm, only: %i[create]
 
   def show
   end
@@ -53,11 +53,4 @@ class GameInvitationsController < ApplicationController
   def check_user_is_author
     @game.author == @current_user
   end
-
-  def check_user_is_gm
-    @game.author == @current_user
-    # change to role check
-  end
-
-
 end
