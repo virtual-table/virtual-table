@@ -22,5 +22,10 @@
     </strong>
     
     <code><%= link_to edit_game_invitation_url(@game, @game.invite_code), edit_game_invitation_path(@game, @game.invite_code) %></code>
+     <%= bulma_form_with url: game_invitations_path, data: { remote: false } do |f| %>
+      <%= f.hidden_field :id, value: @game.id %>
+      <%= f.submit "Reset activation link"%>
+    <% end %>
+      
   </div>
 </div>
