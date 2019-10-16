@@ -1,0 +1,6 @@
+<h1><%= t'.title' %></h1>
+
+<%= t'.welcome_html' %>
+<p>Let's play a game</p>
+<%= t'.game_invite', game: @game.title %>
+<%= link_to t('.activate'), edit_game_invitation_url(@game.id, @game.invite_code) %>

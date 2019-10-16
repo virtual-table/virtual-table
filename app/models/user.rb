@@ -77,14 +77,21 @@ class User < ApplicationRecord
   
   def reset_activation_token
     generate_activation_digest
-    save!
   end
-   
-  def activate
-    update!(
-      activated:    true,
-      activated_at: Time.now.utc
-    )
+
+  def reset_activation_token!
+    generate_activation_digest
+    save
+  end
+
+  def activate(token)
+    if BCrypt::Password.new(self.activation_digest).is_password?(token)
+      update!(
+        activated:    true,
+        activated_at: Time.now.utc
+      )
+      return true
+    end
   end
   
   def send_activation_email

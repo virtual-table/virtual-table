@@ -12,16 +12,6 @@ class GamesController < ApplicationController
     @maps = @game.maps
   end
   
-  def join
-    @game = Game.find params[:id]
-    if @game.invite_code == params[:code]
-      current_user.join! @game
-      redirect_to @game
-    else
-      redirect_to root_url, alert: t('.invite_code_invalid')
-    end
-  end
-  
   def new
     @game = Game.new
   end

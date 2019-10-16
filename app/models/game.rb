@@ -26,6 +26,11 @@ class Game < ApplicationRecord
     self.invite_code = SecureRandom.urlsafe_base64
   end
   
+  def generate_invite_code!
+    self.invite_code = SecureRandom.urlsafe_base64
+    save
+  end
+  
   def add_author_as_player
     unless users.include?(author)
       players.create user: author, role: 'gm'
