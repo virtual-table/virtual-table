@@ -74,6 +74,5 @@ RSpec.describe GameInvitationsController, type: :controller do
           game.reload.players
       }
     end
-  end 
-  
+  end
 end

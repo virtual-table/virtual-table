@@ -49,5 +49,7 @@ Rails.application.routes.draw do
   resources :account_activations, only: %i[edit create show]
 
   resources :game_invitations, only: %i[show create edit]
+ 
+  post 'send_invite_email' => 'game_invitations#send_invite_email', as: :send_game_invite
 
 end

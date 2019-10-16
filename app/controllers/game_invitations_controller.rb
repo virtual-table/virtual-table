@@ -3,9 +3,9 @@ class GameInvitationsController < ApplicationController
 
   before_action :require_user, only: %i[join create]
 
-  before_action :load_game, only: %i[create show edit]
+  before_action :load_game, only: %i[create show edit send_invite_email]
 
-  before_action :require_gm, only: %i[create]
+  before_action :require_gm, only: %i[create send_invite_email]
 
   def show
   end
@@ -40,6 +40,12 @@ class GameInvitationsController < ApplicationController
 
   def create
     @game.generate_invite_code!
+    redirect_to @game
+  end
+
+  def send_invite_email
+    GameMailer.send_invite(params[:email], @game).deliver_now
+    flash[:succes] = t('.game_invite_email_send')
     redirect_to @game
   end
 
