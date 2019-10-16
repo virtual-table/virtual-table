@@ -32,10 +32,9 @@ class GameInvitationsController < ApplicationController
     
       cookies.delete(:game_invite_code)
       cookies.delete(:game_invite_id)
-      success = true
+      return true
     else
-      success = false
-      
+      return false      
     end
   end
 
