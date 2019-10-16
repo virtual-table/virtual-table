@@ -31,7 +31,7 @@ module Playable
 
   def require_gm
     return false unless require_user
-    unless current_player.role.include?('gm') || @game.author.include?(current_user)
+    unless current_player.role.include?('gm') || @game.author == current_user
       flash[:alert] = t('.gm_reqiured')
       redirect_to login_url
       return false

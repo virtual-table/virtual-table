@@ -3,11 +3,37 @@ require 'rails_helper'
 RSpec.describe GameInvitationsController, type: :controller do
 
   describe "GET #create" do
+    let(:player) { create :user }
+    let(:player_gm) { create :user }
     let(:game) { create :game }
 
-    it "generates a new invitation code" do
+    it "generates a new invitation code while logged in as author" do
       login_as game.author
       
+      expect {
+        post :create, params: { id: game.id }
+      }.to change {
+        game.reload.invite_code
+      }
+    end
+
+    it "does not generate a new invitation code while logged in as player without gm role" do
+      login_as player 
+           
+      game.players.create user: player, role: 'player'
+
+      expect {
+        post :create, params: { id: game.id }
+      }.to_not change {
+        game.reload.invite_code
+      }
+    end
+
+    it "generates a new invitation code while logged in as player with gm role" do
+      login_as player_gm 
+
+      game.players.create user: player_gm, role: 'gm'
+
       expect {
         post :create, params: { id: game.id }
       }.to change {
