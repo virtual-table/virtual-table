@@ -3,4 +3,4 @@
 <%= t'.welcome_html', user: @user.name %>
 
 <%= link_to t('.activate'), edit_account_activation_url(@user.activation_token,
-                                                    email: @user.email) %>
+                                                    email: @user.email), id:  "activation-link" %>
