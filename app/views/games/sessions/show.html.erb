@@ -29,8 +29,10 @@ title t('.page_title', game: @game.title)
   </div>
   
   <div class="column">
-    <%=
-      render 'map/displayer', game: @game, map: @map, active_floor: @active_floor
-    %>
+    <% if @map && @floor %>
+      <%=
+        render '/map/displayer', game: @game, map: @map, active_floor: @floor
+      %>
+    <% end %>
   </div>
 </div>

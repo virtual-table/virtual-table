@@ -21,9 +21,9 @@
     }
   ) do
 %>
-  <%= render floor.backgrounds %>
-  <%= render floor.areas       %>
-  <%= render floor.walls       %>
-  <%= render floor.doors       %>
-  <%= render floor.characters  %>
+  <%= render partial: 'map/backgrounds/background', collection: floor.backgrounds %>
+  <%= render partial: 'map/areas/area',             collection: floor.areas       %>
+  <%= render partial: 'map/walls/wall',             collection: floor.walls       %>
+  <%= render partial: 'map/doors/door',             collection: floor.doors       %>
+  <%= render partial: 'map/characters/character',   collection: floor.characters  %>
 <% end %>

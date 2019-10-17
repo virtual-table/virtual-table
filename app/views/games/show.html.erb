@@ -30,47 +30,15 @@ title @game.title
                 %>
               </li>
             <% end %>
-            
-            <li>
-              <%=
-                link_to t('.join_session'), play_path(@game),
-                  class: 'button'
-              %>
-            </li>
           <ul>
         </div>
       </header>
     
       <div class="game-dashboard__content">
-        <%= render 'players', players: @game.players %>
-      
-        <div class="game-dashboard__description">
-          <header>
-            <h2>
-              <%= t '.description' %>
-            </h2>
-          </header>
-          
-          <%= @game.description_html %>
-        </div>
-        
-        <div class="game-dashboard__maps">
-          <header>
-            <h2>
-              <%= t '.maps' %>
-            </h2>
-          </header>
-          
-          <% if @maps.present? %>
-            <ul>
-              <% @maps.each do |map| %>
-                <li><%= link_to map.title, map %></li>
-              <% end %>
-            </ul>
-          <% else %>
-            <p><%= t '.no_maps_available' %></p>
-          <% end %>
-        </div>
+        <%= render 'sessions',    game: @game, sessions: @game.sessions %>
+        <%= render 'players',     game: @game, players:  @game.players %>
+        <%= render 'description', game: @game %>
+        <%= render 'maps',        game: @game, maps: @maps %>
       </div>
     </div>
   </div>

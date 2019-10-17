@@ -1,0 +1,32 @@
+<div class="game-dashboard__sessions">
+  <header>
+    <h2>
+      <%= t '.session' %>
+    </h2>
+  </header>
+  
+  <ul>
+    <% sessions.each do |session| %>
+      <li>
+        <%= session.subject %>
+        <%=
+          link_to t('.join_session'), game_play_path(game, session),
+            class: 'button'
+        %>
+      </li>
+    <% end %>
+  </ul>
+  
+  <% if current_player&.is_gm? %>
+    <div class="sessions__create">
+      <%= bulma_form_for game.sessions.new, url: game_play_index_path(game) do |f| %>
+        <%= f.fields :subject do %>
+          <%= f.label      :subject %>
+          <%= f.text_field :subject %>
+        <% end %>
+        
+        <%= f.submit t('.create_session') %>
+      <% end %>
+    </div>
+  <% end %>
+</div>

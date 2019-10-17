@@ -22,6 +22,8 @@ Rails.application.routes.draw do
         delete 'invite'     => 'invites#destroy',    as: :regenerate_invite
         get    'join/:code' => 'invites#update',     as: :join
       end
+      
+      resources :play, controller: 'sessions', only: %i[create index show]
     end
   end
   
@@ -45,8 +47,6 @@ Rails.application.routes.draw do
       resources :doors
     end
   end
-  
-  resources :play, controller: :game_sessions, only: %i[index show]
   
   resources :dice_rolls, only: %i[index new create show]
   
