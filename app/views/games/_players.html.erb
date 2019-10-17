@@ -16,25 +16,30 @@
     <% end %>
   </ul>
   
-  <div class="players__invite">
-    <strong>
-      <%= t '.invite_link' %>
-    </strong>
+  <% if current_player&.is_gm? %>
+    <div class="players__invite">
+      <strong>
+        <%= t '.invite_link' %>
+      </strong>
     
-    <code><%= link_to edit_game_invitation_url(@game, @game.invite_code), edit_game_invitation_path(@game, @game.invite_code) %></code>
+      <code>
+        <%=
+          link_to join_game_url(@game, @game.invite_code), join_game_path(@game, @game.invite_code) 
+        %>
+      </code>
     
-    <%= bulma_form_with url: game_invitations_path , data: { remote: false } do |f| %>
-      <%= f.hidden_field :id, value: @game.id %>
-      <%= f.submit "Reset invitation link"%>
-    <% end %>
-
-    <%= bulma_form_with url: send_game_invite_path, data: { remote: false } do |f| %>
-      <%= f.hidden_field :id, value: @game.id %>
-      <%= f.fields :email do %>
-        <%= f.label      :email %>
-        <%= f.text_field :email %>
+      <%= bulma_form_with url: regenerate_invite_game_path(@game), method: 'DELETE', class: 'reset-invite-link', data: { remote: false } do |f| %>
+        <%= hidden_field_tag :_method, 'DELETE' %>
+        <%= f.submit t('.reset_invite_link') %>
       <% end %>
-      <%= f.submit "Send invitation link"%>
-    <% end %>
-  </div>
+    
+      <%= bulma_form_with url: send_invite_mail_game_path(@game), data: { remote: false } do |f| %>
+        <%= f.fields :email do %>
+          <%= f.label      :email %>
+          <%= f.text_field :email %>
+        <% end %>
+        <%= f.submit t('.send_invite_link') %>
+      <% end %>
+    </div>
+  <% end %>
 </div>
