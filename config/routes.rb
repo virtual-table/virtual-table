@@ -3,9 +3,9 @@ Rails.application.routes.draw do
   
   root to: 'dashboard#show'
   
-  get    'login'  => 'sessions#new',     as: :login
-  post   'login'  => 'sessions#create'
-  delete 'logout' => 'sessions#destroy', as: :logout
+  get    'login'  => 'authentication#new',     as: :login
+  post   'login'  => 'authentication#create'
+  delete 'logout' => 'authentication#destroy', as: :logout
   
   get  'forgot_password' => 'password_resets#new', as: :forgot_password
   post 'forgot_password' => 'password_resets#create'
