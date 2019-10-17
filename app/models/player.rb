@@ -11,4 +11,10 @@ class Player < ApplicationRecord
   
   delegate :name, to: :user
   
+  ROLES.each do |role|
+    define_method "is_#{role}?" do
+      self.role == role
+    end
+  end
+  
 end
