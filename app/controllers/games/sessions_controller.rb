@@ -1,16 +1,19 @@
 module Games
     class SessionsController < ApplicationController
     
-    before_action :load_game, except: :index
+    before_action :load_game
     
     before_action :require_player
     
     def index
-      redirect_to games_url
+      redirect_to game_url(@game)
     end
     
     def show
       @session = @game.sessions.find params[:id]
+      
+      current_player.join! @session
+      
       @map     = @session.map || @game.maps.first
       @floor   = @map.try { |m| m.floors.first }
     end
