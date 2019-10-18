@@ -8,6 +8,9 @@ class GameSession < ApplicationRecord
   has_many :players,
     foreign_key: 'session_id'
   
+  has_many :chat_messages,
+    foreign_key: 'session_id'
+  
   belongs_to :context,
     polymorphic: true,
     optional:    true

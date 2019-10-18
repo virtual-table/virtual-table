@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_18_092520) do
+ActiveRecord::Schema.define(version: 2019_10_18_111609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,16 @@ ActiveRecord::Schema.define(version: 2019_10_18_092520) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "chat_messages", force: :cascade do |t|
+    t.bigint "session_id", null: false
+    t.bigint "author_id"
+    t.text "body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["author_id"], name: "index_chat_messages_on_author_id"
+    t.index ["session_id"], name: "index_chat_messages_on_session_id"
   end
 
   create_table "compendia", force: :cascade do |t|
@@ -280,6 +290,8 @@ ActiveRecord::Schema.define(version: 2019_10_18_092520) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "chat_messages", "game_sessions", column: "session_id"
+  add_foreign_key "chat_messages", "users", column: "author_id"
   add_foreign_key "compendia", "users", column: "author_id"
   add_foreign_key "game_compendia", "compendia"
   add_foreign_key "game_compendia", "games"
