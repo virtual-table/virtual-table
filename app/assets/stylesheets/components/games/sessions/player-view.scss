@@ -1,0 +1,106 @@
+.player-view {
+  @include flexbox(flex, row, wrap, flex-start, stretch);
+  position: relative;
+  height: calc(100vh - 55px);
+  
+  .player-view__canvas {
+    position: relative;
+    width: calc(100% - 300px);
+    background: #FF0000;
+    overflow: hidden;
+  }
+  
+  .player-view__player-wrapper {
+    position: absolute;
+    bottom: 0;
+    right: 300px;
+    left: 0;
+  }
+  
+  .player-wrapper__chat-log {
+    height: 150px;
+    color: #fff;
+    margin-right: var(--spacing-unit);
+    margin-bottom: var(--spacing-unit);
+    margin-left: calc(var(--spacing-unit) * 2);
+    overflow: scroll;
+    
+    p {
+      max-width: 550px;
+      margin-bottom: calc(var(--spacing-unit) / 2);
+    }
+    
+    p:last-child {
+      margin-bottom: 0;
+    }
+  }
+  
+  .player-wrapper__player-input {
+    @include flexbox(flex, row, wrap, flex-start, stretch);
+    
+    .player-input__context-square {
+      width: 170px;
+      height: 170px;
+      background: #0000FF;
+      border-radius: 4px;
+    }
+    
+    .player-input__players {
+      width: calc(100% - 170px);
+      padding-left: var(--spacing-unit);
+      
+      .players__video-carousel {
+        
+        ol {
+          @include flexbox(flex, row, nowrap);
+          overflow: scroll; 
+          
+          &:after {
+            display: block;
+            min-width: 2px;
+            max-width: 2px;
+            height: 120px;
+            content: '';
+          }
+        }
+        
+        .video-carousel__player {
+          position: relative;
+          min-width: 120px;
+          min-height: 120px;
+          background: #00FF00;
+          margin-bottom: var(--spacing-unit);
+          margin-right: var(--spacing-unit);
+          border-radius: 4px;
+          
+          video {
+            position: absolute;
+            top: 0;
+            right: 0;
+            bottom: 0;
+            left: 0;
+          }
+          
+          .player__actions {
+            position: absolute;
+            bottom: 0;
+            z-index: 999;
+          }
+        }
+      }
+        
+      .players__chat-input {
+        padding-right: var(--spacing-unit);
+        
+        input {
+          width: 100%;
+          height: 34px;
+        }
+      }
+    }
+  }
+  
+  .player-view__sidebar {
+    width: 300px;
+  }
+}
