@@ -6,8 +6,12 @@ module Games
     before_action :require_gm
     
     def create
-      GameMailer.send_invite(params[:email], @game).deliver_now
-      redirect_to @game, success: t('.game_invite_email_send')
+      if params[:email].present?
+        GameMailer.send_invite(params[:email], @game).deliver_now
+        redirect_to @game, success: t('.game_invite_email_send')
+      else
+        render :new
+      end
     end
     
     private
