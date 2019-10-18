@@ -8,14 +8,14 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
   
   participants:  [],
   playerId:      null,      // Needs to be set before anything is broadcasted
-  sessionId:     null,      // Wil be set on connection
+  connectionId:  null,      // Wil be set on connection
   broadcastRate: 1000 / 30, // 30 FPS
   
   // CONNECTION:
   
   // Called when the subscription is ready for use on the server
   connected () {
-    this.sessionId = this.generateSessionIdentifier()
+    this.connectionId = this.generateConnectionIdentifier()
     
     this.attemptP2PConnection = this.attemptP2PConnection.bind(this)
     _.defer(this.attemptP2PConnection)
@@ -28,9 +28,9 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
   
   // Called when there's incoming data on the websocket for this channel
   received (message) {
-    let { playerId, sessionId, data } = message
+    let { playerId, connectionId, data } = message
     
-    if (sessionId != this.sessionId) {
+    if (connectionId != this.connectionId) {
       const method = `receive${data[0]}`
       if (this[method]) {
         let args = data.slice(1)
@@ -42,7 +42,7 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
   // P2P:
   
   disconnectP2P () {
-    for (let [playerId, sessionId, peer] of this.participants) {
+    for (let [playerId, connectionId, peer] of this.participants) {
       peer.destroy()
     }
   },
@@ -59,29 +59,29 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
     this.sendPeerParticipant()
   },
   
-  connectToPeer (playerId, sessionId) {
-    if (sessionId == this.sessionId) return
+  connectToPeer (playerId, connectionId) {
+    if (connectionId == this.connectionId) return
     
-    if (!this.getPeerForSession(sessionId)) {
-      const init = [sessionId, this.sessionId].sort()[0] == this.sessionId
+    if (!this.getPeerForConnection(connectionId)) {
+      const init = [connectionId, this.connectionId].sort()[0] == this.connectionId
       const peer = new Peer({ initiator: init, stream: this.stream })
       
-      peer.on('signal',  (signal) => this.broadcastP2PSignal(sessionId, signal))
-      peer.on('stream',  (stream) => this.receiveP2PStream(playerId, sessionId, stream))
-      peer.on('close',   () => this.disconnectedFromPeer(sessionId))
+      peer.on('signal',  (signal) => this.broadcastP2PSignal(connectionId, signal))
+      peer.on('stream',  (stream) => this.receiveP2PStream(playerId, connectionId, stream))
+      peer.on('close',   () => this.disconnectedFromPeer(connectionId))
       
       // peer.on('data',    (d) => console.log(`Received: ${d}`))
-      peer.on('connect', ()  => peer.send(`Connected ${this.sessionId} to ${sessionId}`))
+      peer.on('connect', ()  => peer.send(`Connected ${this.connectionId} to ${connectionId}`))
       
       this.announceP2PAvailability()
       
-      this.participants.push([playerId, sessionId, peer])
+      this.participants.push([playerId, connectionId, peer])
     }
   },
   
-  disconnectedFromPeer (sessionId) {
+  disconnectedFromPeer (connectionId) {
     let index = this.participants.findIndex(
-      ([pId, sId, peer]) => sId == sessionId
+      ([pId, sId, peer]) => sId == connectionId
     )
     
     if (index) {
@@ -90,15 +90,15 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
     }
   },
   
-  disconnectPeer (sessionId) {
-    const peer = this.getPeerForSession(sessionId)
+  disconnectPeer (connectionId) {
+    const peer = this.getPeerForConnection(connectionId)
     if (peer) peer.destroy()
   },
   
   stopP2PStream (stream) {
     this.stream = null
     
-    for (let [playerId, sessionId, peer] of this.participants) {
+    for (let [playerId, connectionId, peer] of this.participants) {
       try {
         peer.removeStream(stream)
       } catch (error) {
@@ -109,21 +109,21 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
   startP2PStream (stream) {
     this.stream = stream
     
-    for (let [playerId, sessionId, peer] of this.participants) {
+    for (let [playerId, connectionId, peer] of this.participants) {
       peer.addStream(stream)
     }
   },
   
   // SENDERS:
   
-  broadcastP2PSignal (sessionId, signal) {
+  broadcastP2PSignal (connectionId, signal) {
     this.perform('broadcast', {
       playerId:  this.playerId,
-      sessionId: this.sessionId,
+      connectionId: this.connectionId,
       data:      [
         'P2PSignal', [{
-          from:   this.sessionId,
-          to:     sessionId,
+          from:   this.connectionId,
+          to:     connectionId,
           signal: JSON.stringify(signal)
         }]
       ]
@@ -134,7 +134,7 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
     if (this.playerId) {
       this.perform('broadcast', {
         playerId:  this.playerId,
-        sessionId: this.sessionId,
+        connectionId: this.connectionId,
         data:      [method, args]
       })
     }
@@ -161,7 +161,7 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
   },
   
   sendPeerParticipant () {
-    this.broadcast('PeerParticipant', this.playerId, this.sessionId)
+    this.broadcast('PeerParticipant', this.playerId, this.connectionId)
   },
   
   // RECEIVERS:
@@ -203,19 +203,19 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
   receiveP2PSignal (data = {}) {
     const { from, to, signal } = data
     
-    if (to == this.sessionId) {
-      const peer = this.getPeerForSession(from)
+    if (to == this.connectionId) {
+      const peer = this.getPeerForConnection(from)
       if (peer) peer.signal(signal)
     }
   },
   
-  receiveP2PStream (playerId, sessionId, stream) {
+  receiveP2PStream (playerId, connectionId, stream) {
     const chat = this.getVideoChat()
     if (chat) chat.addStream(playerId, stream)
   },
   
-  receivePeerParticipant (playerId, sessionId) {
-    this.connectToPeer(playerId, sessionId)
+  receivePeerParticipant (playerId, connectionId) {
+    this.connectToPeer(playerId, connectionId)
     
     const chat = this.getVideoChat()
     if (chat) chat.setParticipantStatus(playerId, 'online')
@@ -270,13 +270,13 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
     )
   },
   
-  getPeerForSession (sessionId) {
+  getPeerForConnection (connectionId) {
     const participant = this.participants.find(
-      ([pId, sId, peer]) => sId == sessionId
+      ([pId, sId, peer]) => sId == connectionId
     )
     
     if (participant) {
-      const [playerId, sessionId, peer] = participant
+      const [playerId, connectionId, peer] = participant
       return peer
     }
   },
@@ -293,7 +293,7 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
   // Generate a random string that allows us to filter out messages that we
   // broadcasted. This way we can avoid processing data that we modified
   // ourselves.
-  generateSessionIdentifier () {
+  generateConnectionIdentifier () {
     return [
       new Date().getTime(),
       Math.random() * 1000000
