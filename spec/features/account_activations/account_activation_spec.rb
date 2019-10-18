@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "AccountActivations", type: :feature do
+
   scenario "User registration, logout and login" do
     visit(root_url)
 
@@ -24,16 +25,5 @@ RSpec.describe "AccountActivations", type: :feature do
     assert_current_path(root_path)
     expect(page).to have_content 'Games'
     expect(page).to have_content 'Compendia'
-
-    click_link('Logout')
-
-    assert_current_path(login_path)
-
-    fill_in('login_email', with: 'user@test.testing')
-    fill_in('login_password', with: 'password123')
-
-    click_on('Submit')
-
-    assert_current_path(root_path)
   end
 end 
