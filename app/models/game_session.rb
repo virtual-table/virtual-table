@@ -5,6 +5,9 @@ class GameSession < ApplicationRecord
   
   belongs_to :game
   
+  has_many :players,
+    foreign_key: 'session_id'
+  
   belongs_to :context,
     polymorphic: true,
     optional:    true

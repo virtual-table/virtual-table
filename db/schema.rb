@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_17_114131) do
+ActiveRecord::Schema.define(version: 2019_10_18_092520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -258,7 +258,9 @@ ActiveRecord::Schema.define(version: 2019_10_17_114131) do
     t.string "role"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "session_id"
     t.index ["game_id"], name: "index_players_on_game_id"
+    t.index ["session_id"], name: "index_players_on_session_id"
     t.index ["user_id"], name: "index_players_on_user_id"
   end
 
@@ -298,6 +300,7 @@ ActiveRecord::Schema.define(version: 2019_10_17_114131) do
   add_foreign_key "page_contents", "pages"
   add_foreign_key "pages", "compendia"
   add_foreign_key "pages", "pages", column: "parent_id"
+  add_foreign_key "players", "game_sessions", column: "session_id"
   add_foreign_key "players", "games"
   add_foreign_key "players", "users"
 end
