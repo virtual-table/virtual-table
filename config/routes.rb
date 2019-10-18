@@ -23,7 +23,10 @@ Rails.application.routes.draw do
         get    'join/:code' => 'invites#update',     as: :join
       end
       
-      resources :play, controller: 'sessions', only: %i[create index show]
+      post 'play'     => 'sessions#create', as: :create_session
+      get  'play/:id' => 'sessions#show',   as: :play
+      
+      post 'chat/:session_id' => 'chat_messages#create', as: :chat
     end
   end
   

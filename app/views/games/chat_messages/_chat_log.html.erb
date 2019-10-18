@@ -1,0 +1,6 @@
+<div class="player-wrapper__chat-log" id="<%= dom_id(session, 'chat_messages') %>">
+  <%=
+    render partial: 'games/chat_messages/chat_message',
+        collection: messages
+  %>
+</div>

@@ -1,0 +1,19 @@
+(function () {
+  var form = document.getElementById('new_message')
+  form.innerHTML = '<%=
+    escape_javascript render('games/chat_messages/form', session: @session, message: ChatMessage.new)
+  %>'
+  
+  var chat = document.getElementById('<%= dom_id(@session, 'chat_messages') %>')
+  if (!chat) return
+  
+  var existingMessage = document.getElementById('<%= dom_id(@message) %>')
+  if (existingMessage) return
+  
+  chat.insertAdjacentHTML(
+    'beforeend',
+    '<%=
+       escape_javascript render('games/chat_messages/chat_message', chat_message: @message)
+     %>'
+  )
+})()

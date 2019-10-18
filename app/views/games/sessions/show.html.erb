@@ -12,65 +12,20 @@ title t('.page_title', game: @game.title)
   </div>
   
   <div class="player-view__player-wrapper">
-    <div class="player-wrapper__chat-log">
-      <p><strong>John:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-      <p><strong>George:</strong> Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      <p><strong>Eva:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-      <p><strong>Adam:</strong> Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      <p><strong>Jolene:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-      <p><strong>Rik:</strong> Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      <p><strong>TE:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-      <p><strong>Remko:</strong> Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-      <p><strong>Moreno:</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation.</p>
-      <p><strong>An:</strong> Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-    </div>
+    <%=
+      render 'games/chat_messages/chat_log',
+        session:  @session,
+        messages: @session.chat_messages
+    %>
     
     <div class="player-wrapper__player-input">
-      <div class="player-input__context-square context-square">
-        Context SQ
-      </div>
+      <%= render 'games/sessions/context_square' %>
       
       <div class="player-input__players">
-        <div class="players__video-carousel" data-controller="video-chat">
-          <ol>
-            <% @game.players.each do |player| %>
-              <% if player.user == current_user %>
-                <li class="video-carousel__player" data-target="video-chat.host" data-participant-id="<%= player.id %>">
-                  <div class="player__actions">
-                    <strong><%= current_user.name %></strong>
-                    <a data-action="click->video-chat#startStreaming">start</a>
-                    <a data-action="click->video-chat#stopStreaming">stop</a>
-                  </div>
-                  <video autoplay playsinline></video>
-                  <select data-target="video-chat.devices"
-                          data-action="change->video-chat#changeStreamingDevice"
-                          style="display: none">
-                  </select>
-                </li>
-              <% else %>
-                <li data-target="video-chat.participant" data-participant-id="<%= player.id %>" style="display: none">
-                  <em><%= player.user.name %></em>
-                  <video autoplay playsinline></video>
-                </li>
-              <% end %>
-            <% end %>
-            
-            <li class="video-carousel__player">2</li>
-            <li class="video-carousel__player">3</li>
-            <li class="video-carousel__player">4</li>
-            <li class="video-carousel__player">5</li>
-            <li class="video-carousel__player">6</li>
-            <li class="video-carousel__player">7</li>
-            <li class="video-carousel__player">8</li>
-            <li class="video-carousel__player">9</li>
-            <li class="video-carousel__player">10</li>
-            <li class="video-carousel__player">11</li>
-            <li class="video-carousel__player">12</li>
-          </ol>
-        </div>
+        <%= render 'games/sessions/players',   players: @game.players %>
         
-        <div class="players__chat-input">
-          <input type="text" />
+        <div class="players__chat-input" id="new_message">
+          <%= render 'games/chat_messages/form', session: @session %>
         </div>
       </div>
     </div>
