@@ -24,7 +24,7 @@
     </div>
     
     <div style="display: none;">
-      <%= render map.floors %>
+      <%= render partial: 'map/floors/floor', collection: map.floors %>
       
       <% game.players.each do |player| %>
         <div data-controller="map--cursor"

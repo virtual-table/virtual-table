@@ -3,9 +3,9 @@ Rails.application.routes.draw do
   
   root to: 'dashboard#show'
   
-  get    'login'  => 'sessions#new',     as: :login
-  post   'login'  => 'sessions#create'
-  delete 'logout' => 'sessions#destroy', as: :logout
+  get    'login'  => 'authentication#new',     as: :login
+  post   'login'  => 'authentication#create'
+  delete 'logout' => 'authentication#destroy', as: :logout
   
   get  'forgot_password' => 'password_resets#new', as: :forgot_password
   post 'forgot_password' => 'password_resets#create'
@@ -22,6 +22,11 @@ Rails.application.routes.draw do
         delete 'invite'     => 'invites#destroy',    as: :regenerate_invite
         get    'join/:code' => 'invites#update',     as: :join
       end
+      
+      post 'play'     => 'sessions#create', as: :create_session
+      get  'play/:id' => 'sessions#show',   as: :play
+      
+      post 'chat/:session_id' => 'chat_messages#create', as: :chat
     end
   end
   
@@ -45,8 +50,6 @@ Rails.application.routes.draw do
       resources :doors
     end
   end
-  
-  resources :play, controller: :game_sessions, only: %i[index show]
   
   resources :dice_rolls, only: %i[index new create show]
   

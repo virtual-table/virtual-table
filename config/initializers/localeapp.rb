@@ -5,6 +5,9 @@ Localeapp.configure do |config|
   
   # Disable polling:
   config.polling_environments = []
+  
+  # Disable sending:
+  config.sending_environments = []
 end
 
 # Pull latest when app restarts in production:

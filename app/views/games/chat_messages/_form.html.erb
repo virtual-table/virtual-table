@@ -1,0 +1,7 @@
+<%
+game = session.game
+%>
+<%= form_for session.chat_messages.new, url: game_chat_url(game, session), data: { remote: true } do |f| %>
+  <%= f.text_field :body, autofocus: true, autocomplete: 'off', data: { target: 'text-chat.input' } %>
+  <%= f.submit t('.send') %>
+<% end %>

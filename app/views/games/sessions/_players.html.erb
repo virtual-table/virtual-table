@@ -1,0 +1,25 @@
+<div class="players__video-carousel" data-controller="video-chat">
+  <ol>
+    <% players.each do |player| %>
+      <% if player.user == current_user %>
+        <li class="video-carousel__player" data-target="video-chat.host" data-participant-id="<%= player.id %>">
+          <div class="player__actions">
+            <strong><%= current_user.name %></strong>
+            <a data-action="click->video-chat#startStreaming">start</a>
+            <a data-action="click->video-chat#stopStreaming">stop</a>
+          </div>
+          <video autoplay playsinline></video>
+          <select data-target="video-chat.devices"
+                  data-action="change->video-chat#changeStreamingDevice"
+                  style="display: none">
+          </select>
+        </li>
+      <% else %>
+        <li class="video-carousel__player" data-target="video-chat.participant" data-participant-id="<%= player.id %>" style="display: none">
+          <em><%= player.user.name %></em>
+          <video autoplay playsinline></video>
+        </li>
+      <% end %>
+    <% end %>
+  </ol>
+</div>

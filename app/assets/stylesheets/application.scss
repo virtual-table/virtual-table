@@ -34,6 +34,10 @@
 @import 'components/games/game-dashboard';
 @import 'components/games/games-overview';
 
+// Games - Sessions
+// =====================================
+@import 'components/games/sessions/player-view';
+
 // User
 // =====================================
 @import 'components/user/user-auth';

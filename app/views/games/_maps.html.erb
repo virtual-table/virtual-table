@@ -1,0 +1,17 @@
+<div class="game-dashboard__maps">
+  <header>
+    <h2>
+      <%= t '.maps' %>
+    </h2>
+  </header>
+  
+  <% if maps.present? %>
+    <ul>
+      <% maps.each do |map| %>
+        <li><%= link_to map.title, map %></li>
+      <% end %>
+    </ul>
+  <% else %>
+    <p><%= t '.no_maps_available' %></p>
+  <% end %>
+</div>

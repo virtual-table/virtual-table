@@ -5,7 +5,7 @@ class Map::Door < ApplicationRecord
   delegate :map, to: :floor,
     allow_nil: true
     
-  delegate :compendium, to: :floor,
+  delegate :compendium, to: :map,
     allow_nil: true
   
   after_save :relay_update
@@ -31,10 +31,10 @@ class Map::Door < ApplicationRecord
   private
   
   def relay_update
-    return unless compendium.present?
+    return unless map.present?
     
-    compendium.games.each do |game|
-      GameRelayJob.perform_later(game, data: ['DoorUpdated', [attributes]])
+    map.game_sessions.find_each do |session|
+      GameSessionRelayJob.perform_later(session, data: ['DoorUpdated', [attributes]])
     end
   end
   

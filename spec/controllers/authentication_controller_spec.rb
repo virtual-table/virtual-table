@@ -1,7 +1,7 @@
 require 'rails_helper'
 
-RSpec.describe SessionsController, type: :controller do
-  describe 'GET new' do
+RSpec.describe AuthenticationController, type: :controller do
+  describe 'GET #new' do
     before do
       get :new
     end
@@ -11,7 +11,7 @@ RSpec.describe SessionsController, type: :controller do
     end
   end
   
-  describe 'POST create' do
+  describe 'POST #create' do
     let(:username) { FFaker::Internet.email    }
     let(:password) { FFaker::Internet.password }
     
@@ -36,7 +36,7 @@ RSpec.describe SessionsController, type: :controller do
         end
         
         it 'notifies the user that they are logged in' do
-          expect(flash[:notice]).to include I18n.t('sessions.create.session_created')
+          expect(flash[:notice]).to include I18n.t('authentication.create.session_created')
         end
       end
       
@@ -50,7 +50,7 @@ RSpec.describe SessionsController, type: :controller do
         end
         
         it 'notifies the user that they need to activate their account' do
-          expect(flash[:alert]).to include I18n.t('sessions.create.activate_account')
+          expect(flash[:alert]).to include I18n.t('authentication.create.activate_account')
         end
       end
     end
@@ -68,7 +68,7 @@ RSpec.describe SessionsController, type: :controller do
         end
       
         it 'notifies the user that they entered invalid credentials' do
-          expect(flash[:alert]).to include I18n.t('sessions.create.credentials_invalid')
+          expect(flash[:alert]).to include I18n.t('authentication.create.credentials_invalid')
         end
         
         it 'renders the login page' do
@@ -78,7 +78,7 @@ RSpec.describe SessionsController, type: :controller do
     end
   end
   
-  describe 'DELETE destroy' do
+  describe 'DELETE #destroy' do
     context 'when logged in' do
       let(:user) { create :user }
       
@@ -92,7 +92,7 @@ RSpec.describe SessionsController, type: :controller do
       end
       
       it 'notifies the user that they are logged out' do
-        expect(flash[:notice]).to include I18n.t('sessions.destroy.session_destroyed')
+        expect(flash[:notice]).to include I18n.t('authentication.destroy.session_destroyed')
       end
       
       it 'redirects to the homepage' do

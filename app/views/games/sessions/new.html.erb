@@ -1,0 +1,16 @@
+<%
+title t('.page_title')
+%>
+<section class="section">
+  <div class="container">
+    <h1 class="title"><%= t '.create_a_new_session' %></h1>
+    <%= bulma_form_for @session, url: game_play_index_path(@game) do |f| %>
+      <%= f.fields :subject do %>
+        <%= f.label      :subject %>
+        <%= f.text_field :subject %>
+      <% end %>
+      
+      <%= f.submit t('.create_session') %>
+    <% end %>
+  </div>
+</section>

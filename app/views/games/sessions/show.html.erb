@@ -1,0 +1,37 @@
+<%
+title t('.page_title', game: @game.title)
+%>
+
+<div class="player-view">
+  <div class="player-view__canvas">
+    <% if @map && @floor %>
+      <%=
+        render '/map/displayer', game: @game, map: @map, active_floor: @floor
+      %>
+    <% end %>
+  </div>
+  
+  <div class="player-view__player-wrapper" data-controller="text-chat" data-text-chat-game-session-id="<%= @session.id %>">
+    <%=
+      render 'games/chat_messages/chat_log',
+        session:  @session,
+        messages: @session.chat_messages
+    %>
+    
+    <div class="player-wrapper__player-input">
+      <%= render 'games/sessions/context_square' %>
+      
+      <div class="player-input__players">
+        <%= render 'games/sessions/players',   players: @game.players %>
+        
+        <div class="players__chat-input" id="new_message">
+          <%= render 'games/chat_messages/form', session: @session %>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <div class="player-view__sidebar">
+    Sidebar
+  </div>
+</div>

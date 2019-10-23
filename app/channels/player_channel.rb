@@ -11,9 +11,12 @@ class PlayerChannel < ApplicationCable::Channel
   
   def broadcast(message)
     current_player = Player.find(message['playerId'])
-    other_players  = current_player.game.players
-    other_players.each do |player|
-      broadcast_to player, message
+    
+    if current_player.session
+      other_players = current_player.session.players
+      other_players.each do |player|
+        broadcast_to player, message
+      end
     end
   end
 end

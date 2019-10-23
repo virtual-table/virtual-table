@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2019_10_08_141644) do
+ActiveRecord::Schema.define(version: 2019_10_18_111609) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -48,6 +48,16 @@ ActiveRecord::Schema.define(version: 2019_10_08_141644) do
     t.string "checksum", null: false
     t.datetime "created_at", null: false
     t.index ["key"], name: "index_active_storage_blobs_on_key", unique: true
+  end
+
+  create_table "chat_messages", force: :cascade do |t|
+    t.bigint "session_id", null: false
+    t.bigint "author_id"
+    t.text "body"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["author_id"], name: "index_chat_messages_on_author_id"
+    t.index ["session_id"], name: "index_chat_messages_on_session_id"
   end
 
   create_table "compendia", force: :cascade do |t|
@@ -95,6 +105,22 @@ ActiveRecord::Schema.define(version: 2019_10_08_141644) do
     t.datetime "updated_at", precision: 6, null: false
     t.index ["compendium_id"], name: "index_game_compendia_on_compendium_id"
     t.index ["game_id"], name: "index_game_compendia_on_game_id"
+  end
+
+  create_table "game_sessions", force: :cascade do |t|
+    t.bigint "author_id", null: false
+    t.bigint "game_id", null: false
+    t.text "subject"
+    t.string "mode"
+    t.string "current_context_type"
+    t.bigint "current_context_id"
+    t.bigint "current_map_id"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["author_id"], name: "game_session_author"
+    t.index ["current_context_type", "current_context_id"], name: "game_session_context"
+    t.index ["current_map_id"], name: "game_session_map"
+    t.index ["game_id"], name: "game_session_game"
   end
 
   create_table "games", force: :cascade do |t|
@@ -242,7 +268,9 @@ ActiveRecord::Schema.define(version: 2019_10_08_141644) do
     t.string "role"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.bigint "session_id"
     t.index ["game_id"], name: "index_players_on_game_id"
+    t.index ["session_id"], name: "index_players_on_session_id"
     t.index ["user_id"], name: "index_players_on_user_id"
   end
 
@@ -262,9 +290,14 @@ ActiveRecord::Schema.define(version: 2019_10_08_141644) do
   end
 
   add_foreign_key "active_storage_attachments", "active_storage_blobs", column: "blob_id"
+  add_foreign_key "chat_messages", "game_sessions", column: "session_id"
+  add_foreign_key "chat_messages", "users", column: "author_id"
   add_foreign_key "compendia", "users", column: "author_id"
   add_foreign_key "game_compendia", "compendia"
   add_foreign_key "game_compendia", "games"
+  add_foreign_key "game_sessions", "games"
+  add_foreign_key "game_sessions", "maps", column: "current_map_id"
+  add_foreign_key "game_sessions", "users", column: "author_id"
   add_foreign_key "games", "users", column: "author_id"
   add_foreign_key "map_area_pages", "map_areas", column: "area_id"
   add_foreign_key "map_areas", "map_floors", column: "floor_id"
@@ -279,6 +312,7 @@ ActiveRecord::Schema.define(version: 2019_10_08_141644) do
   add_foreign_key "page_contents", "pages"
   add_foreign_key "pages", "compendia"
   add_foreign_key "pages", "pages", column: "parent_id"
+  add_foreign_key "players", "game_sessions", column: "session_id"
   add_foreign_key "players", "games"
   add_foreign_key "players", "users"
 end

@@ -9,6 +9,9 @@ class Game < ApplicationRecord
   has_many :users, 
     through: :players
   
+  has_many :sessions,
+    class_name: 'GameSession'
+  
   has_many :game_compendia,
     dependent: :destroy
   
