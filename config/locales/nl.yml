@@ -1,30 +1,30 @@
-en:
+nl:
   activerecord:
     attributes:
       game_session:
-        subject: Subject
+        subject: 
   authentication:
     create:
-      session_created: Welcome back %{user}! You've successfully signed in.
+      session_created: 
     destroy:
-      session_destroyed: You have successfully signed out.
+      session_destroyed: 
     new:
-      forgot_password: Forgot your password?
-      login: Login
-      page_title: Login
-      reset: Reset
-      submit: Login
+      forgot_password: 
+      login: 
+      page_title: 
+      reset: 
+      submit: 
   compendia:
     compendia:
       compendia: 
       create_new_compendium: 
   dashboard:
     show:
-      user_required: You need to be logged in to continue.
+      user_required: 
   games:
     chat_messages:
       form:
-        send: Send
+        send: 
     description:
       description: 
     games:
@@ -35,10 +35,10 @@ en:
     players:
       invite_link: 
       players: 
-      reset_invite_link: Generate new invite link
-      send_invite_link: Invite via email
+      reset_invite_link: 
+      send_invite_link: 
     sessions:
-      create_session: Create session
+      create_session: 
       join_session: 
       session: 
       show:
@@ -57,9 +57,9 @@ en:
         password: 
   shared:
     main_navigation:
-      compendia: Compendia
-      games: Games
-      login: Login
-      logout: Logout
-      new_game: Add a new game
-      signup: Sign Up
+      compendia: 
+      games: 
+      login: 
+      logout: 
+      new_game: 
+      signup: 
