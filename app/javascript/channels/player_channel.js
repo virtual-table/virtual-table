@@ -166,6 +166,11 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
   
   // RECEIVERS:
   
+  receiveChatMessage (attributes) {
+    const chat = this.getTextChat()
+    if (chat) chat.addMessage(attributes)
+  },
+  
   receiveCharacterDimensions (characterId, width, height) {
     let character = this.getCharacter(characterId)
     if (character) character.updateDimensions(width, height)
@@ -287,6 +292,15 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
     if (element && this.application) {
       return this.application
                  .getControllerForElementAndIdentifier(element, 'video-chat')
+    }
+  },
+  
+  getTextChat () {
+    let element = document.querySelector('[data-controller="text-chat"]')
+    
+    if (element && this.application) {
+      return this.application
+                 .getControllerForElementAndIdentifier(element, 'text-chat')
     }
   },
   

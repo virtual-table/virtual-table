@@ -7,6 +7,9 @@ class Map < ApplicationRecord
   
   belongs_to :compendium
   
+  has_many :game_sessions,
+    foreign_key: 'current_map_id'
+  
   has_many :floors,
     -> { order(level: :desc) },
     class_name: 'Map::Floor',

@@ -11,11 +11,12 @@ class GameSession < ApplicationRecord
   has_many :chat_messages,
     foreign_key: 'session_id'
   
-  belongs_to :context,
+  belongs_to :current_context,
     polymorphic: true,
     optional:    true
   
-  belongs_to :map,
+  belongs_to :current_map,
+    class_name: 'Map',
     optional: true
   
   validates :subject,

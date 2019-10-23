@@ -11,7 +11,7 @@ title t('.page_title', game: @game.title)
     <% end %>
   </div>
   
-  <div class="player-view__player-wrapper">
+  <div class="player-view__player-wrapper" data-controller="text-chat" data-text-chat-game-session-id="<%= @session.id %>">
     <%=
       render 'games/chat_messages/chat_log',
         session:  @session,

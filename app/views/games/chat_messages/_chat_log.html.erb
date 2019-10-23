@@ -1,4 +1,4 @@
-<div class="player-wrapper__chat-log" id="<%= dom_id(session, 'chat_messages') %>">
+<div class="player-wrapper__chat-log" id="<%= dom_id(session, 'chat_messages') %>" data-target="text-chat.messages">
   <%=
     render partial: 'games/chat_messages/chat_message',
         collection: messages

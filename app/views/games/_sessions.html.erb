@@ -19,7 +19,7 @@
   
   <% if current_player&.is_gm? %>
     <div class="sessions__create">
-      <%= bulma_form_for game.sessions.new, url: game_play_index_path(game) do |f| %>
+      <%= bulma_form_for game.sessions.new, url: game_create_session_path(game) do |f| %>
         <%= f.fields :subject do %>
           <%= f.label      :subject %>
           <%= f.text_field :subject %>

@@ -1,8 +1,6 @@
 module ApplicationCable
   class Connection < ActionCable::Connection::Base
     
-    attr_accessor :current_games
-    
     identified_by :current_user
     
     def connect

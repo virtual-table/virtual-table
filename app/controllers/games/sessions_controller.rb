@@ -14,7 +14,7 @@ module Games
       
       current_player.join! @session
       
-      @map     = @session.map || @game.maps.first
+      @map     = @session.current_map || @game.maps.first
       @floor   = @map.try { |m| m.floors.first }
     end
     
