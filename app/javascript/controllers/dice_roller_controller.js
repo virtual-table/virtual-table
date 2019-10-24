@@ -91,25 +91,41 @@ export default class extends ApplicationController {
       const result   = parseInt(diceElement.dataset.diceResult)
       
       for (let die of dicePool) {
-        let yRand  = this.random() * 20
         let object = die.getObject()
         
-        object.position.x = -15 - (index % 3) * 1.5
-        object.position.y = 2 + Math.floor(index / 3) * 1.5
-        object.position.z = -15 + (index % 3) * 1.5
+        object.position.x = index * die.scaleFactor * 3
+        object.position.y = index * die.scaleFactor * 1.5
+        object.position.z = index * die.scaleFactor * 1.5
         object.quaternion.x = (this.random()*90-45) * Math.PI / 180
         object.quaternion.z = (this.random()*90-45) * Math.PI / 180
         
         die.updateBodyFromMesh()
         
-        object.body.velocity.set(250 + result, 40 + yRand, 150 + result)
-        object.body.angularVelocity.set(200 * this.random() -10, 20 * this.random() -10, 20 * this.random() -10)
+        const velocity = this.shuffle([
+          (this.random() < 0.5 ? 2 : -2) * this.random() * die.inertia,
+          (this.random() < 0.5 ? 5 : -5) * this.random() * die.inertia,
+          (this.random() < 0.5 ? 8 : -8) * this.random() * die.inertia
+        ])
+        
+        object.body.velocity.set(...velocity)
+        object.body.angularVelocity.set(this.random(), this.random(), this.random())
         
         diceValues.push({ dice: die, value: result })
       }
     })
     
     this.tray.prepareValues(diceValues)
+  }
+  
+  shuffle (a) {
+    var j, x, i;
+    for (i = a.length - 1; i > 0; i--) {
+      j = Math.floor(this.random() * (i + 1));
+      x = a[i];
+      a[i] = a[j];
+      a[j] = x;
+    }
+    return a;
   }
   
   random () {

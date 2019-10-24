@@ -72,16 +72,15 @@ export default class DiceTray {
     let floor = new CANNON.Body({ mass: 0, shape: new CANNON.Plane(), material: this.materials.floor })
     floor.quaternion.setFromAxisAngle(new CANNON.Vec3(1, 0, 0), -Math.PI / 2)
     this.world.add(floor)
-    
-    let wall
+    let wall;
     
     [
-      { axis: [0, 0, 1], angle:  Math.PI,      position: [0, 0, -(y / 20)] }, // TOP
-      { axis: [0, 1, 0], angle: -Math.PI / 2,  position: [(x / 20), 0, 0]  }, // RIGHT
-      { axis: [0, 1, 0], angle:  Math.PI,      position: [0, 0, (y / 20)]  }, // BOTTOM
-      { axis: [0, 1, 0], angle:  Math.PI / 2,  position: [-(x / 20), 0, 0] }  // LEFT
+      { axis: [0, 0, 1], angle:  Math.PI,      position: [0, 0, -(y / 22)] }, // TOP
+      { axis: [0, 1, 0], angle: -Math.PI / 2,  position: [(x / 22), 0, 0]  }, // RIGHT
+      { axis: [0, 1, 0], angle:  Math.PI,      position: [0, 0, (y / 22)]  }, // BOTTOM
+      { axis: [0, 1, 0], angle:  Math.PI / 2,  position: [-(x / 22), 0, 0] }  // LEFT
     ].forEach((options) => {
-      let wall = new CANNON.Body({ mass: 0, shape: new CANNON.Plane(), material: this.materials.floor })
+      let wall = new CANNON.Body({ mass: 0, shape: new CANNON.Plane(), material: this.materials.wall })
       wall.quaternion.setFromAxisAngle(new CANNON.Vec3(...options.axis), options.angle)
       wall.position.set(...options.position)
       this.world.add(wall)
