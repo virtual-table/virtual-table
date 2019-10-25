@@ -181,10 +181,10 @@ export default class DiceTray {
   
   get throwIsFinished () {
     const diceStoppedMoving = this.dicePools.every((pool) => {
-      return pool.every((dice) => dice.isFinished())
+      return pool.every((dice) => dice.finishedRolling)
     })
     
-    if (diceStoppedMoving && this.throwFinishedCounter == this.frameRate * 2) {
+    if (diceStoppedMoving && this.throwFinishedCounter == this.frameRate * 20) {
       return true
     } else {
       this.throwFinishedCounter++

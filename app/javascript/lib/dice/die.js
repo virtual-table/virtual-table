@@ -19,6 +19,22 @@ export default class Die {
     tray.world.add(this.object.body);
   }
   
+  get finishedRolling() {
+    let threshold = 6;
+    
+    let angularVelocity = this.object.body.angularVelocity;
+    let velocity = this.object.body.velocity;
+    
+    return (
+      Math.abs(angularVelocity.x) < threshold &&
+      Math.abs(angularVelocity.y) < threshold &&
+      Math.abs(angularVelocity.z) < threshold &&
+      Math.abs(velocity.x)        < threshold &&
+      Math.abs(velocity.y)        < threshold &&
+      Math.abs(velocity.z) < threshold
+    )
+  }
+  
   /**
    * @constructor
    * @param {object} options
@@ -59,16 +75,6 @@ export default class Die {
     }
     
     return options;
-  }
-  
-  isFinished() {
-    let threshold = 1;
-    
-    let angularVelocity = this.object.body.angularVelocity;
-    let velocity = this.object.body.velocity;
-    
-    return (Math.abs(angularVelocity.x) < threshold && Math.abs(angularVelocity.y) < threshold && Math.abs(angularVelocity.z) < threshold &&
-      Math.abs(velocity.x) < threshold && Math.abs(velocity.y) < threshold && Math.abs(velocity.z) < threshold);
   }
   
   getUpsideValue() {
