@@ -61,27 +61,6 @@ export default class Die {
     return options;
   }
   
-  emulateThrow(world, callback) {
-    let stableCount = 0;
-    
-    let check = () => {
-      if (this.isFinished()) {
-        stableCount++;
-        
-        if (stableCount === 50) {
-          world.removeEventListener('postStep', check);
-          callback(this.getUpsideValue());
-        }
-      } else {
-        stableCount = 0;
-      }
-      
-      world.step(world.dt);
-    };
-    
-    world.addEventListener('postStep', check);
-  }
-  
   isFinished() {
     let threshold = 1;
     
@@ -312,10 +291,8 @@ export default class Die {
   }
   
   updateMeshFromBody() {
-    if (!this.simulationRunning) {
-      this.object.position.copy(this.object.body.position);
-      this.object.quaternion.copy(this.object.body.quaternion);
-    }
+    this.object.position.copy(this.object.body.position);
+    this.object.quaternion.copy(this.object.body.quaternion);
   }
   
   updateBodyFromMesh() {

@@ -114,7 +114,7 @@ export default class extends ApplicationController {
       }
     })
     
-    this.tray.prepareValues(diceValues)
+    this.tray.cheat(diceValues)
   }
   
   shuffle (a) {

@@ -3,6 +3,10 @@ import THREE from 'lib/three';
 import CannonDebugRenderer from 'lib/three/cannon_debug_renderer'
 
 export default class DiceTray {
+  
+  get frameLength () { return 1.0 / this.frameRate }
+  get frameRate   () { return 60.0 }
+  
   constructor (container, dimensions) {
     this.container  = container
     this.dicePools  = []
@@ -15,6 +19,8 @@ export default class DiceTray {
   // SETUP:
   
   setup () {
+    this.checkThrow = this.checkThrow.bind(this)
+    
     this.setupDimensions()
     this.setupWorld()
     this.setupScene()
@@ -153,7 +159,7 @@ export default class DiceTray {
   render () {
     this.cannonDebugger.update()
     
-    this.world.step(1.0 / 60.0)
+    this.world.step(this.frameLength)
     
     for (let dicePool of this.dicePools) {
       for (let die of dicePool) die.updateMeshFromBody()
@@ -173,14 +179,36 @@ export default class DiceTray {
     this.dicePools.push(dice)
   }
   
-  /**
-   *
-   * @param {array} diceValues
-   * @param {DiceObject} [diceValues.dice]
-   * @param {number} [diceValues.value]
-   *
-   */
-  prepareValues(diceValues) {
+  get throwIsFinished () {
+    const diceStoppedMoving = this.dicePools.every((pool) => {
+      return pool.every((dice) => dice.isFinished())
+    })
+    
+    if (diceStoppedMoving && this.throwFinishedCounter == this.frameRate * 2) {
+      return true
+    } else {
+      this.throwFinishedCounter++
+      return false
+    }
+  }
+  
+  checkThrow () {
+    if (this.throwIsFinished) {
+      this.world.removeEventListener('postStep', this.checkThrow)
+      
+      for (let i = 0; i < this.diceValues.length; i++) {
+        this.diceValues[i].dice.shiftUpperValue(this.diceValues[i].value)
+        this.diceValues[i].dice.setVectors(this.diceValues[i].vectors)
+      }
+      
+      this.throwRunning = false
+      this.throwFinishedCounter = 0
+    } else {
+      this.world.step(this.frameLength)
+    }
+  }
+  
+  cheat (diceValues) {
     if (this.throwRunning) throw new Error('Cannot start another throw. Please wait, till the current throw is finished.');
     
     for (let i = 0; i < diceValues.length; i++) {
@@ -189,43 +217,14 @@ export default class DiceTray {
       }
     }
     
-    this.throwRunning = true;
+    this.diceValues = diceValues
+    this.throwRunning = true
+    this.throwFinishedCounter = 0
     
     for (let i = 0; i < diceValues.length; i++) {
-      diceValues[i].dice.simulationRunning = true;
       diceValues[i].vectors = diceValues[i].dice.getCurrentVectors();
-      diceValues[i].stableCount = 0;
     }
     
-    let check = () => {
-      let allStable = true;
-      for (let i = 0; i < diceValues.length; i++) {
-        if (diceValues[i].dice.isFinished()) {
-          diceValues[i].stableCount++;
-        } else {
-          diceValues[i].stableCount = 0;
-        }
-        
-        if (diceValues[i].stableCount < 50) {
-          allStable = false;
-        }
-      }
-      
-      if (allStable) {
-        this.world.removeEventListener('postStep', check);
-        
-        for (let i = 0; i < diceValues.length; i++) {
-          diceValues[i].dice.shiftUpperValue(diceValues[i].value);
-          diceValues[i].dice.setVectors(diceValues[i].vectors);
-          diceValues[i].dice.simulationRunning = false;
-        }
-        
-        this.throwRunning = false;
-      } else {
-        this.world.step(this.world.dt);
-      }
-    };
-    
-    this.world.addEventListener('postStep', check);
+    this.world.addEventListener('postStep', this.checkThrow);
   }
 }
