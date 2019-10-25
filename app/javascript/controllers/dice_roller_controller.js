@@ -85,6 +85,8 @@ export default class extends ApplicationController {
   
   roll () {
     let diceValues = []
+    let count = 0
+    let loop  = 0
     
     this.diceTargets.forEach((diceElement, index) => {
       const dicePool = this.tray.dicePools[index]
@@ -93,14 +95,29 @@ export default class extends ApplicationController {
       for (let die of dicePool) {
         let object = die.getObject()
         
-        object.position.x = index * die.scaleFactor * 3
-        object.position.y = index * die.scaleFactor * 1.5
-        object.position.z = index * die.scaleFactor * 1.5
-        object.quaternion.x = (this.random()*90-45) * Math.PI / 180
-        object.quaternion.z = (this.random()*90-45) * Math.PI / 180
+        // x = left to right
+        // y = floor to ceiling
+        // z = top to bottom
+        
+        // POSITION DIE:
+        this.tray.positionObject(object, count, loop)
+        
+        if (die.outOfBounds) {
+          loop++
+          count = 0
+          
+          this.tray.positionObject(object, count, loop)
+        } else {
+          count++
+        }
+        
+        // ROTATE DIE:
+        // object.quaternion.x = (this.random()*90-45) * Math.PI / 180
+        // object.quaternion.z = (this.random()*90-45) * Math.PI / 180
         
         die.updateBodyFromMesh()
         
+        // GO DIE, GO:
         const velocity = this.shuffle([
           (this.random() < 0.5 ? 2 : -2) * this.random() * die.inertia,
           (this.random() < 0.5 ? 5 : -5) * this.random() * die.inertia,

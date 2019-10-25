@@ -208,6 +208,34 @@ export default class DiceTray {
     }
   }
   
+  positionObject (object, index, loop) {
+    index++
+    
+    const spiralPoint = (distanceBetweenPoints, distanceBetweenArms, step) => {
+      let x = 0
+      let y = 0
+      let r = distanceBetweenPoints
+      let b = distanceBetweenArms / (2 * Math.PI)
+      let phi = r / b
+      
+      for (let n = 0; n < step - 1; ++n) {
+        phi += distanceBetweenPoints / r
+        r = b * phi
+      }
+      
+      x = r * Math.cos(phi)
+      y = r * Math.sin(phi)
+      
+      return [x, y]
+    }
+    
+    const [ x, y ] = spiralPoint(3.5, 1, index)
+    
+    object.position.x = x
+    object.position.z = y
+    object.position.y = (loop + index + 1) * 1.5
+  }
+  
   cheat (diceValues) {
     if (this.throwRunning) throw new Error('Cannot start another throw. Please wait, till the current throw is finished.');
     

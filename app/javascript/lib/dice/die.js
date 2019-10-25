@@ -19,6 +19,11 @@ export default class Die {
     tray.world.add(this.object.body);
   }
   
+  get outOfBounds () {
+    // TODO: Check if this object is outside of the dice tray
+    return false
+  }
+  
   get finishedRolling() {
     let threshold = 6;
     
