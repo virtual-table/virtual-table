@@ -11,27 +11,24 @@ title t('.page_title', game: @game.title)
     <% end %>
   </div>
   
-  <div class="player-view__player-wrapper" data-controller="text-chat" data-text-chat-game-session-id="<%= @session.id %>">
-    <%=
-      render 'games/chat_messages/chat_log',
-        session:  @session,
-        messages: @session.chat_messages
-    %>
-    
-    <div class="player-wrapper__player-input">
-      <%= render 'games/sessions/context_square' %>
-      
-      <div class="player-input__players">
-        <%= render 'games/sessions/players',   players: @game.players %>
-        
-        <div class="players__chat-input" id="new_message">
-          <%= render 'games/chat_messages/form', session: @session %>
-        </div>
-      </div>
-    </div>
+  <div class="player-view__players" data-controller="text-chat" data-text-chat-game-session-id="<%= @session.id %>">
+    <%= render 'games/sessions/context_square' %>
+    <%= render 'games/sessions/players',   players: @game.players %>
   </div>
   
   <div class="player-view__sidebar">
     Sidebar
+    
+    <div class="sidebar__player-chat">
+      <%=
+        render 'games/chat_messages/chat_log',
+          session:  @session,
+          messages: @session.chat_messages
+      %>
+      
+      <div class="player-chat__input" id="new_message">
+        <%= render 'games/chat_messages/form', session: @session %>
+      </div>
+    </div>
   </div>
 </div>

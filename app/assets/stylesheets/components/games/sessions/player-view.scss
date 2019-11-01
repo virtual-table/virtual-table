@@ -6,101 +6,94 @@
   .player-view__canvas {
     position: relative;
     width: calc(100% - 300px);
+    height: calc(100% - 170px);
     background: #FF0000;
     overflow: hidden;
   }
   
-  .player-view__player-wrapper {
+  .player-view__players {
+    @include flexbox(flex, row, nowrap);
     position: absolute;
-    bottom: 0;
     right: 300px;
+    bottom: 0;
     left: 0;
-  }
-  
-  .player-wrapper__chat-log {
-    height: 150px;
-    color: #fff;
-    margin-right: var(--spacing-unit);
-    margin-bottom: var(--spacing-unit);
-    margin-left: calc(var(--spacing-unit) * 2);
-    overflow: scroll;
+    height: 170px;
+    background: #FF0000;
     
-    p {
-      max-width: 550px;
-      margin-bottom: calc(var(--spacing-unit) / 2);
-    }
-    
-    p:last-child {
-      margin-bottom: 0;
-    }
-  }
-  
-  .player-wrapper__player-input {
-    @include flexbox(flex, row, wrap, flex-start, stretch);
-    
-    .player-input__context-square {
+    .players__context-square {
       width: 170px;
       height: 170px;
       background: #0000FF;
       border-radius: 4px;
     }
     
-    .player-input__players {
+    .players__video-carousel {
       width: calc(100% - 170px);
       padding-left: var(--spacing-unit);
-      
-      .players__video-carousel {
+              
+      ol {
+        @include flexbox(flex, row, nowrap);
+        overflow: scroll; 
         
-        ol {
-          @include flexbox(flex, row, nowrap);
-          overflow: scroll; 
-          
-          &:after {
-            display: block;
-            min-width: 2px;
-            max-width: 2px;
-            height: 120px;
-            content: '';
-          }
-        }
-        
-        .video-carousel__player {
-          position: relative;
-          min-width: 120px;
-          min-height: 120px;
-          background: #00FF00;
-          margin-bottom: var(--spacing-unit);
-          margin-right: var(--spacing-unit);
-          border-radius: 4px;
-          
-          video {
-            position: absolute;
-            top: 0;
-            right: 0;
-            bottom: 0;
-            left: 0;
-          }
-          
-          .player__actions {
-            position: absolute;
-            bottom: 0;
-            z-index: 999;
-          }
+        &:after {
+          display: block;
+          min-width: 2px;
+          max-width: 2px;
+          height: 120px;
+          content: '';
         }
       }
+      
+      .video-carousel__player {
+        position: relative;
+        width: 120px;
+        height: 120px;
+        background: #00FF00;
+        margin-bottom: var(--spacing-unit);
+        margin-right: var(--spacing-unit);
+        border-radius: 4px;
+        overflow: hidden;
         
-      .players__chat-input {
-        padding-right: var(--spacing-unit);
+        video {
+          position: absolute;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          height: 120px;
+          object-fit: fill;
+        }
         
-        input {
-          width: 100%;
-          height: 34px;
+        .player__actions {
+          position: absolute;
+          bottom: 0;
+          z-index: 999;
         }
       }
     }
   }
   
+  .player-wrapper__player-input {
+    @include flexbox(flex, row, wrap, flex-start, stretch);
+  }
+  
   .player-view__sidebar {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
     width: 300px;
+    background: #00FF00;
+    
+    .sidebar__player-chat {
+      
+      .player-chat__log {
+        position: absolute;
+        overflow: scroll;
+        height: 120px;
+        bottom: 0;
+        
+        .log__message { }
+      }
+    }
   }
 }
