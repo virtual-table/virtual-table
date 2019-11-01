@@ -4,7 +4,11 @@ import _ from 'lodash'
 
 const DEFAULT_MEDIA_CONSTRAINTS = {
   audio: true,
-  video: true
+  video: {
+    width:  { min: 120, ideal: 480 },
+    height: { min: 120, ideal: 480 },
+    aspectRatio: { ideal: 1 }
+  }
 }
 
 export default class extends ApplicationController {
