@@ -16,12 +16,12 @@ export default class extends ApplicationController {
   
   get availableHeight () {
     let position = this.canvasTarget.getBoundingClientRect()
-    return window.innerHeight - position.top
+    return window.innerHeight - position.top - 170 // Video carousel height
   }
   
   get availableWidth () {
     let position = this.canvasTarget.getBoundingClientRect()
-    return window.innerWidth - position.left
+    return window.innerWidth - position.left - 300 // Sidebar width
   }
   
   get floors () {

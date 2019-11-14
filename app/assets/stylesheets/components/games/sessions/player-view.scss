@@ -7,7 +7,6 @@
     position: relative;
     width: calc(100% - 300px);
     height: calc(100% - 170px);
-    background: #FF0000;
     overflow: hidden;
   }
   
@@ -18,7 +17,6 @@
     bottom: 0;
     left: 0;
     height: 170px;
-    background: #FF0000;
     
     .players__context-square {
       width: 170px;
@@ -48,7 +46,7 @@
         position: relative;
         width: 120px;
         height: 120px;
-        background: #00FF00;
+        background: rgba(0,0,0,.3);
         margin-bottom: var(--spacing-unit);
         margin-right: var(--spacing-unit);
         border-radius: 4px;
@@ -59,14 +57,20 @@
           top: 0;
           right: 0;
           bottom: 0;
+          width: 120px;
           height: 120px;
-          object-fit: fill;
+          background: #aaa;
         }
         
         .player__actions {
           position: absolute;
-          bottom: 0;
           z-index: 999;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          color: #fff;
+          padding: 4px 8px;
+          background: rgba(0,0,0,.3);
         }
       }
     }
@@ -82,17 +86,41 @@
     top: 0;
     bottom: 0;
     width: 300px;
-    background: #00FF00;
     
     .sidebar__player-chat {
+      position: absolute;
+      bottom: 0;
+      padding: {
+        top: calc(var(--spacing-unit) * 2);
+        right: calc(var(--spacing-unit) * 3);
+        bottom: calc(var(--spacing-unit) * 2);
+        left: calc(var(--spacing-unit) * 3);
+      }
+      border-top: 1px solid rgba(0,0,0,.2);
       
       .player-chat__log {
-        position: absolute;
         overflow: scroll;
-        height: 120px;
-        bottom: 0;
+        height: 160px;
         
-        .log__message { }
+        .log__message { 
+          margin-bottom: calc(var(--spacing-unit) / 2);
+        }
+        
+        .log__message:last-child {
+          margin-bottom: calc(var(--spacing-unit) * 2);
+        }
+      }
+      
+      .player-chat__input {
+        
+        input {
+          width: 100%;
+        }
+        
+        input[type="submit"] {
+          display: none;
+          margin-top: var(--spacing-unit);
+        }
       }
     }
   }
