@@ -8,10 +8,10 @@ RSpec.describe "Sessions", type: :feature do
     visit(root_path)
     assert_current_path(login_path)
 
-    fill_in('login_email', with: user.email)
+    fill_in('login_email',    with: user.email)
     fill_in('login_password', with: user.password)
 
-    click_on('Submit')
+    click_button('Login')
 
     assert_current_path(root_path)
   end
@@ -20,10 +20,10 @@ RSpec.describe "Sessions", type: :feature do
     visit(root_path)
     assert_current_path(login_path)
 
-    fill_in('login_email', with: user_inactive.email)
+    fill_in('login_email',    with: user_inactive.email)
     fill_in('login_password', with: user_inactive.password)
 
-    click_on('Submit')
+    click_button('Login')
 
     assert_current_path( account_activation_path(user_inactive.id) )
   end
@@ -32,10 +32,10 @@ RSpec.describe "Sessions", type: :feature do
     visit(root_path)
     assert_current_path(login_path)
 
-    fill_in('login_email', with: user.email)
+    fill_in('login_email',    with: user.email)
     fill_in('login_password', with: user.password)
 
-    click_on('Submit')
+    click_button('Login')
 
     assert_current_path(root_path)
 

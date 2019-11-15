@@ -5,7 +5,7 @@ RSpec.describe "AccountActivations", type: :feature do
   scenario "User registration, logout and login" do
     visit(root_url)
 
-    click_link('Signup')
+    click_link('Sign Up')
     assert_current_path(new_user_path)
 
     fill_in('user_name', with: 'TestUser')

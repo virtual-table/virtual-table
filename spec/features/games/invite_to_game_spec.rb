@@ -13,7 +13,7 @@ RSpec.describe "Game invites", type: :feature do
     expect(Capybara.current_session.driver.request.cookies.[]('game_invite_code')).not_to be_nil
 
 
-    click_link('Signup')
+    click_link('Sign Up')
     assert_current_path(new_user_path)
 
 
@@ -42,7 +42,7 @@ RSpec.describe "Game invites", type: :feature do
     fill_in('login_email', with: user.email)
     fill_in('login_password', with: user.password)
 
-    click_on('Submit')
+    click_button('Login')
 
     assert_current_path(root_path)
   end
@@ -53,7 +53,7 @@ RSpec.describe "Game invites", type: :feature do
     fill_in('login_email', with: user.email)
     fill_in('login_password', with: user.password)
 
-    click_on('Submit')
+    click_button('Login')
 
     assert_current_path(root_path)
 
