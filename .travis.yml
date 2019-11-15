@@ -1,13 +1,28 @@
 language: ruby
+addons:
+  postgresql: "9.4"
+  chrome: stable
 rvm:
   - 2.6.5
+cache:
+  bundler: true
+  yarn: true
+  directories:
+    - node_modules
 services:
   - postgresql
+install:
+  - bundle install
+  - nvm install node
+  - node -v
+  - npm i -g yarn
+  - yarn install
 before_script:
   - "cp config/database.yml.example config/database.yml"
   - "bundle exec rake db:setup RAILS_ENV=test"
   - "bundle exec localeapp pull"
+  - "npm install"
 script:
   - bundle exec rspec spec/
-addons:
-  postgresql: "9.4"
+after_success:
+  - bundle exec rake assets:precompile
