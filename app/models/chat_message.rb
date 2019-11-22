@@ -7,4 +7,10 @@ class ChatMessage < ApplicationRecord
     class_name: 'User',
     optional:   true
   
+  after_save :relay_message
+  
+  def relay_message
+    ChatMessageRelayJob.perform_later(self)
+  end
+  
 end
