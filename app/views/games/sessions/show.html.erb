@@ -11,7 +11,7 @@ title t('.page_title', game: @game.title)
     <% end %>
   </div>
   
-  <div class="player-view__players" data-controller="text-chat" data-text-chat-game-session-id="<%= @session.id %>">
+  <div class="player-view__players">
     <%= render 'games/sessions/context_square' %>
     <%= render 'games/sessions/players',   players: @game.players %>
   </div>
@@ -19,7 +19,7 @@ title t('.page_title', game: @game.title)
   <div class="player-view__sidebar">
     Sidebar
     
-    <div class="sidebar__player-chat">
+    <div class="sidebar__player-chat" data-controller="text-chat" data-text-chat-game-session-id="<%= @session.id %>">
       <%=
         render 'games/chat_messages/chat_log',
           session:  @session,
