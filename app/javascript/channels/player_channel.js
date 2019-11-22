@@ -28,7 +28,6 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
   
   // Called when there's incoming data on the websocket for this channel
   received (message) {
-    console.log('received', message)
     let { playerId, connectionId, data } = message
     
     if (connectionId != this.connectionId) {
@@ -158,7 +157,7 @@ const playerChannel = consumer.subscriptions.create('PlayerChannel', {
   },
   
   sendCursorPosition (x, y) {
-    // this.broadcast('CursorPosition', this.playerId, x, y)
+    this.broadcast('CursorPosition', this.playerId, x, y)
   },
   
   sendPeerParticipant () {
