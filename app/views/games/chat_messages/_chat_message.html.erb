@@ -1,4 +1,6 @@
 <p class="log__message" id="<%= dom_id(chat_message) %>">
-  <strong class="chat-room-message-author"><%= chat_message.author.name %>:</strong>
-  <%= chat_message.body %>
+  <strong class="message__author"><%= chat_message.author.name %></strong>
+  <span class="message__body">
+    <%= chat_message.body %>
+  </span>
 </p>

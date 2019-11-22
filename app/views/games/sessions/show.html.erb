@@ -4,6 +4,8 @@ title t('.page_title', game: @game.title)
 
 <div class="player-view">
   <div class="player-view__canvas">
+    <%= render 'games/sessions/context_square' %>
+    
     <% if @map && @floor %>
       <%=
         render '/map/displayer', game: @game, map: @map, active_floor: @floor
@@ -12,12 +14,22 @@ title t('.page_title', game: @game.title)
   </div>
   
   <div class="player-view__players">
-    <%= render 'games/sessions/context_square' %>
-    <%= render 'games/sessions/players',   players: @game.players %>
+    <%= render 'games/sessions/players', players: @game.players %>
   </div>
   
   <div class="player-view__sidebar">
-    Sidebar
+    <div class="sidebar__tabs">
+      <ul>
+        <li><a href="#">Compendium</a></li>
+        <li class="tabs__active"><a href="#">Chat</a></li>
+      </ul>
+    </div>
+    
+    <!--
+    <div class="sidebar__compendium">
+      
+    </div>
+    -->
     
     <div class="sidebar__player-chat" data-controller="text-chat" data-text-chat-game-session-id="<%= @session.id %>">
       <%=
