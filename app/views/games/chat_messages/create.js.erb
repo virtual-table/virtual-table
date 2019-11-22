@@ -5,13 +5,7 @@
   %>'
   
   var chatSession = document.querySelector('[data-text-chat-game-session-id="<%= @session.id %>"]')
-  var attributes  = {
-    game_session_id: <%= @session.id %>,
-    chat_message_id: <%= @message.id %>,
-    html:            '<%=
-       escape_javascript render('games/chat_messages/chat_message', chat_message: @message)
-    %>'
-  }
+  var attributes  = <%= raw ChatMessageRelayJob.attributes_for(@message).to_json %>
   
   if (chatSession && window.VTT && window.VTT.application) {
     var app  = window.VTT.application
