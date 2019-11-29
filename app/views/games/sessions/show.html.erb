@@ -17,29 +17,33 @@ title t('.page_title', game: @game.title)
     <%= render 'games/sessions/players', players: @game.players %>
   </div>
   
-  <div class="player-view__sidebar">
-    <div class="sidebar__tabs">
+  <div class="player-view__sidebar" data-controller="sidebar-tabs">
+    <div class="sidebar__tab-options" data-target="sidebar-tabs.options">
       <ul>
-        <li><a href="#">Compendium</a></li>
-        <li class="tabs__active"><a href="#">Chat</a></li>
+        <li>
+          <a href="#" class="is-active" data-tab="tabs__player-chat" data-action="click->sidebar-tabs#switchTab">Chat</a>
+        </li>
+        <li>
+          <a href="#" data-tab="tabs__compendium" data-action="click->sidebar-tabs#switchTab">Compendium</a>
+        </li>
       </ul>
     </div>
     
-    <!--
-    <div class="sidebar__compendium">
+    <div class="sidebar__tabs" data-target="sidebar-tabs.tabs">
+      <div class="tabs__single-tab tabs__player-chat is-active" data-controller="text-chat" data-text-chat-game-session-id="<%= @session.id %>">
+        <%=
+          render 'games/chat_messages/chat_log',
+            session:  @session,
+            messages: @session.chat_messages
+        %>
+        
+        <div class="player-chat__input" id="new_message">
+          <%= render 'games/chat_messages/form', session: @session %>
+        </div>
+      </div>
       
-    </div>
-    -->
-    
-    <div class="sidebar__player-chat" data-controller="text-chat" data-text-chat-game-session-id="<%= @session.id %>">
-      <%=
-        render 'games/chat_messages/chat_log',
-          session:  @session,
-          messages: @session.chat_messages
-      %>
-      
-      <div class="player-chat__input" id="new_message">
-        <%= render 'games/chat_messages/form', session: @session %>
+      <div class="tabs__single-tab tabs__compendium">
+        Compendium
       </div>
     </div>
   </div>
