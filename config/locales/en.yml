@@ -1,10 +1,21 @@
 en:
   activerecord:
     attributes:
+      game:
+        compendium_ids: Compendium ids
+        description: Description
+        title: Title
       game_session:
         subject: Subject
+      map/background:
+        height: Height
+        image: Image
+        width: Width
+        x: X
+        y: Y
   authentication:
     create:
+      credentials_invalid_html: Email and/or password was not correct. Please try again or <a href="%{forgot_password_url">reset your password</a> if you forgot it.
       session_created: Welcome back %{user}! You've successfully signed in.
     destroy:
       session_destroyed: You have successfully signed out.
@@ -18,8 +29,17 @@ en:
     compendia:
       compendia: 
       create_new_compendium: 
+    show:
+      confirm_compendium_destruction: 
+      destroy_compendium: 
+      edit_compendium: 
+      maps: 
+      new_map: 
+      new_page: 
+      pages: 
   dashboard:
     show:
+      page_title: 
       user_required: You need to be logged in to continue.
   games:
     chat_messages:
@@ -27,11 +47,23 @@ en:
         send: Send
     description:
       description: 
+    edit:
+      edit_game: 
+      page_title: 
+    form:
+      reset: 
+      submit: 
     games:
       create_new_game: 
       games: 
+      join_session: 
+    index:
+      page_title: 
+      user_required: 
     maps:
       maps: 
+    new:
+      create_a_new_game: 
     players:
       invite_link: 
       players: 
@@ -43,6 +75,7 @@ en:
       session: 
       show:
         page_title: 
+        player_required: 
     show:
       confirm_game_destruction: 
       destroy_game: 
@@ -50,11 +83,78 @@ en:
   helpers:
     label:
       email: 
+      game:
+        compendium_ids: 
+        description: 
+        title: 
       game_session:
         subject: 
       login:
         email: 
         password: 
+      map_area:
+        bounds_json: 
+        floor_id: 
+        short_code: 
+        title: 
+      map_background:
+        height: 
+        image: 
+        width: 
+        x: 
+        y: 
+      map_character:
+        dim_light_radius: 
+        height: 
+        light_color: 
+        light_radius: 
+        name: 
+        width: 
+        x: 
+        y: 
+  layouts:
+    map_editor:
+      edit: 
+      new_floor: 
+  map:
+    areas:
+      area_panel:
+        reset: 
+        submit: 
+      areas_tab:
+        new_area: 
+    backgrounds:
+      background_panel:
+        reset: 
+        submit: 
+      backgrounds_tab:
+        new_background: 
+    characters:
+      character_panel:
+        reset: 
+        submit: 
+      characters_tab:
+        new_character: 
+    editor_toolbox:
+      new_area: 
+      new_character: 
+      select: 
+    floors:
+      floor_panel:
+        areas: 
+        backgrounds: 
+        characters: 
+        edit: 
+  maps:
+    backgrounds:
+      update:
+        background_updated: 
+  sessions:
+    new:
+      forgot_password: 
+      login: 
+      reset: 
+      submit: 
   shared:
     main_navigation:
       compendia: Compendia
