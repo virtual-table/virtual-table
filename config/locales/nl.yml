@@ -29,6 +29,15 @@ nl:
     compendia:
       compendia: 
       create_new_compendium: 
+    create:
+      compendium_created: 
+    destroy:
+      compendium_destroyed: 
+    maps:
+      new:
+        page_title: 
+    new:
+      page_title: 
     show:
       confirm_compendium_destruction: 
       destroy_compendium: 
@@ -37,6 +46,8 @@ nl:
       new_map: 
       new_page: 
       pages: 
+    update:
+      compendium_updated: 
   dashboard:
     show:
       page_title: 

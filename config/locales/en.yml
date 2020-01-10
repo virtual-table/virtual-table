@@ -29,6 +29,15 @@ en:
     compendia:
       compendia: 
       create_new_compendium: 
+    create:
+      compendium_created: The "%{compendium}" compendium has been created.
+    destroy:
+      compendium_destroyed: The "%{compendium}" compendium has been deleted.
+    maps:
+      new:
+        page_title: New map
+    new:
+      page_title: New compendium
     show:
       confirm_compendium_destruction: 
       destroy_compendium: 
@@ -37,9 +46,11 @@ en:
       new_map: 
       new_page: 
       pages: 
+    update:
+      compendium_updated: The "%{compendium}" compendium has been updated.
   dashboard:
     show:
-      page_title: 
+      page_title: Dashboard
       user_required: You need to be logged in to continue.
   games:
     chat_messages:

@@ -8,7 +8,7 @@ class AuthenticationController < ApplicationController
     if user&.authenticate(login_params[:password])
       if user.activated?
         log_in user
-        redirect_to root_url, notice: t('.session_created')
+        redirect_to root_url, notice: t('.session_created', user: user.name)
       else
         flash.now[:alert] = t('.activate_account')
         redirect_to account_activation_url(user.id)
