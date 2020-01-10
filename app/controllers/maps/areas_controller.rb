@@ -25,6 +25,7 @@ module Maps
     
     def update
       @area = @map.areas.find params[:id]
+      
       if @area.update(area_params)
         redirect_to map_area_url(@map, @area), notice: t('.area_updated')
       else
@@ -42,7 +43,11 @@ module Maps
         floor_id
         x y
         bounds_json
-      ])
+      ],
+        page_ids: []
+      ).tap do |area|
+        area[:page_ids] = area[:page_ids].map { |id| id.presence&.to_i }.compact if area[:page_ids]
+      end
     end
   end
 end

@@ -8,6 +8,8 @@ if area.persisted?
 else
   form_url = map_areas_path(map)
 end
+
+compendium = map.compendium
 %>
 <nav class="panel" id="<%= dom_id(area, :panel) %>" data-controller="map--panel">
   <div class="panel__heading">
@@ -48,6 +50,14 @@ end
         <%= f.label     :bounds_json %>
         <%= f.text_area :bounds_json %>
         <%= f.errors    :bounds_json %>
+      <% end %>
+      
+      <%= f.field :page_ids do %>
+        <%= f.label  :page_ids %>
+        <%= f.select :page_ids, page_select_options(compendium.pages.without_parent),
+                     { include_blank: true },
+                     multiple: true %>
+        <%= f.errors :page_ids %>
       <% end %>
       
       <%= f.submit_or_reset %>
