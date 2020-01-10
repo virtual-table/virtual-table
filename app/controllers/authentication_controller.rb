@@ -14,7 +14,7 @@ class AuthenticationController < ApplicationController
         redirect_to account_activation_url(user.id)
       end
     else
-      flash.now[:alert] = t('.credentials_invalid')
+      flash.now[:alert] = t('.credentials_invalid_html', forgot_password_url: forgot_password_url).html_safe
       render :new
     end
   end
