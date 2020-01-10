@@ -8,28 +8,35 @@ export default class extends ApplicationController {
     return this._floor || (this._floor = this.findParentController('map--floor'))
   }
   
+  get x () { return parseInt(this.data.get('x')) }
+  get y () { return parseInt(this.data.get('y')) }
+  
   get bounds () {
     return JSON.parse(this.data.get('bounds'))
   }
   
   get center () {
-    let points = this.bounds
-    
-    let xPoints = points.map((point) => point[0])
-    let yPoints = points.map((point) => point[1])
-    
-    let xSum = 0
-    let ySum = 0
-    
-    for (let i = 0; i < xPoints.length; i++) {
-      xSum += xPoints[i]
-      ySum += yPoints[i]
+    if (this.data.has('x') && this.data.has('y')) {
+      return [this.x, this.y]
+    } else {
+      let points = this.bounds
+      
+      let xPoints = points.map((point) => point[0])
+      let yPoints = points.map((point) => point[1])
+      
+      let xSum = 0
+      let ySum = 0
+      
+      for (let i = 0; i < xPoints.length; i++) {
+        xSum += xPoints[i]
+        ySum += yPoints[i]
+      }
+      
+      return [
+        xSum / xPoints.length,
+        ySum / yPoints.length
+      ]
     }
-    
-    return [
-      xSum / xPoints.length,
-      ySum / yPoints.length
-    ]
   }
   
   get shortCode () {
