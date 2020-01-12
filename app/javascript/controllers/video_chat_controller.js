@@ -51,6 +51,8 @@ export default class extends ApplicationController {
   }
   
   startStreaming () {
+    if (!navigator.mediaDevices) return
+    
     navigator.mediaDevices
       .getUserMedia(this.mediaConstraints)
       .then((stream) => {
