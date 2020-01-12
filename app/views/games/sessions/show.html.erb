@@ -18,19 +18,39 @@ title t('.page_title', game: @game.title)
   </div>
   
   <div class="player-view__sidebar" data-controller="sidebar-tabs">
-    <div class="sidebar__tab-options" data-target="sidebar-tabs.options">
+    <div class="sidebar__tab-options">
       <ul>
         <li>
-          <a href="#" class="is-active" data-tab="tabs__player-chat" data-action="click->sidebar-tabs#switchTab">Chat</a>
+          <%=
+            link_to t('.chat'), '#player_chat_pane',
+              class: 'is-active',
+              data:  {
+                target:     'sidebar-tabs.tab',
+                tab_target: 'player-chat',
+                action:     'click->sidebar-tabs#switchTab'
+              }
+          %>
         </li>
         <li>
-          <a href="#" data-tab="tabs__compendium" data-action="click->sidebar-tabs#switchTab">Compendium</a>
+          <%=
+            link_to t('.compendium'), '#compendium_pane',
+              data:  {
+                target:     'sidebar-tabs.tab',
+                tab_target: 'compendium',
+                action:     'click->sidebar-tabs#switchTab'
+              }
+          %>
         </li>
       </ul>
     </div>
     
-    <div class="sidebar__tabs" data-target="sidebar-tabs.tabs">
-      <div class="tabs__single-tab tabs__player-chat is-active" data-controller="text-chat" data-text-chat-game-session-id="<%= @session.id %>">
+    <div class="sidebar__tabs">
+      <div id="player_chat_pane"
+           class="tabs__single-tab tabs__player-chat is-active"
+           data-target="sidebar-tabs.pane"
+           data-tab-pane="player-chat"
+           data-controller="text-chat"
+           data-text-chat-game-session-id="<%= @session.id %>">
         <%=
           render 'games/chat_messages/chat_log',
             session:  @session,
@@ -42,7 +62,10 @@ title t('.page_title', game: @game.title)
         </div>
       </div>
       
-      <div class="tabs__single-tab tabs__compendium">
+      <div id="player_compendium_pane"
+           class="tabs__single-tab tabs__compendium"
+           data-target="sidebar-tabs.pane"
+           data-tab-pane="compendium">
         Compendium
       </div>
     </div>
