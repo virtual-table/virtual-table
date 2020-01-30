@@ -76,4 +76,8 @@ module Playable
       return false
     end
   end
+
+  def current_user_has_player_in_game?
+    current_user.players.any? { |player| @game.players.include?(player) }
+  end
 end
