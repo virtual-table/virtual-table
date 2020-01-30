@@ -9,7 +9,12 @@ class GamesController < ApplicationController
   
   def show
     @game = Game.find params[:id]
-    @maps = @game.maps
+    if current_user_has_player_in_game?
+      @maps = @game.maps
+    else
+      @game = nil
+      redirect_to games_url
+    end
   end
   
   def new
