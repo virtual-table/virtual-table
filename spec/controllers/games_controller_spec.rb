@@ -33,16 +33,29 @@ RSpec.describe GamesController, type: :controller do
       login_as user
     end
 
-    it 'shows the games that the user is part of' do
+    it 'shows the game that the user is part of' do
       get :show, params: { id: game_with_player.id }
 
       expect(assigns(:game)).to match(game_with_player)
     end
 
-    it 'does not show the games that the user is not part of' do
-      get :show, params: { id: random_game.id }
+    it 'does not show the game that the user is not part of' do
+      expect(get :show, params: { id: random_game.id } ).to redirect_to(login_url)
+    end
+  end
 
-      expect(assigns(:game)).to_not match(random_game)
+  describe 'POST edit' do
+    it 'lets author edit game' do
+      login_as gm_user
+      get :edit, params: { id: game_with_player.id }
+
+      expect(assigns(:game)).to match(game_with_player)
+    end
+
+    it 'redirects non author users' do
+      login_as user
+
+      expect(get :edit, params: { id: game_with_player.id }).to redirect_to(login_url)
     end
   end
 end
