@@ -50,6 +50,10 @@ module Playable
     @game
   end
 
+  def current_compendium
+    @compendium
+  end
+
   def current_player
     return unless logged_in?
 
@@ -79,7 +83,7 @@ module Playable
   end
 
   def require_player_in_game
-    return if current_user.players.any? { |player| current_game.include? player }
+    return if current_user.players.any? { |player| current_game.players.include? player }
 
     flash[:alert] = t('.player_reqiured')
     redirect_to login_url

@@ -28,19 +28,32 @@ RSpec.describe GamesController, type: :controller do
   end
 
   describe 'GET #show' do
-    let(:random_game) { create :game, author: gm_user }
+    let(:gm_game) { create :game, author: gm_user }
     before do
       login_as user
     end
 
-    it 'shows the game that the user is part of' do
+    it 'shows the game where the user has a player' do
       get :show, params: { id: game_with_player.id }
 
       expect(assigns(:game)).to match(game_with_player)
+      expect(response).to_not redirect_to(login_url)
     end
 
-    it 'does not show the game that the user is not part of' do
-      expect(get :show, params: { id: random_game.id } ).to redirect_to(login_url)
+    it 'does not show the game where the user does not have a player' do
+      expect(get :show, params: { id: gm_game.id }).to redirect_to(login_url)
+    end
+
+    it 'does not show games that user is not author of' do
+      expect(get :show, params: { id: gm_game.id }).to redirect_to(login_url)
+    end
+
+    it 'shows games where user is the author' do
+      login_as gm_user
+      get :show, params: { id: gm_game.id }
+
+      expect(assigns(:game)).to match(gm_game)
+      expect(response).to_not redirect_to(login_url)
     end
   end
 
@@ -51,7 +64,7 @@ RSpec.describe GamesController, type: :controller do
 
       expect(assigns(:game)).to match(game_with_player)
     end
-
+  
     it 'redirects non author users' do
       login_as user
 
