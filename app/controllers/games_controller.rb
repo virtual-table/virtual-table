@@ -2,8 +2,8 @@ class GamesController < ApplicationController
   
   before_action :load_game, only: %i[show edit update destroy]
   before_action :require_user
-  before_action :require_author_of_game, only: %i[show edit update destroy]
-  before_action :require_player_in_game, only: %i[show]
+  before_action :require_author_of_game, only: %i[edit update destroy]
+  before_action :require_author_or_player, only: %i[show]
 
   def index
     @players = current_user&.players
@@ -51,6 +51,15 @@ class GamesController < ApplicationController
   end
 
   private
+
+  def require_author_or_player
+    return if @game.author == current_user
+    return if current_user.players.any? { |player| @game.players.include? player }
+
+    flash[:alert] = t('.author_or_player_required')
+    redirect_to login_url
+    return false
+  end
 
   def load_game
     @game = Game.find params[:id]

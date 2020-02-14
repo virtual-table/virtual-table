@@ -1,7 +1,8 @@
 class CompendiaController < ApplicationController
 
   before_action :load_compendium, only: %i[show edit update destroy]
-  before_action :require_author_of_compendium, only: %i[show edit update destroy]
+  before_action :require_author_of_compendium, only: %i[edit update destroy]
+  before_action :require_author_or_player, only: %i[show]
 
   def index
     @compendia = current_user&.compendia
@@ -52,6 +53,15 @@ class CompendiaController < ApplicationController
 
   def load_compendium
     @compendium = Compendium.find params[:id]
+  end
+
+  def require_author_or_player
+    return if @compendium.author == current_user
+    return if @compendium.games.any? { |game| game.players.any? { |player| current_user.players.include? player } }
+
+    flash[:alert] = t('.author_or_player_required')
+    redirect_to login_url
+    return false
   end
 
   def compendium_params
