@@ -28,8 +28,8 @@ export default class extends ApplicationController {
       Rails.ajax({
         type:    'GET',
         url:     target['href'],
-        success: (html)  => this.insertContent(html, target),
-        error:   (error) => document.location.href = target['href']
+        success: (response) => this.insertContent(response, target),
+        error:   (response) => document.location.href = target['href']
       })
       
       event.preventDefault()
@@ -58,6 +58,10 @@ export default class extends ApplicationController {
   // MUTATIONS:
   
   insertContent (html, link) {
+    if (html.activeElement) {
+      html = html.activeElement.innerHTML
+    }
+    
     let addContentList = link.closest('[data-target*="compendium--editor.addContentList"]')
     if (addContentList) {
       html = html.split(NEW_CONTENT_PLACEHOLDER).join(this.contents.length)
