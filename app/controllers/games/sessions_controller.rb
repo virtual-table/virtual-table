@@ -16,6 +16,8 @@ module Games
       
       @map     = @session.current_map || @game.maps.first
       @floor   = @map.try { |m| m.floors.first }
+      
+      @compendia = @game.compendia
     end
     
     def create
