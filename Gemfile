@@ -7,7 +7,7 @@ ruby '2.6.5'
 gem 'rake'
 
 # Rails:
-gem 'rails',    '~> 6.0.0'
+gem 'rails',    '~> 6.0.2.1'
 gem 'bootsnap', '>= 1.1.0', require: false
 
 # Database:
