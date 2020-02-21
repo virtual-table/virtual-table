@@ -18,7 +18,7 @@ export default class extends ApplicationController {
   set y (v) { this.yTarget.value = v    }
   
   get panel () {
-    return this.findParentController('map--panel')
+    return this.findParentController('panel')
   }
   
   get mapBackground () {
@@ -37,7 +37,7 @@ export default class extends ApplicationController {
   
   show () {
     if (this.panel) {
-      this.findControllers('map--panel').forEach((p) => p.hide())
+      this.findControllers('panel').forEach((p) => p.hide())
       this.panel.show()
     }
   }

@@ -1,0 +1,21 @@
+<%
+page = local_assigns[:page].presence ||
+       local_assigns[:page_panel]
+compendium = page.compendium
+%>
+<nav class="panel" id="<%= dom_id(page, :panel) %>" data-controller="panel">
+  <div class="panel__heading">
+    <%=
+      link_to "<", "##{dom_id(compendium, :panel)}",
+        class: 'panel__back',
+        data: {
+          action: 'click->accordion#openPanel'
+        }
+    %>
+    <%= page.title %>
+  </div>
+
+  <div class="panel__content">
+    <%= render page %>
+  </div>
+</nav>

@@ -10,11 +10,13 @@
               if page.new_record?
                 compendium_new_page_content_path(compendium,
                   content_type: content_type.to_s,
+                  xhr:          true,
                   position:     '__POSITION_PLACEHOLDER__'
                 )
               else
                 new_compendium_page_content_path(compendium, page,
                   content_type: content_type.to_s,
+                  xhr:          true,
                   position:     '__POSITION_PLACEHOLDER__'
                 )
               end

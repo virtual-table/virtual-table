@@ -51,7 +51,7 @@ export default class extends ApplicationController {
   }
   
   show () {
-    this.findControllers('map--panel').forEach((panel) => panel.hide())
+    this.findControllers('panel').forEach((panel) => panel.hide())
     this.element.style.display = 'block'
   }
   
@@ -112,7 +112,7 @@ export default class extends ApplicationController {
     let element = document.getElementById(htmlId)
     if (element) {
       return this.application.getControllerForElementAndIdentifier(
-        element, 'map--panel'
+        element, 'panel'
       )
     }
   }

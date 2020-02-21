@@ -1,0 +1,17 @@
+<div
+  id="player_chat_pane"
+  class="tabs__single-tab tabs__player-chat is-active"
+  data-target="sidebar-tabs.pane"
+  data-tab-pane="player-chat"
+  data-controller="text-chat"
+  data-text-chat-game-session-id="<%= @session.id %>">
+  <%=
+    render 'games/chat_messages/chat_log',
+      session:  session,
+      messages: session.chat_messages
+  %>
+
+  <div class="player-chat__input" id="new_message">
+    <%= render 'games/chat_messages/form', session: session %>
+  </div>
+</div>

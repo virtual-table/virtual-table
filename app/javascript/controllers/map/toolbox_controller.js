@@ -1,40 +1,15 @@
-import ApplicationController from 'controllers/application_controller'
+import AccordionController from 'controllers/accordion_controller'
 import _ from 'lodash'
 
-export default class extends ApplicationController {
+export default class extends AccordionController {
   
   get editor () { return this.findParentController('map-editor') }
   
   connect () {
-    _.defer(this.showInitialPanel.bind(this))
+    super.connect()
   }
   
   // ACTIONS:
-  
-  showInitialPanel () {
-    let initialPanel = this.data.get('initialPanel')
-    
-    if (initialPanel) {
-      let panel = this.getPanel(initialPanel)
-      if (panel) panel.show()
-    }
-  }
-  
-  openPanel (event) {
-    let link = event.currentTarget.closest('a')
-    
-    if (link) {
-      event.preventDefault()
-      
-      let panel = this.getPanel(
-        link.dataset.panel     ?
-            link.dataset.panel :
-            link['href'].split('#').pop()
-      )
-      
-      if (panel) panel.show()
-    }
-  }
   
   switchMode (event) {
     let target = event.currentTarget
@@ -72,17 +47,6 @@ export default class extends ApplicationController {
           this.editor.modeCallback = null
           break
       }
-    }
-  }
-  
-  // HELPERS:
-  
-  getPanel (htmlId) {
-    let element = document.getElementById(htmlId)
-    if (element) {
-      return this.application.getControllerForElementAndIdentifier(
-        element, 'map--panel'
-      )
     }
   }
 }

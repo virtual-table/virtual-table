@@ -1,0 +1,11 @@
+<%
+f = fields
+%>
+<%= f.hidden_field :id %>
+
+<%= f.field :description, control: { data: { controller: 'html-editor' } } do %>
+  <%= f.label     :description %>
+  <%= content_tag :div, '',     data: { target: 'html-editor.editor' } %>
+  <%= f.text_area :description, data: { target: 'html-editor.input'  } %>
+  <%= f.errors    :description %>
+<% end %>

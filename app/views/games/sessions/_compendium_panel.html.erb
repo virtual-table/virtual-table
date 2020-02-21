@@ -1,0 +1,24 @@
+<%
+root_pages = compendium.pages.without_parent
+%>
+<nav class="panel" id="<%= dom_id(compendium, :panel) %>" data-controller="panel">
+  <div class="panel__heading">
+    <%= compendium.title %>
+  </div>
+
+  <div class="panel__content">
+    <% if root_pages.present? %>
+      <ul>
+        <%= render partial: 'games/sessions/compendium_panel_page', collection: root_pages %>
+      </ul>
+    <% else %>
+      <div>
+        <p><%= t '.no_pages_available' %></p>
+      </div>
+    <% end %>
+  </div>
+</nav>
+<%=
+  render partial: 'games/sessions/page_panel',
+      collection: compendium.pages
+%>

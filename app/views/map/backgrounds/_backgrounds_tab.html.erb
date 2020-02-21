@@ -1,7 +1,7 @@
 <%
 map = floor.map
 %>
-<div id="<%= dom_id(floor, :backgrounds_tab) %>" data-target="map--panel.tab">
+<div id="<%= dom_id(floor, :backgrounds_tab) %>" data-target="panel.tab">
   <div class="panel__content">
     <ul>
       <% floor.backgrounds.each do |background| %>
@@ -9,7 +9,7 @@ map = floor.map
           <%=
             link_to background.filename, "##{dom_id(background, :panel)}",
               data: {
-                action: 'click->map--panel#openPanel'
+                action: 'click->panel#openPanel'
               }
           %>
         </li>

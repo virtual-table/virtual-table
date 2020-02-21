@@ -11,13 +11,13 @@ end
 
 compendium = map.compendium
 %>
-<nav class="panel" id="<%= dom_id(area, :panel) %>" data-controller="map--panel">
+<nav class="panel" id="<%= dom_id(area, :panel) %>" data-controller="panel">
   <div class="panel__heading">
     <%=
       link_to floor.title, "##{dom_id(area.floor, :panel)}",
         class: 'panel__back',
         data: {
-          action: 'click->map--panel#openPanel'
+          action: 'click->panel#openPanel'
         }
     %>
   </div>

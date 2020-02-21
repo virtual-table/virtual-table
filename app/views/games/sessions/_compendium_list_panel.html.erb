@@ -1,0 +1,21 @@
+<nav class="panel" id="compendium_list" data-controller="panel">
+  <div class="panel__heading">
+  </div>
+
+  <div class="panel__content">
+    <ul>
+      <% compendia.each do |compendium| %>
+        <li>
+          <%= link_to "##{dom_id(compendium, :panel)}", data: { action: 'click->accordion#openPanel' } do %>
+            <% if compendium.cover.attached? %>
+              <%= image_tag compendium.cover.variant(resize_to_fit: [200, 200]) %>
+              <strong><%= compendium.title %></strong>
+            <% else %>
+              <%= compendium.title %>
+            <% end %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </div>
+</nav>

@@ -15,13 +15,13 @@ form_data = {
   form__map_background_map_background: dom_id(background)
 }
 %>
-<nav class="panel" id="<%= dom_id(background, :panel) %>" data-controller="map--panel">
+<nav class="panel" id="<%= dom_id(background, :panel) %>" data-controller="panel">
   <div class="panel__heading">
     <%=
       link_to floor.title, "##{dom_id(floor, :panel)}",
         class: 'panel__back',
         data: {
-          action: 'click->map--panel#openPanel'
+          action: 'click->panel#openPanel'
         }
     %>
   </div>

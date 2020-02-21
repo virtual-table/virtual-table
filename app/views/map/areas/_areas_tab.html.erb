@@ -1,7 +1,7 @@
 <%
 map = floor.map
 %>
-<div id="<%= dom_id(floor, :areas_tab) %>" data-target="map--panel.tab">
+<div id="<%= dom_id(floor, :areas_tab) %>" data-target="panel.tab">
   <div class="panel__content">
     <ul>
       <% floor.areas.each do |area| %>
@@ -9,7 +9,7 @@ map = floor.map
           <%=
             link_to area.full_title, "##{dom_id(area, :panel)}",
               data: {
-                action: 'click->map--panel#openPanel'
+                action: 'click->panel#openPanel'
               }
           %>
         </li>

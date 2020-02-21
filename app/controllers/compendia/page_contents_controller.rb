@@ -8,10 +8,14 @@ module Compendia
       @page_content.position = (params[:position].presence || @page.contents.count).to_i
       @page_content.content  = build_content
       
-      render layout: !request.xhr?
+      render layout: render_layout?
     end
     
     private
+    
+    def render_layout?
+      params[:xhr].nil? ? !request.xhr? : !params[:xhr]
+    end
     
     def load_page
       @page = @compendium.pages.find_by(id: params[:page_id]) ||

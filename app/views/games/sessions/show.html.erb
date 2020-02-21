@@ -5,18 +5,18 @@ title t('.page_title', game: @game.title)
 <div class="player-view">
   <div class="player-view__canvas">
     <%= render 'games/sessions/context_square' %>
-    
+
     <% if @map && @floor %>
       <%=
         render '/map/displayer', game: @game, map: @map, active_floor: @floor
       %>
     <% end %>
   </div>
-  
+
   <div class="player-view__players">
     <%= render 'games/sessions/players', players: @game.players %>
   </div>
-  
+
   <div class="player-view__sidebar" data-controller="sidebar-tabs">
     <div class="sidebar__tab-options">
       <ul>
@@ -43,31 +43,10 @@ title t('.page_title', game: @game.title)
         </li>
       </ul>
     </div>
-    
+
     <div class="sidebar__tabs">
-      <div id="player_chat_pane"
-           class="tabs__single-tab tabs__player-chat is-active"
-           data-target="sidebar-tabs.pane"
-           data-tab-pane="player-chat"
-           data-controller="text-chat"
-           data-text-chat-game-session-id="<%= @session.id %>">
-        <%=
-          render 'games/chat_messages/chat_log',
-            session:  @session,
-            messages: @session.chat_messages
-        %>
-        
-        <div class="player-chat__input" id="new_message">
-          <%= render 'games/chat_messages/form', session: @session %>
-        </div>
-      </div>
-      
-      <div id="player_compendium_pane"
-           class="tabs__single-tab tabs__compendium"
-           data-target="sidebar-tabs.pane"
-           data-tab-pane="compendium">
-        Compendium
-      </div>
+      <%= render 'chat',      session:   @session   %>
+      <%= render 'compendia', compendia: @compendia %>
     </div>
   </div>
 </div>

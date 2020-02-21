@@ -2,7 +2,7 @@
 floor ||= local_assigns[:floor_panel]
 tabs  ||= %w[backgrounds areas characters]
 %>
-<nav class="panel" id="<%= dom_id(floor, :panel) %>" data-controller="map--panel">
+<nav class="panel" id="<%= dom_id(floor, :panel) %>" data-controller="panel">
   <div class="panel__heading">
     <%= floor.title %>
     
@@ -19,7 +19,7 @@ tabs  ||= %w[backgrounds areas characters]
       <%=
         link_to t(".#{tab}"), "##{dom_id(floor, "#{tab}_tab")}",
           data:  {
-            action: 'click->map--panel#changeTab'
+            action: 'click->panel#changeTab'
           }
       %>
     <% end %>

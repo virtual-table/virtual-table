@@ -1,7 +1,7 @@
 <%
 map = floor.map
 %>
-<div id="<%= dom_id(floor, :characters_tab) %>" data-target="map--panel.tab">
+<div id="<%= dom_id(floor, :characters_tab) %>" data-target="panel.tab">
   <div class="panel__content">
     <ul>
       <% floor.characters.each do |character| %>
@@ -9,7 +9,7 @@ map = floor.map
           <%=
             link_to character.name, "##{dom_id(character, :panel)}",
               data: {
-                action: 'click->map--panel#openPanel'
+                action: 'click->panel#openPanel'
               }
           %>
         </li>

@@ -1,4 +1,4 @@
-<nav class="panel" id="<%= dom_id(map, :panel) %>" data-controller="map--panel" data-map--panel-active="true">
+<nav class="panel" id="<%= dom_id(map, :panel) %>" data-controller="panel" data-panel-active="true">
   <div class="panel__heading">
     <h1>
       <%= map.title %>
@@ -15,7 +15,7 @@
       link_to floor.title, "##{dom_id(floor)}",
         class: 'panel__block',
         data: {
-          action: 'click->map--panel#openPanel click->map-editor#changeFloor',
+          action: 'click->panel#openPanel click->map-editor#changeFloor',
           panel:  dom_id(floor, :panel),
           floor:  dom_id(floor)
         }

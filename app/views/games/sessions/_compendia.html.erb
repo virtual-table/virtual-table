@@ -1,0 +1,30 @@
+<%
+if compendia&.size == 1
+  initial_compendium_panel = dom_id(compendia.first, :panel)
+elsif compendia.present?
+  initial_compendium_panel = 'compendia_list_panel'
+else
+  initial_compendium_panel = 'no_compendia_panel'
+end
+%>
+<div id="player_compendium_pane"
+     class="tabs__single-tab tabs__compendium"
+     data-target="sidebar-tabs.pane"
+     data-tab-pane="compendium"
+     data-controller="accordion"
+     data-accordion-initial-panel="<%= initial_compendium_panel %>">
+  <% if compendia.present? %>
+    <% if compendia.size == 1 %>
+      <%= render 'compendium_panel', compendium: compendia.first %>
+    <% else %>
+      <%= render 'compendium_list_panel', compendia: compendia %>
+      <% compendia.each do |compendium| %>
+        <%= render 'compendium_panel', compendium: compendium %>
+      <% end %>
+    <% end %>
+  <% else %>
+    <div id="no_compendia_panel">
+      <p><%= t '.no_compendia_available' %></p>
+    </div>
+  <% end %>
+</div>

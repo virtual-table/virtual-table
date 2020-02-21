@@ -1,0 +1,19 @@
+<%
+page = local_assigns[:page].presence ||
+       local_assigns[:compendium_panel_page]
+compendium = page.compendium
+%>
+<li>
+  <%=
+    link_to page.title, "##{dom_id(page, :panel)}",
+            data: { action: 'click->accordion#openPanel' }
+  %>
+  <% if page.children.present? %>
+    <ul>
+      <%=
+        render partial: 'games/sessions/compendium_panel_page',
+            collection: page.children
+      %>
+    </ul>
+  <% end %>
+</li>
