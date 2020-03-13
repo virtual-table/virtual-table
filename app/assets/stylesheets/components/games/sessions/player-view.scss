@@ -43,7 +43,7 @@
       ol {
         @include flexbox(flex, row, nowrap, flex-start, center);
         height: 275px;
-        overflow: scroll; 
+        overflow: scroll;
         
         &:after {
           display: block;
@@ -132,7 +132,7 @@
       }
     }
     
-    .sidebar__tabs { 
+    .sidebar__tabs {
       
       .tabs__single-tab {
         display: none;
@@ -157,10 +157,11 @@
           overflow: scroll;
           height: calc(100vh - 190px);
           
-          .log__message { 
+          .log__message {
             background: rgba(0,0,0,.1);
             margin-top: calc(var(--spacing-unit) / 2);
             border-radius: 2px;
+            word-break: break-word;
             
             .message__author {
               display: block;
