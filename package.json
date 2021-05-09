@@ -10,7 +10,7 @@
     "hotkeys-js": "^3.6.3",
     "inspire-tree": "^5.0.2",
     "inspire-tree-dom": "^4.0.6",
-    "lodash": "^4.17.14",
+    "lodash": "^4.17.21",
     "orbit-controls-es6": "^2.0.0",
     "pixi-viewport": "^3.21.2",
     "pixi.js": "^4.8.6",
